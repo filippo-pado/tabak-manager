@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 
 var ItemSchema = new mongoose.Schema({
-  barcode: { type: String, default: '' },
+  sector: String,
+  barcode: String,
+  name: String,
   price: { type: Number, default: 0 }
 });
 

@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -21,7 +22,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,    
+    NavbarComponent,
     MovementsComponent,
     RidComponent,
     PageNotFoundComponent
@@ -31,6 +32,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule,
     AppRoutingModule,
     AppMaterialModule
   ],

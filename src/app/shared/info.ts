@@ -1,4 +1,6 @@
 export interface Info {
-  category: String,
-  rate: Number
+  categories: [{
+    category: string;
+    rate: number;
+  }];
 }

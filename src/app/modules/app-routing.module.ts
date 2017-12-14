@@ -8,9 +8,9 @@ import { PageNotFoundComponent } from '../page-not-found/page-not-found.componen
 const routes: Routes = [
   { path: 'movements', component: MovementsComponent },
   { path: 'rid', component: RidComponent },
-  { path: '',   redirectTo: '/movements', pathMatch: 'full' },
+  { path: '', redirectTo: '/movements', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
- ];
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

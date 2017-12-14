@@ -60,3 +60,6 @@ typings/
 # Angular output files
 /dist
 
+# Visual studio code settings
+/.vscode
+

@@ -2,10 +2,7 @@ var mongoose = require('mongoose');
 
 var MovementSchema = new mongoose.Schema({
   category: String, // 'Bollo', Super'..
-  date: {
-    type: Date,
-    default: Date.now // `Date.now()` returns the current unix timestamp as a number
-  },
+  date: Date,
   gross: Number,
   net: Number,
   profit: Number,

@@ -1,7 +1,8 @@
-export interface Rid {
-  category: String,
-  description: String,
-  date: Date,
-  amount: Number,
-  verifiedMovement: String
+export class Rid {
+  _id: string;
+  category: string;
+  description: string;
+  date: Date;
+  amount: number;
+  verifiedMovement: string;
 }

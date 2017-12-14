@@ -5,20 +5,22 @@ var express = require('express'),
 
 /*
   GET /
+  GET /categories
   POST /
 */
 
-/* GET INFO */
-router.get('/', function(req, res, next) {
-  Info.find(function(err, info) {
+/* GET ALL INFO */
+router.get('/', function (req, res, next) {
+  Info.findOne(function (err, info) {
     if (err) return next(err);
     res.json(info);
   });
 });
 
 /* POST INFO */
-router.post('/', function(req, res, next) {
-  Info.create(req.body, function(err, info) {
+router.post('/category', function (req, res, next) {
+  console.log(JSON.stringify(req.body, null, 2));
+  Info.findOneAndUpdate({}, { $push: { categories: req.body } }, { new: true }, function (err, info) {
     if (err) return next(err);
     res.json(info);
   });

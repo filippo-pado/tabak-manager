@@ -19,6 +19,9 @@
   overflow: auto;
   max-height: 500px;
 }
+.mat-cell{
+  padding-right: 10px;
+}
 
 .mat-header-cell.mat-sort-header-sorted {
   color: black;

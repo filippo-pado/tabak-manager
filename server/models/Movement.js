@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
 
 var MovementSchema = new mongoose.Schema({
-  category: String, // 'Bollo', Super'..
+  category: String,
   date: Date,
-  gross: Number,
-  net: Number,
-  profit: Number,
+  amount: Number,
   rid: Number,
   extraRid: Number,
+  verified: Boolean,
   verifiedRid: mongoose.Schema.Types.ObjectId
 });
 

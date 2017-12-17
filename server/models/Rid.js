@@ -5,6 +5,7 @@ var RidSchema = new mongoose.Schema({
   description: String,
   date: Date,
   amount: Number,
+  verified: Boolean,
   verifiedMovement: mongoose.Schema.Types.ObjectId
 });
 

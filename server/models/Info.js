@@ -4,7 +4,8 @@ var InfoSchema = new mongoose.Schema({
   categories: [{
     _id: false,
     category: String,
-    rate: Number
+    rate: Number,
+    amountToProfit: Number
   }]
 });
 

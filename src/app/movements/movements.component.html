@@ -1,3 +1,79 @@
-<p>
-  movements works!
-</p>
+<mat-tab-group (selectedTabChange)='changedCategory($event)'>
+  <mat-tab label='Tutti'></mat-tab>
+  <mat-tab *ngFor='let category of info.categories' label='{{category.category | titlecase}}'></mat-tab>
+</mat-tab-group>
+<mat-card class="container">
+  <div class="mat-h1">{{selectedTab | titlecase}}</div>
+  <div fxLayout='row'>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
+    </mat-form-field>
+    <button mat-button *ngIf='newMovement===null && selectedTab!="Tutti"' (click)='startNew()'>Nuovo</button>
+  </div>
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <mat-form-field *ngIf='editing[movement._id] || movement===newMovement '>
+          <input matInput type="date" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
+        </mat-form-field>
+        <span *ngIf='!editing[movement._id] && movement!==newMovement'>{{movement.date | date: 'yyyy-MM-dd '}}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Valore </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <mat-form-field *ngIf='editing[movement._id] || movement===newMovement '>
+          <input matInput type="number" step="0.01" [(ngModel)]=movement.amount (keypress)="validateAmount($event)" />
+        </mat-form-field>
+        <span *ngIf='!editing[movement._id] && movement!==newMovement'>{{movement.amount | currency:'EUR'}} </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="profit">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Aggio </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        {{toProfit(movement.amount, movement.category) | currency:'EUR'}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="rid">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Rid </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <mat-form-field *ngIf='editing[movement._id] || movement===newMovement '>
+          <input matInput type="number" step="0.01" [(ngModel)]=movement.rid (keypress)="validateAmount($event)" />
+        </mat-form-field>
+        <span *ngIf='!editing[movement._id] && movement!==newMovement'>{{movement.rid | currency:'EUR'}} </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="extraRid">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> 2° Rid </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <mat-form-field *ngIf='editing[movement._id] || movement===newMovement '>
+          <input matInput type="number" step="0.01" [(ngModel)]=movement.extraRid (keypress)="validateAmount($event)" />
+        </mat-form-field>
+        <span *ngIf='!editing[movement._id] && movement!==newMovement'>{{movement.extraRid | currency:'EUR'}} </span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="verified">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        {{movement.verified ? (movement.verifiedMovement ? movement.verifiedMovement._id : 'SI') : '-' }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <button mat-raised-button *ngIf='!editing[movement._id] && movement!==newMovement ' (click)='verify(movement)' color="primary">Verifica</button>
+        <button mat-raised-button *ngIf='!editing[movement._id] && movement!==newMovement ' (click)='startEditing(movement)' color="accent">Mod</button>
+        <button mat-raised-button *ngIf='!editing[movement._id] && movement!==newMovement ' (click)='delete(movement)' color="warn">Elim</button>
+        <button mat-raised-button *ngIf='editing[movement._id]' (click)='confirmEditing(movement)' color="primary">Conferma</button>
+        <button mat-raised-button *ngIf='editing[movement._id]' (click)='cancelEditing(movement)' color="warn">Annulla</button>
+        <button mat-raised-button *ngIf='movement===newMovement ' (click)='confirmNew(movement)' color="primary">Crea</button>
+        <button mat-raised-button *ngIf='movement===newMovement ' (click)='cancelNew(movement)' color="warn">Annulla</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 50, 100]">
+  </mat-paginator>
+</mat-card>

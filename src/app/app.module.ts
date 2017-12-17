@@ -12,6 +12,7 @@ import { AppMaterialModule } from './modules/app-material.module';
 
 import { InfoService } from './shared/info.service';
 import { RidService } from './rid/rid.service';
+import { MovementService } from './movements/movement.service';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { MovementsComponent } from './movements/movements.component';
@@ -36,7 +37,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AppRoutingModule,
     AppMaterialModule
   ],
-  providers: [InfoService, RidService],
+  providers: [InfoService, RidService, MovementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

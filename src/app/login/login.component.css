@@ -1,0 +1,12 @@
+.report {
+    margin-top: 25px;
+    height: 25px;
+}
+.message {
+    color: red;
+}
+.loginCard {
+    width: 400px;
+    text-align: center;
+    margin: 20px;
+}

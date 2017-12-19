@@ -8,10 +8,10 @@ import { InfoService } from '../shared/info.service';
 
 @Component({
   selector: 'app-rid',
-  templateUrl: './rid.component.html',
-  styleUrls: ['./rid.component.css']
+  templateUrl: './rids.component.html',
+  styleUrls: ['./rids.component.css']
 })
-export class RidComponent implements OnInit, AfterViewInit {
+export class RidsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['description', 'date', 'amount', 'verified', 'action'];
   dataSource = new MatTableDataSource();
   info: Info = {} as Info;

@@ -7,7 +7,6 @@ import { Movement } from '../shared/movement';
 
 @Injectable()
 export class MovementService {
-  private headers = new Headers({ 'Content-Type': 'application/json' });
   private movementsUrl = '/api/movements'; // URL to web api
 
   constructor(private http: HttpClient) { }

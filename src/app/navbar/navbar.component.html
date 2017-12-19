@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <a mat-button routerLink="." class='navbar-main'>Tabak-Manager</a>
-  <a mat-button routerLink="movements" class='navbar-item'>Contabilità</a>
-  <a mat-button routerLink="rid" class='navbar-item'>Rid</a>
+  <a *ngIf='loginObserver | async' mat-button routerLink="movements" class='navbar-item'>Contabilità</a>
+  <a *ngIf='loginObserver | async' mat-button routerLink="rid" class='navbar-item'>Rid</a>
   <!-- This fills the remaining space of the current row -->
   <span style='flex: 1 1 auto;'></span>
-  <!--<a mat-button routerLink="." class='navbar-item'>Ordini</a>-->
+  <a *ngIf='loginObserver | async' mat-button routerLink='/login' class='navbar-item'>Logout</a>
 </mat-toolbar>

@@ -2,11 +2,16 @@ var express = require('express'),
   path = require('path'),
   router = express.Router();
 
-var restBuilder = require('./restBuilder.js');
+var userRoutes = require('./user.routes.js');
+var protectRoutes = require('./protect.routes.js');
 var infoRoutes = require('./info.routes.js');
+
+var restBuilder = require('./restBuilder.js');
 var Movement = require('../models/Movement.js');
 var Rid = require('../models/Rid.js');
 
+router.use('/api/users/', userRoutes);
+router.use('/api', protectRoutes);
 router.use('/api/info/', infoRoutes);
 router.use('/api/movements/', restBuilder(express.Router(), Movement));
 router.use('/api/rids/', restBuilder(express.Router(), Rid));

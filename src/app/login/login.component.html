@@ -1,0 +1,17 @@
+<div fxLayoutAlign="center">
+  <mat-card class='loginCard'>
+    <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm">
+      <div fxLayout="column">
+        <div class='mat-h1'>Accedi</div>
+        <mat-form-field>
+          <input matInput name='password' type='password' required [(ngModel)]="password" placeholder="Password">
+        </mat-form-field>
+        <button mat-raised-button color='primary' fxFlexAlign="center" [disabled]="loading">Login</button>
+        <div class="report">
+          <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+          <div *ngIf='message' class="message">{{message}}</div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

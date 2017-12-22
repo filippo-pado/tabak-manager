@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Info } from '../shared/info';
+import { Category } from './category';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class InfoService {
+export class CategoryService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private infoUrl = '/api/info'; // URL to web api
+  private categoryUrl = '/api/categories'; // URL to web api
 
   constructor(private http: HttpClient) { }
 
-  getInfo(): Promise<Info> {
-    return this.http.get(this.infoUrl)
+  getAll(): Promise<Category[]> {
+    return this.http.get(this.categoryUrl)
       .toPromise()
       .then(response => {
-        return response as Info;
+        return response as Category[];
       })
       .catch(this.handleError);
   }

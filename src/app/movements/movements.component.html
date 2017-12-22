@@ -1,6 +1,6 @@
 <mat-tab-group (selectedTabChange)='changedCategory($event)'>
   <mat-tab label='Tutti'></mat-tab>
-  <mat-tab *ngFor='let category of info.categories' label='{{category.category | titlecase}}'></mat-tab>
+  <mat-tab *ngFor='let category of categories' label='{{category.name | titlecase}}'></mat-tab>
 </mat-tab-group>
 <mat-card class="container">
   <div class="mat-h1">{{selectedTab | titlecase}}</div>

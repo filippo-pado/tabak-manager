@@ -2,9 +2,9 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator } from '@angular/material';
 
 import { Rid } from '../shared/rid';
-import { Info } from '../shared/info';
+import { Category } from '../shared/category';
 import { RidService } from './rid.service';
-import { InfoService } from '../shared/info.service';
+import { CategoryService } from '../shared/category.service';
 
 @Component({
   selector: 'app-rid',
@@ -14,7 +14,7 @@ import { InfoService } from '../shared/info.service';
 export class RidsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['description', 'date', 'amount', 'verified', 'action'];
   dataSource = new MatTableDataSource();
-  info: Info = {} as Info;
+  categories: Category[] = [];
   selectedTab: string = 'Tutti';
   editing: Object = {};
   newRid: Rid = null;
@@ -22,7 +22,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private ridService: RidService, private infoService: InfoService) { }
+  constructor(private ridService: RidService, private categoryService: CategoryService) { }
   /**
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
@@ -30,8 +30,8 @@ export class RidsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.infoService.getInfo().then(info => {
-      this.info = info;
+    this.categoryService.getAll().then(categories => {
+      this.categories = categories;
     }).then(() => {
       this.ridService.getAll().then(rids => {
         rids.forEach(rid => {
@@ -48,7 +48,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
   changedCategory(event: MatTabChangeEvent): void {
-    this.selectedTab = event.index === 0 ? 'Tutti' : this.info.categories[event.index - 1].category;
+    this.selectedTab = event.index === 0 ? 'Tutti' : this.categories[event.index - 1].name;
     const filterCategory = this.selectedTab === 'Tutti' ? {} : { category: this.selectedTab };
     this.ridService.getAll(filterCategory).then(rids => { // -1 because position 0 is all
       rids.forEach(rid => {

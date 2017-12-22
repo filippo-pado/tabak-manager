@@ -13,7 +13,7 @@ import { AppMaterialModule } from './modules/app-material.module';
 import { AuthService } from './shared/auth.service';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
-import { InfoService } from './shared/info.service';
+import { CategoryService } from './shared/category.service';
 import { RidService } from './rids/rid.service';
 import { MovementService } from './movements/movement.service';
 
@@ -42,7 +42,7 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     AppMaterialModule
   ],
-  providers: [AuthService, AuthGuard, InfoService, RidService, MovementService, {
+  providers: [AuthService, AuthGuard, CategoryService, RidService, MovementService, {
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
   }],
   bootstrap: [AppComponent]

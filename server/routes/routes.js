@@ -9,12 +9,14 @@ var infoRoutes = require('./info.routes.js');
 var restBuilder = require('./restBuilder.js');
 var Movement = require('../models/Movement.js');
 var Rid = require('../models/Rid.js');
+var Category = require('../models/Category.js');
 
 router.use('/api/users/', userRoutes);
-router.use('/api', protectRoutes);
+//router.use('/api', protectRoutes);
 router.use('/api/info/', infoRoutes);
 router.use('/api/movements/', restBuilder(express.Router(), Movement));
 router.use('/api/rids/', restBuilder(express.Router(), Rid));
+router.use('/api/categories/', restBuilder(express.Router(), Category));
 
 router.get('/api/*', (req, res) => {
   res.status(500).send('Wrong API request');

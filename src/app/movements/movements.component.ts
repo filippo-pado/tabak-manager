@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator } from '@a
 import { Movement } from '../shared/movement';
 import { Category } from '../shared/category';
 import { MovementService } from './movement.service';
-import { CategoryService } from '../shared/category.service';
+import { CategoryService } from '../categories/category.service';
 
 @Component({
   selector: 'app-movements',
@@ -12,10 +12,10 @@ import { CategoryService } from '../shared/category.service';
   styleUrls: ['./movements.component.css']
 })
 export class MovementsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['date', 'amount', 'profit', 'rid', 'verified', 'action'];
+  displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
   dataSource = new MatTableDataSource();
   categories: Category[] = [];
-  selectedTab: string = 'Tutti';
+  selectedTab: string = 'tutti';
   editing: Object = {};
   newMovement: Movement = null;
 
@@ -47,14 +47,14 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  changedCategory(event: MatTabChangeEvent): void {
-    this.selectedTab = event.index === 0 ? 'Tutti' : this.categories[event.index - 1].name;
+  changedCategory(category: string): void {
+    this.selectedTab = category;
     if ((this.selectedTab) === 'superenalotto') {
-      this.displayedColumns = ['date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'action'];
+      this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'action'];
     } else {
-      this.displayedColumns = ['date', 'amount', 'profit', 'rid', 'verified', 'action'];
+      this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
     }
-    const filterCategory = this.selectedTab === 'Tutti' ? {} : { category: this.selectedTab };
+    const filterCategory = this.selectedTab === 'tutti' ? {} : { category: this.selectedTab };
     this.movementService.getAll(filterCategory).then(movements => { // -1 because position 0 is all
       movements.forEach(movement => {
         this.editing[movement._id] = false;

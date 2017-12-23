@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator } from '@a
 import { Rid } from '../shared/rid';
 import { Category } from '../shared/category';
 import { RidService } from './rid.service';
-import { CategoryService } from '../shared/category.service';
+import { CategoryService } from '../categories/category.service';
 
 @Component({
   selector: 'app-rid',

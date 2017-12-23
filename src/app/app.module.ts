@@ -13,7 +13,7 @@ import { AppMaterialModule } from './modules/app-material.module';
 import { AuthService } from './shared/auth.service';
 import { AuthInterceptor } from './shared/auth.interceptor';
 import { AuthGuard } from './shared/auth.guard';
-import { CategoryService } from './shared/category.service';
+import { CategoryService } from './categories/category.service';
 import { RidService } from './rids/rid.service';
 import { MovementService } from './movements/movement.service';
 
@@ -22,6 +22,7 @@ import { MovementsComponent } from './movements/movements.component';
 import { RidsComponent } from './rids/rids.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { LoginComponent } from './login/login.component';
     MovementsComponent,
     RidsComponent,
     PageNotFoundComponent,
-    LoginComponent
+    LoginComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,

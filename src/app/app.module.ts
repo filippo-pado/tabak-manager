@@ -23,6 +23,7 @@ import { RidsComponent } from './rids/rids.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginComponent } from './login/login.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { MovementFormComponent } from './movements/movement-form/movement-form.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CategoriesComponent } from './categories/categories.component';
     RidsComponent,
     PageNotFoundComponent,
     LoginComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    MovementFormComponent
   ],
   imports: [
     BrowserModule,

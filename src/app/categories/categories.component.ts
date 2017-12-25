@@ -9,7 +9,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  @Output() tabChanged = new EventEmitter<string>();
+  @Output() categoryChanged = new EventEmitter<string>();
   categories: Category[] = [];
 
   constructor(private categoryService: CategoryService) { }
@@ -17,7 +17,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.categoryService.getAll().then(categories => {
       this.categories = categories.sort((a, b) => a.group < b.group ? 1 : -1);
-      this.tabChanged.emit('tutti');
+      this.categoryChanged.emit('tutti');
     });
   }
   groups(): string[] {
@@ -32,13 +32,13 @@ export class CategoriesComponent implements OnInit {
   }
   parentTabChanged(event: MatTabChangeEvent): void {
     if (event.index === 0) {
-      this.tabChanged.emit('tutti');
+      this.categoryChanged.emit('tutti');
     } else {
       const newCat: string = this.subCategories(event.tab.textLabel.toLowerCase())[0].name;
-      this.tabChanged.emit(newCat);
+      this.categoryChanged.emit(newCat);
     }
   }
   childTabChanged(event: MatTabChangeEvent): void {
-    this.tabChanged.emit(event.tab.textLabel.toLowerCase());
+    this.categoryChanged.emit(event.tab.textLabel.toLowerCase());
   }
 }

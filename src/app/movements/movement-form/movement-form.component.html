@@ -1,0 +1,27 @@
+<mat-card class='container'>
+  <div class='mat-h1' *ngIf='action==="new"'>Nuovo</div>
+  <div class='mat-h1' *ngIf='action==="edit"'>Modifica</div>
+  <div fxLayout='row' fxLayoutAlign='space-around'>
+    <mat-form-field>
+      <input matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category | titlecase">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
+      />
+    </mat-form-field>
+    <button mat-raised-button *ngIf='action==="new"' (click)='confirmNew()' color="primary">Crea</button>
+    <button mat-raised-button *ngIf='action==="edit"' (click)='confirmEditing()' color="primary">Conferma</button>
+    <button mat-raised-button (click)='reset();' color="warn">Annulla</button>
+  </div>
+</mat-card>

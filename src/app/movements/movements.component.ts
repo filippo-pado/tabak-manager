@@ -12,12 +12,11 @@ import { CategoryService } from '../categories/category.service';
   styleUrls: ['./movements.component.css']
 })
 export class MovementsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
-  dataSource = new MatTableDataSource();
-  categories: Category[] = [];
-  selectedTab: string = 'tutti';
-  editing: Object = {};
-  newMovement: Movement = null;
+  displayedColumns: string[];
+  dataSource: MatTableDataSource<Movement>;
+  categories: Category[];
+  selectedCategory: String;
+  editingMovementID: String;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,58 +33,44 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       this.categories = categories;
     }).then(() => {
       this.movementService.getAll().then(movements => {
-        movements.forEach(movement => {
-          this.editing[movement._id] = false;
-        });
         this.dataSource.data = movements;
+        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
+        this.selectedCategory = 'tutti';
       });
     });
   }
-  ngOnInit() { }
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource();
+  }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
   changedCategory(category: string): void {
-    this.selectedTab = category;
-    if ((this.selectedTab) === 'superenalotto') {
+    this.selectedCategory = category;
+    if ((this.selectedCategory) === 'superenalotto') {
       this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'action'];
     } else {
       this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
     }
-    const filterCategory = this.selectedTab === 'tutti' ? {} : { category: this.selectedTab };
-    this.movementService.getAll(filterCategory).then(movements => { // -1 because position 0 is all
-      movements.forEach(movement => {
-        this.editing[movement._id] = false;
-      });
+    const filterCategory = this.selectedCategory === 'tutti' ? {} : { category: this.selectedCategory };
+    this.movementService.getAll(filterCategory).then(movements => {
       this.dataSource.data = movements;
     });
-    this.newMovement = null;
   }
   verify(movement: Movement): void {
-    movement.verified = !movement.verified;
     this.movementService.update(movement._id, movement).then(response => {
-
+      movement.verified = !movement.verified;
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });
   }
-  startEditing(movement: Movement): void {
-    this.editing[movement._id] = true;
-  }
-  confirmEditing(movement: Movement): void {
-    this.movementService.update(movement._id, movement).then(response => {
-      this.editing[movement._id] = false;
-    }).catch(error => {
-      alert(JSON.stringify(error, null, 2));
-    });
-  }
-  cancelEditing(movement: Movement): void {
-    this.editing[movement._id] = false;
+  edit(movement: Movement): void {
+    this.editingMovementID = movement._id;
   }
   delete(movement: Movement): void {
-    if (confirm('Eliminare elemeto?')) {
+    if (confirm('Eliminare elemento?')) {
       this.movementService.delete(movement._id).then(() => {
         this.dataSource.data = this.dataSource.data.filter(function (elem: Movement) {
           return elem._id !== movement._id;
@@ -95,28 +80,15 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  startNew(): void {
-    this.newMovement = new Movement();
-    this.newMovement.category = this.selectedTab;
-    this.dataSource.data.unshift(this.newMovement);
-    this.dataSource.filter = '';
-  }
-  confirmNew(movement: Movement): void {
-    const index: number = this.dataSource.data.findIndex(element => element === movement);
-    this.movementService.create(movement).then(response => {
-      this.dataSource.data[index] = response;
-      this.dataSource.filter = '';
-      this.newMovement = null;
-    }).catch(error => {
-      alert(JSON.stringify(error, null, 2));
-    });
-  }
-  cancelNew(movement: Movement): void {
-    this.newMovement = null;
-    this.dataSource.data = this.dataSource.data.filter(function (elem: Movement) {
-      return elem._id !== movement._id;
-    });
-    this.dataSource.filter = '';
+  movementEmitted(movementEmitted: Movement): void {
+    const movementIndex = this.dataSource.data.findIndex(movement => movement._id === movementEmitted._id);
+    if (movementIndex !== -1) {
+      this.dataSource.data[movementIndex] = movementEmitted;
+    } else {
+      this.dataSource.data.push(movementEmitted);
+    }
+    this.dataSource._updateChangeSubscription();
+    this.editingMovementID = undefined;
   }
   validateAmount(event: any) {
     const pattern = /^[a-zA-Z]+$/;

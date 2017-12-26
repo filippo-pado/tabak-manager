@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, SimpleChange, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { Movement } from '../../shared/movement';
 import { MovementService } from '../movement.service';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-movement-form',
@@ -12,6 +11,7 @@ export class MovementFormComponent implements OnChanges {
   @Input() movementID: string;
   @Input() category: string;
   @Output() movementEmitter = new EventEmitter<Movement>();
+  @ViewChild('date') dateEl: ElementRef;
   movement: Movement;
   action: string;
 
@@ -27,6 +27,7 @@ export class MovementFormComponent implements OnChanges {
         });
       this.action = 'edit';
     }
+    this.dateEl.nativeElement.focus();
   }
   reset(): void {
     this.action = 'new';
@@ -43,20 +44,16 @@ export class MovementFormComponent implements OnChanges {
     }
   }
 
-  confirmEditing(): void {
-    this.movementService.update(this.movement._id, this.movement)
-      .then(response => {
-        this.movementEmitter.emit(response);
-      })
-      .catch(error => {
-        alert(JSON.stringify(error, null, 2));
-      });
-  }
-  confirmNew(): void {
-    this.movementService.create(this.movement)
-      .then(response => {
-        this.movementEmitter.emit(response);
-      })
+  onSubmit() {
+    let query: Promise<Movement>;
+    if (this.action === 'new') {
+      query = this.movementService.create(this.movement);
+    } else {
+      query = this.movementService.update(this.movement._id, this.movement);
+    }
+    query.then(response => {
+      this.movementEmitter.emit(response);
+    })
       .catch(error => {
         alert(JSON.stringify(error, null, 2));
       });

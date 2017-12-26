@@ -1,27 +1,29 @@
 <mat-card class='container'>
   <div class='mat-h1' *ngIf='action==="new"'>Nuovo</div>
   <div class='mat-h1' *ngIf='action==="edit"'>Modifica</div>
-  <div fxLayout='row' fxLayoutAlign='space-around'>
-    <mat-form-field>
-      <input matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category | titlecase">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
-      />
-    </mat-form-field>
-    <button mat-raised-button *ngIf='action==="new"' (click)='confirmNew()' color="primary">Crea</button>
-    <button mat-raised-button *ngIf='action==="edit"' (click)='confirmEditing()' color="primary">Conferma</button>
-    <button mat-raised-button (click)='reset();' color="warn">Annulla</button>
-  </div>
+  <form #movementForm="ngForm" (ngSubmit)="onSubmit()">
+    <div fxLayout='row' fxLayoutAlign='space-around'>
+      <mat-form-field>
+        <input name='category' matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category | titlecase">
+      </mat-form-field>
+      <mat-form-field>
+        <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
+      </mat-form-field>
+      <mat-form-field>
+        <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <button mat-raised-button type='submit' [disabled]='movementForm.form.controls.category && movementForm.form.controls.category.value===""'
+        color="primary">{{action==='new' ? 'Nuovo' : 'Modifica' }}</button>
+      <button mat-raised-button (click)='reset();' color="warn">Annulla</button>
+    </div>
+  </form>
 </mat-card>

@@ -47,12 +47,22 @@
         {{movement.verified ? (movement.verifiedMovement ? movement.verifiedMovement._id : 'SI') : '-' }}
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
+    <ng-container matColumnDef="verify">
+      <mat-header-cell *matHeaderCellDef> Verifica </mat-header-cell>
       <mat-cell *matCellDef="let movement">
         <button mat-raised-button (click)='verify(movement)' color="primary">Verifica</button>
-        <button mat-raised-button (click)='edit(movement)' color="accent">Mod</button>
-        <button mat-raised-button (click)='delete(movement)' color="warn">Elim</button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Modifica </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <button mat-raised-button (click)='edit(movement)' color="accent">Modifica</button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Elimina </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        <button mat-raised-button (click)='delete(movement)' color="warn">Elimina</button>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

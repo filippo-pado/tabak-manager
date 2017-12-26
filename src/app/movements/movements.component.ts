@@ -32,10 +32,10 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     this.categoryService.getAll().then(categories => {
       this.categories = categories;
     }).then(() => {
+      this.selectedCategory = 'tutti';
       this.movementService.getAll().then(movements => {
         this.dataSource.data = movements;
-        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
-        this.selectedCategory = 'tutti';
+        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'verify', 'edit', 'delete'];
       });
     });
   }
@@ -49,11 +49,6 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   }
   changedCategory(category: string): void {
     this.selectedCategory = category;
-    if ((this.selectedCategory) === 'superenalotto') {
-      this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'action'];
-    } else {
-      this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
-    }
     const filterCategory = this.selectedCategory === 'tutti' ? {} : { category: this.selectedCategory };
     this.movementService.getAll(filterCategory).then(movements => {
       this.dataSource.data = movements;

@@ -1,0 +1,35 @@
+<mat-card class='container'>
+  <div class='mat-h1' *ngIf='action==="new"'>Nuovo</div>
+  <div class='mat-h1' *ngIf='action==="edit"'>Modifica</div>
+  <form #movementForm="ngForm" (ngSubmit)="onSubmit()">
+    <div fxLayout='row' fxLayoutAlign='space-around' fxLayoutWrap>
+      <mat-form-field>
+        <input name='category' matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category | titlecase">
+      </mat-form-field>
+      <mat-form-field>
+        <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
+      </mat-form-field>
+      <mat-form-field>
+        <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
+        />
+      </mat-form-field>
+      <span>
+        <button class='icon-button' mat-icon-button type='submit' [disabled]='movementForm.form.controls.category && movementForm.form.controls.category.value===""'
+          color="primary">
+          <mat-icon class='icon-button'>{{action==='new' ? 'note_add' : 'mode_edit' }}</mat-icon>
+        </button>
+        <button class='icon-button' mat-icon-button type='button' (click)='reset();' color="warn">
+          <mat-icon class='icon-button'>cancel</mat-icon>
+        </button>
+      </span>
+    </div>
+  </form>
+</mat-card>

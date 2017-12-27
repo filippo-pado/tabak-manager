@@ -1,28 +1,16 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    min-width: 300px;
-    margin: 20px;
-  }
-  
-  .example-header {
-    min-height: 64px;
-    padding: 8px 24px 0;
-  }
-  
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  }
-  
-  .mat-table {
-    overflow: auto;
-    max-height: 500px;
-  }
-  .mat-cell{
-    padding-right: 10px;
-  }
-  
-  .mat-header-cell.mat-sort-header-sorted {
-    color: black;
-  }
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.mat-cell{
+  padding-right: 10px;
+}
+
+.mat-header-cell.mat-sort-header-sorted {
+  color: black;
+}

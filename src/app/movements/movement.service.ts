@@ -18,6 +18,14 @@ export class MovementService {
       .catch(this.handleError);
   }
 
+  getOne(id: string): Promise<Movement> {
+    const url = `${this.movementsUrl}/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as Movement)
+      .catch(this.handleError);
+  }
+
   create(movement: Movement): Promise<Movement> {
     return this.http.post(this.movementsUrl, movement)
       .toPromise()

@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, SimpleChange, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { Movement } from '../../shared/movement';
 import { MovementService } from '../movement.service';
 
@@ -15,7 +16,7 @@ export class MovementFormComponent implements OnChanges {
   movement: Movement;
   action: string;
 
-  constructor(private movementService: MovementService) { }
+  constructor(private movementService: MovementService, public snackBar: MatSnackBar) { }
 
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     this.reset();
@@ -52,10 +53,10 @@ export class MovementFormComponent implements OnChanges {
       query = this.movementService.update(this.movement._id, this.movement);
     }
     query.then(response => {
+      this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
       this.movementEmitter.emit(response);
-    })
-      .catch(error => {
-        alert(JSON.stringify(error, null, 2));
-      });
+    }).catch(error => {
+      alert(JSON.stringify(error, null, 2));
+    });
   }
 }

@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 
 import { Movement } from '../shared/movement';
 import { Category } from '../shared/category';
@@ -21,7 +21,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private movementService: MovementService, private categoryService: CategoryService) { }
+  constructor(private movementService: MovementService, private categoryService: CategoryService, public snackBar: MatSnackBar) { }
   /**
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
@@ -35,7 +35,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       this.selectedCategory = 'tutti';
       this.movementService.getAll().then(movements => {
         this.dataSource.data = movements;
-        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'extraRid', 'verified', 'verify', 'edit', 'delete'];
+        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
       });
     });
   }
@@ -57,6 +57,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   verify(movement: Movement): void {
     this.movementService.update(movement._id, movement).then(response => {
       movement.verified = !movement.verified;
+      this.snackBar.open(movement.verified ? 'Movimento verificato!' : 'Movimento non verificato!', 'Ok', { duration: 2000 });
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });
@@ -70,6 +71,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         this.dataSource.data = this.dataSource.data.filter(function (elem: Movement) {
           return elem._id !== movement._id;
         });
+        this.snackBar.open('Movimento eliminato!', 'Ok', { duration: 2000 });
       }).catch(error => {
         alert(JSON.stringify(error, null, 2));
       });

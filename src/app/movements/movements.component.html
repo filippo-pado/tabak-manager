@@ -4,7 +4,7 @@
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
   </mat-form-field>
-  <mat-table #table [dataSource]="dataSource" matSort>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="asc">
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
       <mat-cell *matCellDef="let movement">
@@ -32,37 +32,27 @@
     <ng-container matColumnDef="rid">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rid </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.rid | currency:'EUR'}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="extraRid">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> 2° Rid </mat-header-cell>
-      <mat-cell *matCellDef="let movement">
-        {{movement.extraRid | currency:'EUR'}}
+        <div>{{movement.rid | currency:'EUR'}}</div>
+        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid | currency:'EUR'}}</div>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="verified">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.verified ? (movement.verifiedMovement ? movement.verifiedMovement._id : 'SI') : '-' }}
+        <button mat-icon-button (click)='verify(movement)' color="primary">
+          <mat-icon>{{movement.verified ? 'warning' : 'check'}}</mat-icon>
+        </button>{{movement.verified ? (movement.verifiedMovement ? movement.verifiedMovement._id : 'SI') : '--' }}
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="verify">
-      <mat-header-cell *matHeaderCellDef> Verifica </mat-header-cell>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        <button mat-raised-button (click)='verify(movement)' color="primary">Verifica</button>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef> Modifica </mat-header-cell>
-      <mat-cell *matCellDef="let movement">
-        <button mat-raised-button (click)='edit(movement)' color="accent">Modifica</button>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef> Elimina </mat-header-cell>
-      <mat-cell *matCellDef="let movement">
-        <button mat-raised-button (click)='delete(movement)' color="warn">Elimina</button>
+        <button mat-icon-button (click)='edit(movement)' color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)='delete(movement)' color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

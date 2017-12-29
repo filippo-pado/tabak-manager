@@ -7,12 +7,12 @@ import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/c
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './modules/app-routing.module';
-import { AppMaterialModule } from './modules/app-material.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppMaterialModule } from './app-material.module';
 
-import { AuthService } from './shared/auth.service';
-import { AuthInterceptor } from './shared/auth.interceptor';
-import { AuthGuard } from './shared/auth.guard';
+import { AuthService } from './auth/auth.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthGuard } from './auth/auth.guard';
 import { CategoryService } from './categories/category.service';
 import { RidService } from './rids/rid.service';
 import { MovementService } from './movements/movement.service';

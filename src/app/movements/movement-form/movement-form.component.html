@@ -1,6 +1,7 @@
 <mat-card class='container'>
-  <div class='mat-h1' *ngIf='action==="new"'>Nuovo</div>
-  <div class='mat-h1' *ngIf='action==="edit"'>Modifica</div>
+  <mat-card-header>
+    <mat-card-title>{{action==='new' ? 'Nuovo' : 'Modifica'}}</mat-card-title>
+  </mat-card-header>
   <form #movementForm="ngForm" (ngSubmit)="onSubmit()">
     <div fxLayout='row' fxLayoutAlign='space-around' fxLayoutWrap>
       <mat-form-field>
@@ -9,15 +10,15 @@
       <mat-form-field>
         <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class='input-number'>
         <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
         />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class='input-number'>
         <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
         />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field class='input-number'>
         <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
         />
       </mat-form-field>

@@ -1,8 +1,8 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 
-import { Movement } from '../shared/movement';
-import { Category } from '../shared/category';
+import { Movement } from './movement';
+import { Category } from '../categories/category';
 import { MovementService } from './movement.service';
 import { CategoryService } from '../categories/category.service';
 

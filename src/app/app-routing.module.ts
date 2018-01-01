@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from '../shared/auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 
-import { MovementsComponent } from '../movements/movements.component';
-import { RidsComponent } from '../rids/rids.component';
-import { LoginComponent } from '../login/login.component';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { MovementsComponent } from './movements/movements.component';
+import { RidsComponent } from './rids/rids.component';
+import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'movements', component: MovementsComponent, canActivate: [AuthGuard] },

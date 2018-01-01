@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Rid } from '../shared/rid';
 
 import 'rxjs/add/operator/toPromise';
+import { Rid } from './rid';
 
 @Injectable()
 export class RidService {
-  private ridsUrl = '/api/rids'; // URL to web api
+  private ridsUrl = '/api/rids';
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +14,14 @@ export class RidService {
     return this.http.get(this.ridsUrl, { params: params })
       .toPromise()
       .then(response => response as Rid[])
+      .catch(this.handleError);
+  }
+
+  getOne(id: string): Promise<Rid> {
+    const url = `${this.ridsUrl}/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response as Rid)
       .catch(this.handleError);
   }
 

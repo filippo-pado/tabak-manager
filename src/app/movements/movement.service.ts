@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Rid } from '../shared/rid';
 
 import 'rxjs/add/operator/toPromise';
-import { Movement } from '../shared/movement';
+import { Movement } from './movement';
 
 @Injectable()
 export class MovementService {
-  private movementsUrl = '/api/movements'; // URL to web api
+  private movementsUrl = '/api/movements';
 
   constructor(private http: HttpClient) { }
 

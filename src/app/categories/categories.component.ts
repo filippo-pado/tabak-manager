@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Category } from '../shared/category';
+import { Category } from './category';
 import { CategoryService } from './category.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 

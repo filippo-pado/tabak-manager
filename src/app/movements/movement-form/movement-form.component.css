@@ -1,9 +1,12 @@
 .container {
-  margin: 20px;
+  margin: 16px;
 }
 .icon-button{ 
   font-size: 40px;
   line-height: 46px;
   height: 50px;
   width: 50px;
+}
+.input-number{
+  max-width: 80px;
 }

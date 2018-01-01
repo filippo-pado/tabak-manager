@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChange, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { Movement } from '../../shared/movement';
+import { Movement } from '../movement';
 import { MovementService } from '../movement.service';
 
 @Component({

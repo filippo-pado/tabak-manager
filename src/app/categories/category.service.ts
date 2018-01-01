@@ -6,7 +6,6 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class CategoryService {
-  private headers = new Headers({ 'Content-Type': 'application/json' });
   private categoryUrl = '/api/categories'; // URL to web api
 
   constructor(private http: HttpClient) { }

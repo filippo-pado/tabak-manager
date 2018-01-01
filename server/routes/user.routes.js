@@ -6,7 +6,6 @@ var express = require('express'),
 
 /*
 POST /login
-POST /register
 */
 
 /* LOGIN */
@@ -20,7 +19,7 @@ router.post('/login', function (req, res) {
         if (!user.comparePassword(req.body.password)) {
             return res.status(401).send('Authentication failed. Wrong password.');
         }
-        let token = jwt.sign({ username: user.username }, process.env.SECRET, { expiresIn: '12h' });
+        let token = jwt.sign({ username: user.username }, process.env.SECRET || 'mysecret', { expiresIn: '12h' });
 
         // return the information including token as JSON                   
         return res.json({
@@ -29,16 +28,5 @@ router.post('/login', function (req, res) {
         });
     });
 });
-
-/* REGISTER */
-/*router.post('/register', function (req, res) {
-    let newUser = new User(req.body);
-    newUser.hashPassword(req.body.password);
-    newUser.save(function (err, user) {
-        if (err) return next(err);
-        user.hashedPassword = undefined;
-        res.json(user);
-    });
-});*/
 
 module.exports = router;

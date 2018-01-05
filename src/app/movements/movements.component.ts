@@ -35,7 +35,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       this.selectedCategory = 'tutti';
       this.movementService.getAll().then(movements => {
         this.dataSource.data = movements;
-        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'verified', 'action'];
+        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
       });
     });
   }
@@ -55,8 +55,13 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     });
   }
   verify(movement: Movement): void {
+    if (movement.verified) {
+      movement.verified = false;
+      movement.verifiedRid = null;
+    } else {
+      movement.verified = true;
+    }
     this.movementService.update(movement._id, movement).then(response => {
-      movement.verified = !movement.verified;
       this.snackBar.open(movement.verified ? 'Movimento verificato!' : 'Movimento non verificato!', 'Ok', { duration: 2000 });
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));

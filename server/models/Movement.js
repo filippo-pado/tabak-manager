@@ -7,7 +7,8 @@ var MovementSchema = new mongoose.Schema({
   rid: Number,
   extraRid: Number,
   verified: Boolean,
-  verifiedRid: mongoose.Schema.Types.ObjectId
+  verifiedRid: mongoose.Schema.Types.ObjectId,
+  note: String
 });
 
 module.exports = mongoose.model('Movement', MovementSchema);

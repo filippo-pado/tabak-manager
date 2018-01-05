@@ -22,6 +22,9 @@
         <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
         />
       </mat-form-field>
+      <mat-form-field>
+        <input name='note' matInput type="text" placeholder="Note" [(ngModel)]="movement.note" />
+      </mat-form-field>
       <span>
         <button class='icon-button' mat-icon-button type='submit' [disabled]='movementForm.form.controls.category && movementForm.form.controls.category.value===""'
           color="primary">

@@ -36,6 +36,12 @@
         <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid | currency:'EUR'}}</div>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="note">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Note </mat-header-cell>
+      <mat-cell *matCellDef="let movement">
+        {{movement.note}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="verified">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
       <mat-cell *matCellDef="let movement">

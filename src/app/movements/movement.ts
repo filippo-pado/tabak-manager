@@ -7,4 +7,5 @@ export class Movement {
   extraRid: number = 0;
   verified: boolean = false;
   verifiedRid: string = null;
+  note: string = '';
 }

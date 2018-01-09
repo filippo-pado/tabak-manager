@@ -1,40 +1,47 @@
-import { Component, Input, OnChanges, SimpleChange, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Movement } from '../movement';
 import { MovementService } from '../movement.service';
+import { MovementFormService } from './movement-form.service';
+import { CategoryService } from '../../shared/categories/category.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-movement-form',
   templateUrl: './movement-form.component.html',
   styleUrls: ['./movement-form.component.css']
 })
-export class MovementFormComponent implements OnChanges {
-  @Input() movementID: string;
-  @Input() category: string;
-  @Output() movementEmitter = new EventEmitter<Movement>();
+export class MovementFormComponent implements OnInit {
   @ViewChild('date') dateEl: ElementRef;
   movement: Movement;
   action: string;
 
-  constructor(private movementService: MovementService, public snackBar: MatSnackBar) { }
+  constructor(private movementService: MovementService, private movementFormService: MovementFormService,
+    private categoryService: CategoryService, public snackBar: MatSnackBar) { }
 
-  ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
+  ngOnInit() {
     this.reset();
-    if (changes['movementID'] && changes['movementID'].currentValue !== undefined) {
-      this.movementService.getOne(changes['movementID'].currentValue)
+    this.movementFormService.movementID.subscribe(movementID => {
+      this.movementService.getOne(movementID)
         .then(movement => this.movement = movement)
         .catch(error => {
           alert(JSON.stringify(error, null, 2));
         });
       this.action = 'edit';
-    }
-    this.dateEl.nativeElement.focus();
+    });
+    this.movementFormService.category.subscribe(category => {
+      this.reset();
+      this.dateEl.nativeElement.focus();
+    });
+    this.categoryService.category.subscribe(category => {
+      this.reset(category);
+    });
   }
-  reset(): void {
+
+  reset(category: string = 'tutti'): void {
     this.action = 'new';
     this.movement = new Movement();
-    this.movement.category = this.category === 'tutti' ? '' : this.category;
-    this.movementID = null;
+    this.movement.category = (category === 'tutti' ? '' : category);
   }
   validateAmount(event: any) {
     const pattern = /^[a-zA-Z]+$/;
@@ -54,7 +61,7 @@ export class MovementFormComponent implements OnChanges {
     }
     query.then(response => {
       this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
-      this.movementEmitter.emit(response);
+      this.movementFormService.changeMovement(response);
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });

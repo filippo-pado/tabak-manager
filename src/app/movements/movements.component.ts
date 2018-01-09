@@ -2,9 +2,10 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 
 import { Movement } from './movement';
-import { Category } from '../categories/category';
+import { Category } from '../shared/categories/category';
 import { MovementService } from './movement.service';
-import { CategoryService } from '../categories/category.service';
+import { MovementFormService } from './movement-form/movement-form.service';
+import { CategoryService } from '../shared/categories/category.service';
 
 @Component({
   selector: 'app-movements',
@@ -15,13 +16,31 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<Movement>;
   categories: Category[];
-  selectedCategory: String;
-  editingMovementID: String;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private movementService: MovementService, private categoryService: CategoryService, public snackBar: MatSnackBar) { }
+  constructor(private movementService: MovementService, private movementFormService: MovementFormService,
+    private categoryService: CategoryService, public snackBar: MatSnackBar) { }
+
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource();
+    this.categoryService.category.subscribe(category => {
+      const filterCategory = category === 'tutti' ? {} : { category: category };
+      this.movementService.getAll(filterCategory).then(movements => {
+        this.dataSource.data = movements;
+      });
+    });
+    this.movementFormService.movement.subscribe(movement => {
+      const movementIndex = this.dataSource.data.findIndex(mov => mov._id === movement._id);
+      if (movementIndex !== -1) {
+        this.dataSource.data[movementIndex] = movement;
+      } else {
+        this.dataSource.data.push(movement);
+      }
+      this.dataSource._updateChangeSubscription();
+    });
+  }
   /**
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
@@ -32,27 +51,17 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     this.categoryService.getAll().then(categories => {
       this.categories = categories;
     }).then(() => {
-      this.selectedCategory = 'tutti';
       this.movementService.getAll().then(movements => {
         this.dataSource.data = movements;
         this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
       });
     });
   }
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource();
-  }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-  }
-  changedCategory(category: string): void {
-    this.selectedCategory = category;
-    const filterCategory = this.selectedCategory === 'tutti' ? {} : { category: this.selectedCategory };
-    this.movementService.getAll(filterCategory).then(movements => {
-      this.dataSource.data = movements;
-    });
   }
   verify(movement: Movement): void {
     if (movement.verified) {
@@ -68,7 +77,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     });
   }
   edit(movement: Movement): void {
-    this.editingMovementID = movement._id;
+    this.movementFormService.changeMovementID(movement._id);
   }
   delete(movement: Movement): void {
     if (confirm('Eliminare elemento?')) {
@@ -82,16 +91,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  movementEmitted(movementEmitted: Movement): void {
-    const movementIndex = this.dataSource.data.findIndex(movement => movement._id === movementEmitted._id);
-    if (movementIndex !== -1) {
-      this.dataSource.data[movementIndex] = movementEmitted;
-    } else {
-      this.dataSource.data.push(movementEmitted);
-    }
-    this.dataSource._updateChangeSubscription();
-    this.editingMovementID = undefined;
-  }
+
   validateAmount(event: any) {
     const pattern = /^[a-zA-Z]+$/;
     const inputChar = String.fromCharCode(event.charCode);

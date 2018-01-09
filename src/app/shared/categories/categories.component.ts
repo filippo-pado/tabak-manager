@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Category } from './category';
 import { CategoryService } from './category.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -9,7 +9,6 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  @Output() categoryChanged = new EventEmitter<string>();
   categories: Category[] = [];
 
   constructor(private categoryService: CategoryService) { }
@@ -17,7 +16,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit() {
     this.categoryService.getAll().then(categories => {
       this.categories = categories.sort((a, b) => a.group < b.group ? 1 : -1);
-      this.categoryChanged.emit('tutti');
+      this.categoryService.changeCategory('tutti');
     });
   }
   groups(): string[] {
@@ -32,13 +31,13 @@ export class CategoriesComponent implements OnInit {
   }
   parentTabChanged(event: MatTabChangeEvent): void {
     if (event.index === 0) {
-      this.categoryChanged.emit('tutti');
+      this.categoryService.changeCategory('tutti');
     } else {
       const newCat: string = this.subCategories(event.tab.textLabel.toLowerCase())[0].name;
-      this.categoryChanged.emit(newCat);
+      this.categoryService.changeCategory(newCat);
     }
   }
   childTabChanged(event: MatTabChangeEvent): void {
-    this.categoryChanged.emit(event.tab.textLabel.toLowerCase());
+    this.categoryService.changeCategory(event.tab.textLabel.toLowerCase());
   }
 }

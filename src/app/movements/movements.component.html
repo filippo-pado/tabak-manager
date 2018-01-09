@@ -1,6 +1,6 @@
-<app-categories (categoryChanged)='changedCategory($event)'></app-categories>
-<app-movement-form [movementID]='editingMovementID' [category]='selectedCategory' (movementEmitter)='movementEmitted($event)'></app-movement-form>
+<app-categories></app-categories>
 <mat-card class="container">
+  <app-movement-form></app-movement-form>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
   </mat-form-field>
@@ -20,20 +20,20 @@
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valore </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.amount | currency:'EUR'}}
+        {{movement.amount}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="profit">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Aggio </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{toProfit(movement.amount, movement.category) | currency:'EUR'}}
+        {{toProfit(movement.amount, movement.category)}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rid">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rid </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        <div>{{movement.rid | currency:'EUR'}}</div>
-        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid | currency:'EUR'}}</div>
+        <div>{{movement.rid}}</div>
+        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid}}</div>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="note">

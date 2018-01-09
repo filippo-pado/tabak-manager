@@ -3,12 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from './category';
 
 import 'rxjs/add/operator/toPromise';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class CategoryService {
   private categoryUrl = '/api/categories'; // URL to web api
+  private categorySubject = new Subject<string>();
+
+  category = this.categorySubject.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  changeCategory(category: string) {
+    this.categorySubject.next(category);
+  }
 
   getAll(): Promise<Category[]> {
     return this.http.get(this.categoryUrl)
@@ -18,6 +26,7 @@ export class CategoryService {
       })
       .catch(this.handleError);
   }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error);

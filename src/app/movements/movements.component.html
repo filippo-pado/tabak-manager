@@ -1,5 +1,5 @@
-<app-categories (categoryChanged)='changedCategory($event)'></app-categories>
-<app-movement-form [movementID]='editingMovementID' [category]='selectedCategory' (movementEmitter)='movementEmitted($event)'></app-movement-form>
+<app-categories></app-categories>
+<app-movement-form></app-movement-form>
 <mat-card class="container">
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">

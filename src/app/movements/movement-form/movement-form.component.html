@@ -2,7 +2,7 @@
   <div class='mat-h1'>{{action==='new' ? 'Nuovo' : 'Modifica'}}</div>
   <div fxLayout='row' fxLayoutAlign='space-around' fxLayoutWrap>
     <mat-form-field class='input-text'>
-      <input name='category' matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category | titlecase">
+      <input name='category' matInput disabled type="text" placeholder="Categoria" [ngModel]="movement.category.name | titlecase">
     </mat-form-field>
     <mat-form-field class='input-text'>
       <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
@@ -27,7 +27,7 @@
         color="primary">
         <mat-icon class='icon-button'>{{action==='new' ? 'note_add' : 'mode_edit' }}</mat-icon>
       </button>
-      <button class='icon-button' mat-icon-button type='button' (click)='reset();' color="warn">
+      <button class='icon-button' mat-icon-button type='button' (click)='reset(movement.category);' color="warn">
         <mat-icon class='icon-button'>cancel</mat-icon>
       </button>
     </span>

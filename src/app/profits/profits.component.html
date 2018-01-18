@@ -1,0 +1,28 @@
+<mat-card>
+  <h1>Aggi</h1>
+  <mat-button-toggle-group>
+    <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
+      Mensile
+    </mat-button-toggle>
+    <mat-button-toggle class='buttonToggle' (click)='quarterArts()' value="quarter">
+      Trimestrale
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="period" matSortDirection="asc">
+    <ng-container matColumnDef="period">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Periodo </mat-header-cell>
+      <mat-cell *matCellDef="let period">{{period.period}} {{labels[period.period-1]}}</mat-cell>
+    </ng-container>
+    <ng-container *ngFor='let group of groups' matColumnDef="{{group}}">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{group | titlecase}} </mat-header-cell>
+      <mat-cell *matCellDef="let period">{{(period[group] ? period[group] : 0) | currency: 'EUR'}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+
+</mat-card>

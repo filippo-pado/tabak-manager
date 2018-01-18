@@ -17,6 +17,7 @@ import { CategoryService } from './shared/categories/category.service';
 import { RidService } from './rids/rid.service';
 import { MovementService } from './movements/movement.service';
 import { MovementFormService } from './movements/movement-form/movement-form.service';
+import { ProfitService } from './profits/profit.service';
 
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
@@ -25,7 +26,7 @@ import { MovementsComponent } from './movements/movements.component';
 import { RidsComponent } from './rids/rids.component';
 import { LoginComponent } from './login/login.component';
 import { MovementFormComponent } from './movements/movement-form/movement-form.component';
-import { ProfitComponent } from './profit/profit.component';
+import { ProfitsComponent } from './profits/profits.component';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { ProfitComponent } from './profit/profit.component';
     LoginComponent,
     CategoriesComponent,
     MovementFormComponent,
-    ProfitComponent
+    ProfitsComponent
   ],
   imports: [
     BrowserModule,
@@ -49,9 +50,10 @@ import { ProfitComponent } from './profit/profit.component';
     AppRoutingModule,
     AppMaterialModule
   ],
-  providers: [AuthService, AuthGuard, CategoryService, RidService, MovementService, MovementFormService, {
-    provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-  }],
+  providers: [AuthService, AuthGuard, CategoryService, RidService, MovementService, MovementFormService,
+    ProfitService, {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

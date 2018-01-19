@@ -1,13 +1,13 @@
 var mongoose = require('mongoose');
 
 var MovementSchema = new mongoose.Schema({
-  category: String,
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
   date: Date,
   amount: Number,
   rid: Number,
   extraRid: Number,
   verified: Boolean,
-  verifiedRid: mongoose.Schema.Types.ObjectId,
+  verifiedRid: { type: mongoose.Schema.Types.ObjectId, ref: 'Rid' },
   note: String
 });
 

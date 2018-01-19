@@ -8,7 +8,7 @@
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.category | titlecase}}
+        {{movement.category.name | titlecase}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="date">
@@ -20,20 +20,20 @@
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Valore </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.amount}}
+        {{movement.amount | currency:'EUR'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="profit">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Aggio </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{toProfit(movement.amount, movement.category)}}
+        {{(movement.amount*movement.category.amountToProfit) | currency:'EUR'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rid">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rid </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        <div>{{movement.rid}}</div>
-        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid}}</div>
+        <div>{{movement.rid | currency:'EUR'}}</div>
+        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid | currency:'EUR'}}</div>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="note">

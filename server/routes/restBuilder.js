@@ -1,9 +1,10 @@
-module.exports = function(router, model) {
+module.exports = function (router, model) {
   var mongoose = require('mongoose');
 
   /*
     GET /
     POST /
+    POST /query
 
     GET /:id
     PATCH /:id
@@ -11,40 +12,48 @@ module.exports = function(router, model) {
   */
 
   /* GET ALL ITEMS */
-  router.get('/', function(req, res, next) {
-    model.find(req.query, function(err, data) {
+  router.get('/', function (req, res, next) {
+    model.find({}, function (err, data) {
       if (err) return next(err);
       res.json(data);
     });
   });
 
   /* SAVE ITEM */
-  router.post('/', function(req, res, next) {
-    model.create(req.body, function(err, data) {
+  router.post('/', function (req, res, next) {
+    model.create(req.body, function (err, data) {
+      if (err) return next(err);
+      res.json(data);
+    });
+  });
+
+  /* QUERY ITEMS */
+  router.post('/query', function (req, res, next) {
+    model.find(req.body.query ? req.body.query : {}).populate(req.body.populate ? req.body.populate : '').exec(function (err, data) {
       if (err) return next(err);
       res.json(data);
     });
   });
 
   /* GET SINGLE ITEM BY ID */
-  router.get('/:id', function(req, res, next) {
-    model.findById(req.params.id, function(err, data) {
+  router.get('/:id', function (req, res, next) {
+    model.findById(req.params.id, function (err, data) {
       if (err) return next(err);
       res.json(data);
     });
   });
 
   /* UPDATE ITEM */
-  router.patch('/:id', function(req, res, next) {
-    model.findByIdAndUpdate(req.params.id, req.body, { new: true }, function(err, data) {
+  router.patch('/:id', function (req, res, next) {
+    model.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, data) {
       if (err) return next(err);
       res.json(data);
     });
   });
 
   /* DELETE ITEM */
-  router.delete('/:id', function(req, res, next) {
-    model.findByIdAndRemove(req.params.id, req.body, function(err, data) {
+  router.delete('/:id', function (req, res, next) {
+    model.findByIdAndRemove(req.params.id, req.body, function (err, data) {
       if (err) return next(err);
       res.json(data);
     });

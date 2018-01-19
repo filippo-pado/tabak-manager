@@ -1,3 +1,5 @@
+import { Movement } from '../movements/movement';
+
 export class Rid {
   _id: string;
   category: string = '';
@@ -5,5 +7,5 @@ export class Rid {
   date: Date = new Date();
   amount: number = 0;
   verified: boolean = false;
-  verifiedMovement: string = null;
+  verifiedMovement: Movement = new Movement();
 }

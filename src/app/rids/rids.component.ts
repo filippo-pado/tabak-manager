@@ -43,7 +43,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
   changedCategory(category: string): void {
     this.selectedCategory = category;
     const filterCategory = this.selectedCategory === 'tutti' ? {} : { category: this.selectedCategory };
-    this.ridService.getAll(filterCategory).then(rids => {
+    this.ridService.query(filterCategory).then(rids => {
       this.dataSource.data = rids;
     });
   }

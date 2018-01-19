@@ -8,13 +8,13 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class CategoryService {
   private categoryUrl = '/api/categories'; // URL to web api
-  private categorySubject = new Subject<string>();
+  private categorySubject = new Subject<Category>();
 
   category = this.categorySubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  changeCategory(category: string) {
+  changeCategory(category: Category) {
     this.categorySubject.next(category);
   }
 

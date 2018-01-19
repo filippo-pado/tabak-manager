@@ -26,19 +26,22 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
     this.categoryService.category.subscribe(category => {
-      const filterCategory = category === 'tutti' ? {} : { category: category };
-      this.movementService.getAll(filterCategory).then(movements => {
+      const filterCategory = category.name === 'tutti' ? {} : { category: category._id };
+      this.movementService.query(filterCategory, 'category').then(movements => {
         this.dataSource.data = movements;
       });
     });
-    this.movementFormService.movement.subscribe(movement => {
-      const movementIndex = this.dataSource.data.findIndex(mov => mov._id === movement._id);
-      if (movementIndex !== -1) {
-        this.dataSource.data[movementIndex] = movement;
-      } else {
-        this.dataSource.data.push(movement);
-      }
-      this.dataSource._updateChangeSubscription();
+    this.movementFormService.movementUpdatedID.subscribe(movementUpdatedID => {
+      this.movementService.query({ _id: movementUpdatedID }, 'category').then(movements => {
+        const movement = movements[0];
+        const movementIndex = this.dataSource.data.findIndex(mov => mov._id === movement._id);
+        if (movementIndex !== -1) {
+          this.dataSource.data[movementIndex] = movement;
+        } else {
+          this.dataSource.data.unshift(movement);
+        }
+        this.dataSource._updateChangeSubscription();
+      });
     });
   }
   /**
@@ -51,7 +54,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     this.categoryService.getAll().then(categories => {
       this.categories = categories;
     }).then(() => {
-      this.movementService.getAll().then(movements => {
+      this.movementService.query({}, 'category').then(movements => {
         this.dataSource.data = movements;
         this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
       });
@@ -92,7 +95,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  validateAmount(event: any) {
+  validateAmount(event: any): void {
     const pattern = /^[a-zA-Z]+$/;
     const inputChar = String.fromCharCode(event.charCode);
 
@@ -101,7 +104,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       event.preventDefault();
     }
   }
-  toProfit(amount: number, category: string): Number {
+  toProfit(amount: number, category: string): number {
     return amount * this.categories.find(x => x.name === category).amountToProfit;
   }
 }

@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Movement } from '../movement';
+import { Category } from '../../shared/categories/category';
 
 @Injectable()
 export class MovementFormService {
 
-  private categorySubject = new Subject<string>();
+  private categorySubject = new Subject<Category>();
   private movementIDSubject = new Subject<string>();
-  private movementSubject = new Subject<Movement>();
+  private movementUpdatedIDSubject = new Subject<string>();
 
   category = this.categorySubject.asObservable();
   movementID = this.movementIDSubject.asObservable();
-  movement = this.movementSubject.asObservable();
+  movementUpdatedID = this.movementUpdatedIDSubject.asObservable();
 
   constructor() { }
 
-  changeCategory(category: string) {
+  changeCategory(category: Category) {
     this.categorySubject.next(category);
   }
   changeMovementID(movementID: string) {
     this.movementIDSubject.next(movementID);
   }
-  changeMovement(movement: Movement) {
-    this.movementSubject.next(movement);
+  updateMovementID(movementUpdatedID: string) {
+    this.movementUpdatedIDSubject.next(movementUpdatedID);
   }
 }

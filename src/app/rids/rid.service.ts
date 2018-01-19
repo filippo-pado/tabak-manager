@@ -10,8 +10,8 @@ export class RidService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(params: any = {}): Promise<Rid[]> {
-    return this.http.get(this.ridsUrl, { params: params })
+  getAll(): Promise<Rid[]> {
+    return this.http.get(this.ridsUrl)
       .toPromise()
       .then(response => response as Rid[])
       .catch(this.handleError);
@@ -22,6 +22,13 @@ export class RidService {
     return this.http.get(url)
       .toPromise()
       .then(response => response as Rid)
+      .catch(this.handleError);
+  }
+
+  query(query: any = {}): Promise<Rid[]> {
+    return this.http.post(this.ridsUrl + '/query', query)
+      .toPromise()
+      .then(response => response as Rid[])
       .catch(this.handleError);
   }
 

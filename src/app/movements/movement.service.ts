@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
 import { Movement } from './movement';
@@ -10,8 +10,8 @@ export class MovementService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(params: any = {}): Promise<Movement[]> {
-    return this.http.get(this.movementsUrl, { params: params })
+  getAll(): Promise<Movement[]> {
+    return this.http.get(this.movementsUrl)
       .toPromise()
       .then(response => response as Movement[])
       .catch(this.handleError);
@@ -22,6 +22,13 @@ export class MovementService {
     return this.http.get(url)
       .toPromise()
       .then(response => response as Movement)
+      .catch(this.handleError);
+  }
+
+  query(query: any = {}, populate: string = ''): Promise<Movement[]> {
+    return this.http.post(this.movementsUrl + '/query', { query: query, populate: populate })
+      .toPromise()
+      .then(response => response as Movement[])
       .catch(this.handleError);
   }
 

@@ -31,10 +31,16 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
       'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
     this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     this.dataSource.data = [];
-    this.displayedColumns = ['category'].concat(this.periods);
+    this.displayedColumns = ['group'].concat(this.periods).concat(['totalGroup']);
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
-      this.dataSource.data = profits;
-
+      const totalRow = { group: 'totale' };
+      this.periods.concat(['totalGroup']).forEach(period => {
+        totalRow[period] = 0;
+        profits.forEach(row => {
+          totalRow[period] += row[period] ? row[period] : 0;
+        });
+      });
+      this.dataSource.data = profits.concat(totalRow);
     });
   }
 
@@ -42,7 +48,7 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.periodLabels = ['Gennaio Febbraio Marzo', 'Aprile Maggio Giugno', 'Luglio Agosto Settembre', 'Ottobre Novembre Dicembre'];
     this.periods = ['1', '2', '3', '4'];
     this.dataSource.data = [];
-    this.displayedColumns = ['category'].concat(this.periods);
+    this.displayedColumns = ['group'].concat(this.periods).concat(['totalGroup']);
     this.profitService.getProfits(4, 'art').then(profits => {
       this.dataSource.data = profits;
     });

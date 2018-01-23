@@ -13,7 +13,7 @@ export class ProfitService {
     let params = new HttpParams();
     params = params.append('months', '' + monthsGroup);
     params = params.append('group', group);
-    return this.http.get(this.profitsUrl, { params: params })
+    return this.http.get(this.profitsUrl + '/', { params: params })
       .toPromise()
       .then(response => response)
       .catch(this.handleError);

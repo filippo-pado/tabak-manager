@@ -11,13 +11,18 @@
 
 
   <mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="category">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
-      <mat-cell *matCellDef="let category">{{category.category | titlecase}}</mat-cell>
+
+    <ng-container matColumnDef="group">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo </mat-header-cell>
+      <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
     </ng-container>
     <ng-container *ngFor='let period of periods' matColumnDef="{{period}}">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{[periodLabels[period-1]]}} </mat-header-cell>
-      <mat-cell *matCellDef="let category">{{(category[period] ? category[period] : 0) | currency: 'EUR'}}</mat-cell>
+      <mat-cell *matCellDef="let group">{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="totalGroup">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Totale </mat-header-cell>
+      <mat-cell *matCellDef="let group">{{group.totalGroup | currency: 'EUR'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

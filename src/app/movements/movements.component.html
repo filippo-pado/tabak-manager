@@ -1,6 +1,5 @@
-<app-categories></app-categories>
 <mat-card class="container">
-  <app-movement-form></app-movement-form>
+  <router-outlet></router-outlet>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
   </mat-form-field>
@@ -53,7 +52,7 @@
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        <button mat-icon-button (click)='edit(movement)' color="primary">
+        <button mat-icon-button [routerLink]="['movement/'+movement._id]" color="primary">
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-icon-button (click)='delete(movement)' color="warn">

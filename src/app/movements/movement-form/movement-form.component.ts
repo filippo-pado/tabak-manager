@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+
 import { Movement } from '../movement';
 import { Category } from '../../shared/categories/category';
 import { MovementService } from '../movement.service';
@@ -18,28 +20,32 @@ export class MovementFormComponent implements OnInit {
   action: string;
 
   constructor(private movementService: MovementService, private movementFormService: MovementFormService,
-    private categoryService: CategoryService, public snackBar: MatSnackBar) { }
+    private categoryService: CategoryService, public snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.reset();
-    this.movementFormService.movementID.subscribe(movementID => {
-      this.movementService.query({ _id: movementID }, 'category')
-        .then(movement => this.movement = movement[0])
-        .catch(error => {
-          alert(JSON.stringify(error, null, 2));
-        });
-      this.action = 'edit';
-    });
-    this.categoryService.category.subscribe(category => {
-      this.reset(category.name === 'tutti' ? new Category() : category);
-    });
-  }
-
-  reset(category: Category = new Category()): void {
-    this.action = 'new';
     this.movement = new Movement();
-    this.movement.category = category;
-    this.dateEl.nativeElement.focus();
+    this.route.paramMap.subscribe(params => {
+      if (params.get('movement_id') !== null) {
+        this.action = 'edit';
+        this.movementService.query({ _id: params.get('movement_id') }, 'category')
+          .then(movement => this.movement = movement[0])
+          .catch(error => {
+            alert(JSON.stringify(error, null, 2));
+          });
+      } else {
+        this.action = 'new';
+        if (params.get('category_id') !== 'all') {
+          this.categoryService.getOne(params.get('category_id'))
+            .then(category => {
+              this.movement.category = category;
+            })
+            .catch(error => {
+              alert(JSON.stringify(error, null, 2));
+            });
+        }
+      }
+      this.dateEl.nativeElement.focus();
+    });
   }
   validateAmount(event: any) {
     const pattern = /^[a-zA-Z]+$/;
@@ -49,7 +55,6 @@ export class MovementFormComponent implements OnInit {
       event.preventDefault();
     }
   }
-
   onSubmit() {
     let query: Promise<Movement>;
     if (this.action === 'new') {
@@ -60,7 +65,7 @@ export class MovementFormComponent implements OnInit {
     query.then(response => {
       this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
       this.movementFormService.updateMovementID(response._id);
-      this.reset(this.movement.category);
+      this.router.navigate(['/movements/category/' + this.movement.category._id]);
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });

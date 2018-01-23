@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Movement } from './movement';
 import { Category } from '../shared/categories/category';
@@ -15,22 +16,16 @@ import { CategoryService } from '../shared/categories/category.service';
 export class MovementsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<Movement>;
-  categories: Category[];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private movementService: MovementService, private movementFormService: MovementFormService,
-    private categoryService: CategoryService, public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.categoryService.category.subscribe(category => {
-      const filterCategory = category.name === 'tutti' ? {} : { category: category._id };
-      this.movementService.query(filterCategory, 'category').then(movements => {
-        this.dataSource.data = movements;
-      });
-    });
+    this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
     this.movementFormService.movementUpdatedID.subscribe(movementUpdatedID => {
       this.movementService.query({ _id: movementUpdatedID }, 'category').then(movements => {
         const movement = movements[0];
@@ -43,7 +38,17 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         this.dataSource._updateChangeSubscription();
       });
     });
+    this.route.paramMap.subscribe(params => {
+      if (params.get('movement_id') === null) {
+        const filterCategory = params.get('category_id') === 'all' ? {} : { category: params.get('category_id') };
+        this.movementService.query(filterCategory, 'category').then(movements => {
+          this.dataSource.data = movements;
+        });
+      }
+    });
   }
+
+
   /**
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
@@ -51,14 +56,6 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.categoryService.getAll().then(categories => {
-      this.categories = categories;
-    }).then(() => {
-      this.movementService.query({}, 'category').then(movements => {
-        this.dataSource.data = movements;
-        this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
-      });
-    });
   }
 
   applyFilter(filterValue: string) {
@@ -78,9 +75,6 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });
-  }
-  edit(movement: Movement): void {
-    this.movementFormService.changeMovementID(movement._id);
   }
   delete(movement: Movement): void {
     if (confirm('Eliminare elemento?')) {
@@ -103,8 +97,5 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       // invalid character, prevent input
       event.preventDefault();
     }
-  }
-  toProfit(amount: number, category: string): number {
-    return amount * this.categories.find(x => x.name === category).amountToProfit;
   }
 }

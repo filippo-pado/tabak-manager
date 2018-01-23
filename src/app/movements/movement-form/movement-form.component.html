@@ -27,7 +27,7 @@
         color="primary">
         <mat-icon class='icon-button'>{{action==='new' ? 'note_add' : 'mode_edit' }}</mat-icon>
       </button>
-      <button class='icon-button' mat-icon-button type='button' (click)='reset(movement.category);' color="warn">
+      <button class='icon-button' mat-icon-button type='button' [routerLink]="['/movements/category/'+movement.category._id]" color="warn">
         <mat-icon class='icon-button'>cancel</mat-icon>
       </button>
     </span>

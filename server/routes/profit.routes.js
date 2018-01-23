@@ -19,7 +19,9 @@ router.get('/', (req, res) => {
       $group: {
         _id: {
           category: req.query.group ? ('$category.' + req.query.group) : '$category.profitGroup',
-          month: { $ceil: { $divide: [{ $month: "$date" }, req.query.months ? Number(req.query.months) : 1] } },
+          month: {
+            $substr: [{ $ceil: { $divide: [{ $month: "$date" }, req.query.months ? Number(req.query.months) : 1] } }, 0, - 1]
+          },
         },
         profit: {
           $sum: {
@@ -32,10 +34,10 @@ router.get('/', (req, res) => {
       }
     }, {
       $group: {
-        _id: '$_id.month',
+        _id: '$_id.category',
         profits: {
           $push: {
-            category: "$_id.category",
+            month: "$_id.month",
             profit: "$profit",
           }
         }
@@ -47,13 +49,13 @@ router.get('/', (req, res) => {
             $map: {
               input: "$profits",
               as: "pair",
-              in: ["$$pair.category", "$$pair.profit"]
+              in: ["$$pair.month", "$$pair.profit"]
             }
           }
         }
       }
     },
-    { $addFields: { profits: { 'period': "$_id" } } },
+    { $addFields: { profits: { 'category': "$_id" } } },
     {
       $replaceRoot: { newRoot: "$profits" }
     }

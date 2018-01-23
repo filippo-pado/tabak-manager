@@ -12,56 +12,41 @@ import { CategoryService } from '../shared/categories/category.service';
 export class ProfitsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   viewType: string;
-  labels: string[];
-  groups: string[];
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
-
+  periods: string[];
+  periodLabels: string[];
   constructor(private profitService: ProfitService, private categoryService: CategoryService) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
+    this.monthGroups();
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    this.monthGroups();
   }
   monthGroups(): void {
-    this.dataSource.data = [];
-    this.labels = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+    this.periodLabels = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
       'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-    this.categoryService.getAll().then(categories => {
-      const profitGroups = new Set();
-      categories.forEach(category => {
-        profitGroups.add(category.profitGroup);
-      });
-      this.groups = Array.from(profitGroups);
-      this.displayedColumns = ['period'].concat(this.groups);
-    });
-
+    this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    this.dataSource.data = [];
+    this.displayedColumns = ['category'].concat(this.periods);
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
       this.dataSource.data = profits;
+
     });
   }
 
   quarterArts(): void {
+    this.periodLabels = ['Gennaio Febbraio Marzo', 'Aprile Maggio Giugno', 'Luglio Agosto Settembre', 'Ottobre Novembre Dicembre'];
+    this.periods = ['1', '2', '3', '4'];
     this.dataSource.data = [];
-    this.labels = ['Gennaio Febbraio Marzo', 'Aprile Maggio Giugno', 'Luglio Agosto Settembre', 'Ottobre Novembre Dicembre'];
-    this.categoryService.getAll().then(categories => {
-      const arts = new Set();
-      categories.forEach(category => {
-        arts.add(category.art);
-      });
-      this.groups = Array.from(arts);
-      this.displayedColumns = ['period'].concat(this.groups);
-    });
-
+    this.displayedColumns = ['category'].concat(this.periods);
     this.profitService.getProfits(4, 'art').then(profits => {
       this.dataSource.data = profits;
     });
   }
-
 }
 
 

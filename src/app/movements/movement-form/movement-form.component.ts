@@ -33,11 +33,11 @@ export class MovementFormComponent implements OnInit {
             alert(JSON.stringify(error, null, 2));
           });
       } else {
-        this.action = 'new';
+        this.reset();
         if (params.get('category_id') !== 'all') {
           this.categoryService.getOne(params.get('category_id'))
             .then(category => {
-              this.movement.category = category;
+              this.reset(category);
             })
             .catch(error => {
               alert(JSON.stringify(error, null, 2));
@@ -46,6 +46,12 @@ export class MovementFormComponent implements OnInit {
       }
       this.dateEl.nativeElement.focus();
     });
+  }
+  reset(category: Category = new Category()): void {
+    this.action = 'new';
+    this.movement = new Movement();
+    this.movement.category = category;
+    this.dateEl.nativeElement.focus();
   }
   validateAmount(event: any) {
     const pattern = /^[a-zA-Z]+$/;
@@ -65,6 +71,7 @@ export class MovementFormComponent implements OnInit {
     query.then(response => {
       this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
       this.movementFormService.updateMovementID(response._id);
+      this.reset(this.movement.category);
       this.router.navigate(['/movements/category/' + this.movement.category._id]);
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));

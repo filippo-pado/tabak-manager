@@ -13,20 +13,24 @@ import { AppMaterialModule } from './shared/app-material.module';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthInterceptor } from './shared/auth/auth.interceptor';
 import { AuthGuard } from './shared/auth/auth.guard';
-import { CategoryService } from './shared/categories/category.service';
+import { CategoryService } from './categories/category.service';
+import { CategoryFormService } from './categories/category-form/category-form.service';
 import { RidService } from './rids/rid.service';
 import { MovementService } from './movements/movement.service';
 import { MovementFormService } from './movements/movement-form/movement-form.service';
 import { ProfitService } from './profits/profit.service';
+import { UtilsService } from './shared/utils/utils.service';
 
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
-import { CategoriesComponent } from './shared/categories/categories.component';
+import { CategoryTabsComponent } from './shared/category-tabs/category-tabs.component';
 import { MovementsComponent } from './movements/movements.component';
 import { RidsComponent } from './rids/rids.component';
 import { LoginComponent } from './login/login.component';
 import { MovementFormComponent } from './movements/movement-form/movement-form.component';
 import { ProfitsComponent } from './profits/profits.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { CategoryFormComponent } from './categories/category-form/category-form.component';
 
 
 @NgModule({
@@ -37,9 +41,11 @@ import { ProfitsComponent } from './profits/profits.component';
     RidsComponent,
     PageNotFoundComponent,
     LoginComponent,
+    CategoryTabsComponent,
     CategoriesComponent,
     MovementFormComponent,
-    ProfitsComponent
+    ProfitsComponent,
+    CategoryFormComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,7 @@ import { ProfitsComponent } from './profits/profits.component';
     AppRoutingModule,
     AppMaterialModule
   ],
-  providers: [AuthService, AuthGuard, CategoryService, RidService, MovementService, MovementFormService,
+  providers: [AuthService, AuthGuard, UtilsService, CategoryService, CategoryFormService, RidService, MovementService, MovementFormService,
     ProfitService, {
       provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
     }],

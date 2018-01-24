@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { ProfitService } from './profit.service';
-import { Category } from '../shared/categories/category';
-import { CategoryService } from '../shared/categories/category.service';
+import { Category } from '../categories/category';
+import { CategoryService } from '../categories/category.service';
 
 @Component({
   selector: 'app-profits',

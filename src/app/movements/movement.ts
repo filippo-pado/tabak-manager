@@ -1,4 +1,4 @@
-import { Category } from '../shared/categories/category';
+import { Category } from '../categories/category';
 import { Rid } from '../rids/rid';
 
 export class Movement {

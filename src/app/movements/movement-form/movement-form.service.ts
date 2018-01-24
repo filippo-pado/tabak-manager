@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Movement } from '../movement';
-import { Category } from '../../shared/categories/category';
+import { Category } from '../../categories/category';
 
 @Injectable()
 export class MovementFormService {

@@ -1,0 +1,54 @@
+<mat-card class="container">
+  <router-outlet></router-outlet>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
+  </mat-form-field>
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Nome </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="group">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo logico </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.group}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="profitGroup">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo contabile </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.profitGroup}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="art">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Art </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        <div>{{category.art}}</div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="rate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Aggio </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.rate}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="amountToProfit">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Moltiplicatore aggio </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.amountToProfit}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        <button mat-icon-button [routerLink]="[category._id]" color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</mat-card>

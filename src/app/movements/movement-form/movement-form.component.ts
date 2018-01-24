@@ -3,11 +3,11 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { Movement } from '../movement';
-import { Category } from '../../shared/categories/category';
+import { Category } from '../../categories/category';
+import { UtilsService } from '../../shared/utils/utils.service';
 import { MovementService } from '../movement.service';
 import { MovementFormService } from './movement-form.service';
-import { CategoryService } from '../../shared/categories/category.service';
-import { Observable } from 'rxjs/Observable';
+import { CategoryService } from '../../categories/category.service';
 
 @Component({
   selector: 'app-movement-form',
@@ -18,11 +18,14 @@ export class MovementFormComponent implements OnInit {
   @ViewChild('date') dateEl: ElementRef;
   movement: Movement;
   action: string;
+  validateNumberField: (evt: Event) => void;
 
-  constructor(private movementService: MovementService, private movementFormService: MovementFormService,
+  constructor(private utilsService: UtilsService, private movementService: MovementService,
+    private movementFormService: MovementFormService,
     private categoryService: CategoryService, public snackBar: MatSnackBar, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
+    this.validateNumberField = this.utilsService.validateNumberField;
     this.movement = new Movement();
     this.route.paramMap.subscribe(params => {
       if (params.get('movement_id') !== null) {
@@ -52,14 +55,6 @@ export class MovementFormComponent implements OnInit {
     this.movement = new Movement();
     this.movement.category = category;
     this.dateEl.nativeElement.focus();
-  }
-  validateAmount(event: any) {
-    const pattern = /^[a-zA-Z]+$/;
-    const inputChar = String.fromCharCode(event.charCode);
-    if (pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
-    }
   }
   onSubmit() {
     let query: Promise<Movement>;

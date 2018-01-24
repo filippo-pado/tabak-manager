@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from './category';
-import { CategoryService } from './category.service';
+import { Category } from '../../categories/category';
+import { CategoryService } from '../../categories/category.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  selector: 'app-category-tabs',
+  templateUrl: './category-tabs.component.html',
+  styleUrls: ['./category-tabs.component.css']
 })
-export class CategoriesComponent implements OnInit {
+export class CategoryTabsComponent implements OnInit {
   objectKeys = Object.keys;
   categories: Category[] = [];
   categoryGroups: { [key: string]: Category[] } = {};

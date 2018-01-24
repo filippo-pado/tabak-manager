@@ -3,10 +3,10 @@ import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackB
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Movement } from './movement';
-import { Category } from '../shared/categories/category';
+import { Category } from '../categories/category';
 import { MovementService } from './movement.service';
 import { MovementFormService } from './movement-form/movement-form.service';
-import { CategoryService } from '../shared/categories/category.service';
+import { CategoryService } from '../categories/category.service';
 
 @Component({
   selector: 'app-movements',

@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 
-import { CategoriesComponent } from '../shared/categories/categories.component';
+import { CategoryTabsComponent } from '../shared/category-tabs/category-tabs.component';
+import { CategoriesComponent } from '../categories/categories.component';
+import { CategoryFormComponent } from '../categories/category-form/category-form.component';
 import { MovementsComponent } from '../movements/movements.component';
 import { MovementFormComponent } from '../movements/movement-form/movement-form.component';
 import { RidsComponent } from '../rids/rids.component';
@@ -12,23 +14,25 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   {
-    path: 'movements', component: CategoriesComponent, canActivate: [AuthGuard],
+    path: 'movements', component: CategoryTabsComponent, canActivate: [AuthGuard],
     children: [
       {
         path: 'category/:category_id',
         component: MovementsComponent,
         children: [
-          {
-            path: 'movement/:movement_id',
-            component: MovementFormComponent,
-          },
-          {
-            path: '',
-            component: MovementFormComponent,
-          }
+          { path: 'movement/:movement_id', component: MovementFormComponent, },
+          { path: '', component: MovementFormComponent, }
         ]
       },
-
+    ],
+  },
+  {
+    path: 'categories', component: CategoriesComponent, canActivate: [AuthGuard],
+    children: [
+      {
+        path: ':category_id',
+        component: CategoryFormComponent
+      },
     ],
   },
   { path: 'rid', component: RidsComponent, canActivate: [AuthGuard] },

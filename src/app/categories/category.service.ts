@@ -27,6 +27,29 @@ export class CategoryService {
       .catch(this.handleError);
   }
 
+  create(category: Category): Promise<Category> {
+    return this.http.post(this.categoryUrl, category)
+      .toPromise()
+      .then(response => response as Category)
+      .catch(this.handleError);
+  }
+
+  update(id: string, updates: any): Promise<Category> {
+    const url = `${this.categoryUrl}/${id}`;
+    return this.http.patch(url, updates)
+      .toPromise()
+      .then(response => response as Category)
+      .catch(this.handleError);
+  }
+
+  delete(id: string): Promise<void> {
+    const url = `${this.categoryUrl}/${id}`;
+    return this.http.delete(url)
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error);

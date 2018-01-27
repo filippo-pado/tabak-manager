@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from '@app/core';
+import { PublicModule } from '@app/public';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { LoginModule } from '@app/login';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { LoginModule } from '@app/login';
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
-    LoginModule
+    PublicModule
   ],
   bootstrap: [AppComponent]
 })

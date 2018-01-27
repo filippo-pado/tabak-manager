@@ -6,20 +6,17 @@ import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
 
-import { NavbarComponent } from './navbar/navbar.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoryService } from './http/category.service';
 import { MovementService } from './http/movement.service';
 import { ProfitService } from './http/profit.service';
 import { RidService } from './http/rid.service';
-
 
 @NgModule({
   imports: [
     HttpClientModule,
     SharedModule
   ],
-  declarations: [NavbarComponent, PageNotFoundComponent],
+  declarations: [],
   providers: [
     AuthService,
     AuthGuard,
@@ -28,8 +25,7 @@ import { RidService } from './http/rid.service';
     ProfitService,
     RidService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-  ],
-  exports: [NavbarComponent, PageNotFoundComponent]
+  ]
 })
 
 export class CoreModule { }

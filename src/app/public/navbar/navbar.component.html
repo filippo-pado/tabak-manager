@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <a mat-button routerLink="/" class='navbar-main'>Tabak-Manager</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="movements/category/all" class='navbar-item'>Contabilità</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="rids" class='navbar-item'>Rid</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="categories" class='navbar-item'>Categorie</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="profits" class='navbar-item'>Aggi</a>
+  <!-- This fills the remaining space of the current row -->
+  <span style='flex: 1 1 auto;'></span>
+  <a [class.show]='loginObserver | async' mat-button routerLink='/login' class='navbar-item'>Logout</a>
+</mat-toolbar>

@@ -6,4 +6,9 @@
 .navbar-item {
   color: white;
   font-size: 20px;
+  display: none;
+}
+
+.show{
+  display: block;
 }

@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppMaterialModule } from './app-material.module';
 import { UtilsService } from './utils/utils.service';
 
-const importExport = [
+const modules = [
   CommonModule,
   RouterModule,
   FormsModule,
@@ -16,10 +16,10 @@ const importExport = [
 ];
 
 @NgModule({
-  imports: importExport,
+  imports: modules,
   declarations: [
   ],
   providers: [UtilsService],
-  exports: importExport
+  exports: modules
 })
 export class SharedModule { }

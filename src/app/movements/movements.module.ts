@@ -12,8 +12,8 @@ import { MovementFormService } from './movement-form/movement-form.service';
 @NgModule({
   imports: [
     SharedModule,
-    CategoriesModule,
-    MovementsRoutingModule
+    MovementsRoutingModule,
+    CategoriesModule
   ],
   declarations: [
     MovementsComponent, MovementFormComponent

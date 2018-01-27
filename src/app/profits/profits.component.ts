@@ -50,7 +50,14 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.dataSource.data = [];
     this.displayedColumns = ['group'].concat(this.periods).concat(['totalGroup']);
     this.profitService.getProfits(4, 'art').then(profits => {
-      this.dataSource.data = profits;
+      const totalRow = { group: 'totale' };
+      this.periods.concat(['totalGroup']).forEach(period => {
+        totalRow[period] = 0;
+        profits.forEach(row => {
+          totalRow[period] += row[period] ? row[period] : 0;
+        });
+      });
+      this.dataSource.data = profits.concat(totalRow);
     });
   }
 }

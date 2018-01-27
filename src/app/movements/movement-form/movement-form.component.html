@@ -8,15 +8,15 @@
       <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
     </mat-form-field>
     <mat-form-field class='input-number'>
-      <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateAmount($event)"
+      <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateNumberField($event)"
       />
     </mat-form-field>
     <mat-form-field class='input-number'>
-      <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateAmount($event)"
+      <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateNumberField($event)"
       />
     </mat-form-field>
     <mat-form-field class='input-number'>
-      <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateAmount($event)"
+      <input name='extraRid' matInput type="number" placeholder="Extra rid" step="0.01" [(ngModel)]="movement.extraRid" (keypress)="validateNumberField($event)"
       />
     </mat-form-field>
     <mat-form-field class='input-text'>
@@ -27,7 +27,8 @@
         color="primary">
         <mat-icon class='icon-button'>{{action==='new' ? 'note_add' : 'mode_edit' }}</mat-icon>
       </button>
-      <button class='icon-button' mat-icon-button type='button' (click)='reset(movement.category);' color="warn">
+      <button class='icon-button' mat-icon-button type='button' (click)='reset(movement.category)' [routerLink]="['/movements/category/'+movement.category._id]"
+        color="warn">
         <mat-icon class='icon-button'>cancel</mat-icon>
       </button>
     </span>

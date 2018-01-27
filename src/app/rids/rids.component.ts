@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 
 import { Rid } from './rid';
-import { RidService } from './rid.service';
+import { RidService } from '@app/core';
 
 @Component({
   selector: 'app-rids',

@@ -1,0 +1,14 @@
+.navbar-main {
+  color: white;
+  font-size: 30px;
+}
+
+.navbar-item {
+  color: white;
+  font-size: 20px;
+  display: none;
+}
+
+.show{
+  display: block;
+}

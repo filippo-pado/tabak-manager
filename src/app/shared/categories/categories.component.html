@@ -1,8 +1,0 @@
-<mat-tab-group (selectedTabChange)='parentTabChanged($event)'>
-  <mat-tab *ngFor='let group of objectKeys(categoryGroups)' label='{{group | titlecase}}'>
-    <mat-tab-group (selectedTabChange)='childTabChanged($event)'>
-      <mat-tab *ngFor='let category of categoryGroups[group]' label='{{category.name | titlecase}}'>
-      </mat-tab>
-    </mat-tab-group>
-  </mat-tab>
-</mat-tab-group>

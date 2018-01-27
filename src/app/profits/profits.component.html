@@ -10,14 +10,19 @@
   </mat-button-toggle-group>
 
 
-  <mat-table #table [dataSource]="dataSource" matSort matSortActive="period" matSortDirection="asc">
-    <ng-container matColumnDef="period">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Periodo </mat-header-cell>
-      <mat-cell *matCellDef="let period">{{period.period}} {{labels[period.period-1]}}</mat-cell>
+  <mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="group">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo </mat-header-cell>
+      <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
     </ng-container>
-    <ng-container *ngFor='let group of groups' matColumnDef="{{group}}">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{group | titlecase}} </mat-header-cell>
-      <mat-cell *matCellDef="let period">{{(period[group] ? period[group] : 0) | currency: 'EUR'}}</mat-cell>
+    <ng-container *ngFor='let period of periods' matColumnDef="{{period}}">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{[periodLabels[period-1]]}} </mat-header-cell>
+      <mat-cell *matCellDef="let group">{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="totalGroup">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Totale </mat-header-cell>
+      <mat-cell *matCellDef="let group">{{group.totalGroup | currency: 'EUR'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

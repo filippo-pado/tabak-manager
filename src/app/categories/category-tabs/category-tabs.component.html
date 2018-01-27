@@ -1,0 +1,19 @@
+<mat-tab-group (selectedTabChange)='parentTabChanged($event)'>
+  <mat-tab label='Tutti'>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link [routerLink]="['category/all']" routerLinkActive #rla="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+        [active]="rla.isActive">
+        Tutti
+      </a>
+    </nav>
+  </mat-tab>
+  <mat-tab *ngFor='let group of objectKeys(categoryGroups)' label='{{group | titlecase}}'>
+    <nav mat-tab-nav-bar>
+      <a mat-tab-link *ngFor='let category of categoryGroups[group]' [routerLink]="'category/'+category._id" routerLinkActive #rla="routerLinkActive"
+        [routerLinkActiveOptions]="{exact: true}" [active]="rla.isActive">
+        {{category.name | titlecase}}
+      </a>
+    </nav>
+  </mat-tab>
+</mat-tab-group>
+<router-outlet></router-outlet>

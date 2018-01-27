@@ -13,7 +13,7 @@ var Rid = require('../models/Rid.js');
 var Category = require('../models/Category.js');
 
 router.use('/api/users/', userRoutes);
-router.use('/api', protectRoutes);
+//router.use('/api', protectRoutes);
 router.use('/api/info/', infoRoutes);
 router.use('/api/profits/', profitRoutes);
 router.use('/api/movements/', restBuilder(express.Router(), Movement));

@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
 import { Category } from './category';
-import { CategoryService } from './category.service';
+import { CategoryService } from '@app/core';
 import { CategoryFormService } from './category-form/category-form.service';
 
 @Component({

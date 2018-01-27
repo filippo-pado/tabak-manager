@@ -1,4 +1,4 @@
-import { Movement } from '../movements/movement';
+import { Movement } from '@app/movements';
 
 export class Rid {
   _id: string;

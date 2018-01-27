@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Category } from '../../categories/category';
 
 @Injectable()
 export class CategoryFormService {

@@ -1,5 +1,5 @@
-import { Category } from '../categories/category';
-import { Rid } from '../rids/rid';
+import { Category } from '@app/categories';
+import { Rid } from '@app/rids';
 
 export class Movement {
   _id: string;

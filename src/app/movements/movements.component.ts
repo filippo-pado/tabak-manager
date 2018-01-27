@@ -1,12 +1,10 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatTabChangeEvent, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Movement } from './movement';
-import { Category } from '../categories/category';
-import { MovementService } from './movement.service';
+import { MovementService } from '@app/core';
 import { MovementFormService } from './movement-form/movement-form.service';
-import { CategoryService } from '../categories/category.service';
 
 @Component({
   selector: 'app-movements',
@@ -86,16 +84,6 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       }).catch(error => {
         alert(JSON.stringify(error, null, 2));
       });
-    }
-  }
-
-  validateAmount(event: any): void {
-    const pattern = /^[a-zA-Z]+$/;
-    const inputChar = String.fromCharCode(event.charCode);
-
-    if (pattern.test(inputChar)) {
-      // invalid character, prevent input
-      event.preventDefault();
     }
   }
 }

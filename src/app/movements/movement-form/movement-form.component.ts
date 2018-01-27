@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Movement } from '../movement';
-import { Category } from '../../categories/category';
-import { UtilsService } from '../../shared/utils/utils.service';
-import { MovementService } from '../movement.service';
+import { Category } from '@app/categories';
+import { CategoryService } from '@app/core';
+import { UtilsService } from '@app/shared';
+import { MovementService } from '@app/core';
 import { MovementFormService } from './movement-form.service';
-import { CategoryService } from '../../categories/category.service';
 
 @Component({
   selector: 'app-movement-form',

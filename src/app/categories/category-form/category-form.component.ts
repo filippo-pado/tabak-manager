@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
+import { UtilsService } from '@app/shared';
+
 import { Category } from '../category';
-import { UtilsService } from '../../shared/utils/utils.service';
-import { CategoryService } from '../category.service';
+import { CategoryService } from '@app/core';
 import { CategoryFormService } from './category-form.service';
 
 @Component({
@@ -16,9 +17,14 @@ export class CategoryFormComponent implements OnInit {
   category: Category = new Category();
   validateNumberField: (evt: Event) => void;
 
-  constructor(private utilsService: UtilsService, private categoryService: CategoryService,
-    private categoryFormService: CategoryFormService, public snackBar: MatSnackBar,
-    private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private utilsService: UtilsService,
+    private categoryService: CategoryService,
+    private categoryFormService: CategoryFormService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.validateNumberField = this.utilsService.validateNumberField;

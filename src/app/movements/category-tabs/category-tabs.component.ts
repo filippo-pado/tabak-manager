@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTabGroup, MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 
-import { Category } from '../category';
+import { Category } from '@app/categories';
 import { CategoryService } from '@app/core';
 
 @Component({
@@ -31,9 +31,9 @@ export class CategoryTabsComponent implements OnInit {
   }
   parentTabChanged(event: MatTabChangeEvent): void {
     if (event.tab.textLabel === 'Tutti') {
-      this.router.navigate(['movements/category/all']);
+      this.router.navigate(['movements']);
     } else {
-      this.router.navigate(['movements/category/' + this.categoryGroups[event.tab.textLabel.toLowerCase()][0]._id]);
+      this.router.navigate(['movements'], { queryParams: { category_id: this.categoryGroups[event.tab.textLabel.toLowerCase()][0]._id } });
     }
   }
 }

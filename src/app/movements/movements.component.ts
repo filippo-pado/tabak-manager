@@ -36,9 +36,10 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         this.dataSource._updateChangeSubscription();
       });
     });
-    this.route.paramMap.subscribe(params => {
-      if (params.get('movement_id') === null) {
-        const filterCategory = params.get('category_id') === 'all' ? {} : { category: params.get('category_id') };
+    this.route.queryParams.subscribe(params => {
+      // if movement_id changes, load only if it comes from first load by url
+      if (!params.movement_id || !this.dataSource.data.length) {
+        const filterCategory = (params && params.category_id) ? { category: params.category_id } : {};
         this.movementService.query(filterCategory, 'category').then(movements => {
           this.dataSource.data = movements;
         });

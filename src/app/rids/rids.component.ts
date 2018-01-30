@@ -12,8 +12,6 @@ import { RidService } from '@app/core';
 export class RidsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];
   dataSource: MatTableDataSource<Rid>;
-  selectedCategory: String;
-  editingRidID: String;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,26 +24,18 @@ export class RidsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.selectedCategory = 'tutti';
+  }
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource();
     this.ridService.getAll().then(rids => {
       this.dataSource.data = rids;
       this.displayedColumns = ['category', 'description', 'date', 'amount', 'verified'];
     });
   }
-  ngOnInit() {
-    this.dataSource = new MatTableDataSource();
-  }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-  }
-  changedCategory(category: string): void {
-    this.selectedCategory = category;
-    const filterCategory = this.selectedCategory === 'tutti' ? {} : { category: this.selectedCategory };
-    this.ridService.query(filterCategory).then(rids => {
-      this.dataSource.data = rids;
-    });
   }
   verify(rid: Rid): void {
     this.ridService.update(rid._id, rid).then(response => {

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var RidSchema = new mongoose.Schema({
-  category: String,
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
   description: String,
   date: Date,
   amount: Number,

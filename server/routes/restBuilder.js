@@ -27,6 +27,14 @@ module.exports = function (router, model) {
     });
   });
 
+  /*SAVE MANY ITEMS*/
+  router.post('/bulk', function (req, res, next) {
+    model.insertMany(req.body, function (err, data) {
+      if (err) return next(err);
+      res.json(data);
+    });
+  });
+
   /* QUERY ITEMS */
   router.post('/query', function (req, res, next) {
     model.find(req.body.query ? req.body.query : {}).populate(req.body.populate ? req.body.populate : '').exec(function (err, data) {

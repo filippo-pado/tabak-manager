@@ -39,6 +39,13 @@ export class RidService {
       .catch(this.handleError);
   }
 
+  createMany(rids: Rid[]): Promise<Rid> {
+    return this.http.post(this.ridsUrl + '/bulk', rids)
+      .toPromise()
+      .then(response => response as Rid[])
+      .catch(this.handleError);
+  }
+
   update(id: string, updates: any): Promise<Rid> {
     const url = `${this.ridsUrl}/${id}`;
     return this.http.patch(url, updates)

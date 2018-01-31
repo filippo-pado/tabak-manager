@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'dev') {
   var logger = require('morgan');
   app.use(logger('dev'));
 }
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/', routes);

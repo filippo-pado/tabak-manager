@@ -1,5 +1,5 @@
 <mat-card class="container">
-  <app-rid-uploader></app-rid-uploader>
+  <app-rid-uploader (ridsLoaded)='ridsLoaded($event)'></app-rid-uploader>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
   </mat-form-field>
@@ -7,7 +7,8 @@
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
       <mat-cell *matCellDef="let rid">
-        {{rid.category | titlecase}}
+        <span *ngIf='rid.category'>{{rid.category.name | titlecase}}</span>
+        <span *ngIf='!rid.category'>Altro</span>
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">

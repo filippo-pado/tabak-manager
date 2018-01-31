@@ -57,6 +57,8 @@ export class MovementFormComponent implements OnInit {
     this.dateEl.nativeElement.focus();
   }
   onSubmit() {
+    this.movement.date = new Date(this.movement.date);
+    this.movement.date.setHours(12, 0, 0);
     let query: Promise<Movement>;
     if (this.action === 'new') {
       query = this.movementService.create(this.movement);
@@ -64,6 +66,7 @@ export class MovementFormComponent implements OnInit {
       query = this.movementService.update(this.movement._id, this.movement);
     }
     query.then(response => {
+      console.log(response);
       this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
       this.movementFormService.updateMovementID(response._id);
       this.returnToCategories();

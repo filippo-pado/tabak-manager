@@ -27,15 +27,18 @@ export class RidsComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.ridService.getAll().then(rids => {
-      this.dataSource.data = rids;
-      this.displayedColumns = ['category', 'description', 'date', 'amount', 'verified'];
-    });
+    this.reload();
+    this.displayedColumns = ['category', 'description', 'date', 'amount', 'verified'];
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+  private reload(): void {
+    this.ridService.query({}, 'category').then(rids => {
+      this.dataSource.data = rids;
+    });
   }
   verify(rid: Rid): void {
     this.ridService.update(rid._id, rid).then(response => {
@@ -44,5 +47,8 @@ export class RidsComponent implements OnInit, AfterViewInit {
     }).catch(error => {
       alert(JSON.stringify(error, null, 2));
     });
+  }
+  ridsLoaded(): void {
+    this.reload();
   }
 }

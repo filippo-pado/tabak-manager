@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+
 import { Rid } from '../rid';
 import { Category } from '@app/categories';
+import { RidService } from '@app/core';
 import { CategoryService } from '@app/core';
 
 import * as XLSX from 'xlsx';
@@ -12,15 +15,30 @@ type AOA = any[][];
   styleUrls: ['./rid-uploader.component.css']
 })
 export class RidUploaderComponent implements OnInit {
+  loading: boolean = false;
   data: AOA = [[]];
   categories: Category[];
+  inputFile: File;
+  inputFileName: string = '';
+  @Output() ridsLoaded: EventEmitter<void> = new EventEmitter();
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService, private ridService: RidService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.categoryService.getAll().then(categories => {
       this.categories = categories;
     });
+  }
+
+  deleteAll(): void {
+    if (confirm('ATTENZIONE: eliminare tutti i rid presenti??? OPERAZIONE IRREVERSIBILE!')) {
+      this.ridService.deleteAll().then(() => {
+        this.snackBar.open('Rid eliminati!', 'Ok', { duration: 2000 });
+        this.ridsLoaded.emit();
+      }).catch(error => {
+        alert(JSON.stringify(error, null, 2));
+      });
+    }
   }
 
   onFileChange(evt: any) {
@@ -29,6 +47,11 @@ export class RidUploaderComponent implements OnInit {
     if (target.files.length !== 1) {
       throw new Error('Cannot use multiple files');
     }
+    this.inputFile = evt.target.files[0];
+    this.inputFileName = this.inputFile.name;
+  }
+
+  load(): void {
     const reader: FileReader = new FileReader();
     reader.onload = (e: any) => {
       // read workbook
@@ -44,19 +67,32 @@ export class RidUploaderComponent implements OnInit {
       this.data.forEach(row => {
         if (row[0] && (parseInt(row[0].substr(0, 2), 10))) {
           const rid = new Rid();
-          rid.category = this.findCategoryAndSanitaze(row[3]);
-          rid.date = row[2];
-          rid.description = row[3];
-          rid.amount = row[4];
+          rid.category = this.findCategory(row[3]);
+          rid.description = rid.category ? rid.category.name : row[3];
+          rid.amount = row[4].replace('€', '').replace(' ', '');
+          rid.verifiedMovement = undefined;
+          rid.verified = false;
+          const [day, month, year] = row[2].split('/');
+          rid.date = new Date(year, month - 1, day);
           ridToSave.push(rid);
         }
       });
-      console.log(ridToSave);
+      this.loading = true;
+      this.ridService.createMany(ridToSave)
+        .then((rids: Rid[]) => {
+          this.loading = false;
+          this.snackBar.open('Rid caricati!', 'Ok', { duration: 2000 });
+          this.ridsLoaded.emit();
+        })
+        .catch(error => {
+          this.loading = false;
+          alert(JSON.stringify(error, null, 2));
+        });
     };
-    reader.readAsBinaryString(target.files[0]);
+    reader.readAsBinaryString(this.inputFile);
   }
 
-  private findCategoryAndSanitaze(description: string): Category {
+  private findCategory(description: string): Category {
     const descriptionMap = new Map<string, string>();
     descriptionMap.set('Delega f24', 'f24');
     descriptionMap.set('Bon sepa', null);

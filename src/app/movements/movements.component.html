@@ -8,7 +8,7 @@
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.category.name | titlecase}}
+        {{movement.category | titlecase}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="date">
@@ -26,14 +26,13 @@
     <ng-container matColumnDef="profit">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Aggio </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{(movement.amount*movement.category.amountToProfit) | currency:'EUR'}}
+        {{movement.profit | currency:'EUR'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="rid">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Rid </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        <div>{{movement.rid | currency:'EUR'}}</div>
-        <div *ngIf='movement.extraRid!==0'>& {{movement.extraRid | currency:'EUR'}}</div>
+        {{movement.rid[0] | currency:'EUR'}} + {{movement.rid[1] | currency:'EUR'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="note">
@@ -47,7 +46,8 @@
       <mat-cell *matCellDef="let movement">
         <button mat-icon-button (click)='verify(movement)' color="primary">
           <mat-icon>{{movement.verified ? 'warning' : 'check'}}</mat-icon>
-        </button>{{movement.verified ? (movement.verifiedRid ? movement.verifiedRid._id : 'SI') : '--' }}
+        </button>
+        {{movement.verifiedRid ? movement.verifiedRid : (movement.verified ? 'Si' : 'No')}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="action">

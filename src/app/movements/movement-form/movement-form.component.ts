@@ -66,7 +66,6 @@ export class MovementFormComponent implements OnInit {
       query = this.movementService.update(this.movement._id, this.movement);
     }
     query.then(response => {
-      console.log(response);
       this.snackBar.open(this.action === 'new' ? 'Movimento creato!' : 'Movimento modificato!', 'Ok', { duration: 2000 });
       this.movementFormService.updateMovementID(response._id);
       this.returnToCategories();

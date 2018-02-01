@@ -5,6 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Movement } from './movement';
 import { MovementService } from '@app/core';
 import { MovementFormService } from './movement-form/movement-form.service';
+import { unescape } from 'querystring';
 
 @Component({
   selector: 'app-movements',
@@ -13,7 +14,7 @@ import { MovementFormService } from './movement-form/movement-form.service';
 })
 export class MovementsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];
-  dataSource: MatTableDataSource<Movement>;
+  dataSource: MatTableDataSource<MovementTableData>;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,9 +30,9 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         const movement = movements[0];
         const movementIndex = this.dataSource.data.findIndex(mov => mov._id === movement._id);
         if (movementIndex !== -1) {
-          this.dataSource.data[movementIndex] = movement;
+          this.dataSource.data[movementIndex] = new MovementTableData(movement);
         } else {
-          this.dataSource.data.unshift(movement);
+          this.dataSource.data.unshift(new MovementTableData(movement));
         }
         this.dataSource._updateChangeSubscription();
       });
@@ -41,7 +42,11 @@ export class MovementsComponent implements OnInit, AfterViewInit {
       if (!params.movement_id || !this.dataSource.data.length) {
         const filterCategory = (params && params.category_id) ? { category: params.category_id } : {};
         this.movementService.query(filterCategory, 'category').then(movements => {
-          this.dataSource.data = movements;
+          const data: MovementTableData[] = [];
+          movements.forEach(movement => {
+            data.push(new MovementTableData(movement));
+          });
+          this.dataSource.data = data;
         });
       }
     });
@@ -62,23 +67,31 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  verify(movement: Movement): void {
-    if (movement.verified) {
-      movement.verified = false;
-      movement.verifiedRid = null;
-    } else {
-      movement.verified = true;
-    }
-    this.movementService.update(movement._id, movement).then(response => {
-      this.snackBar.open(movement.verified ? 'Movimento verificato!' : 'Movimento non verificato!', 'Ok', { duration: 2000 });
-    }).catch(error => {
-      alert(JSON.stringify(error, null, 2));
+  verify(tableMovement: MovementTableData): void {
+    this.movementService.getOne(tableMovement._id).then((movement: Movement) => {
+      if (tableMovement.verified) {
+        movement.verified = false;
+        movement.verifiedRid = undefined;
+      } else {
+        movement.verified = true;
+      }
+      this.movementService.update(movement._id, movement).then(response => {
+        this.snackBar.open(response.verified ? 'Movimento verificato!' : 'Movimento non verificato!', 'Ok', { duration: 2000 });
+        const movementIndex = this.dataSource.data.findIndex(mov => mov._id === response._id);
+        if (movementIndex !== -1) {
+          this.dataSource.data[movementIndex].verified = response.verified;
+          this.dataSource.data[movementIndex].verifiedRid = response.verifiedRid ? response.verifiedRid.date : undefined;
+          this.dataSource._updateChangeSubscription();
+        }
+      }).catch(error => {
+        alert(JSON.stringify(error, null, 2));
+      });
     });
   }
   delete(movement: Movement): void {
     if (confirm('Eliminare elemento?')) {
       this.movementService.delete(movement._id).then(() => {
-        this.dataSource.data = this.dataSource.data.filter(function (elem: Movement) {
+        this.dataSource.data = this.dataSource.data.filter(function (elem: MovementTableData) {
           return elem._id !== movement._id;
         });
         this.snackBar.open('Movimento eliminato!', 'Ok', { duration: 2000 });
@@ -86,5 +99,29 @@ export class MovementsComponent implements OnInit, AfterViewInit {
         alert(JSON.stringify(error, null, 2));
       });
     }
+  }
+}
+
+class MovementTableData {
+  _id: string;
+  category: string;
+  date: Date;
+  amount: number;
+  profit: number;
+  rid: number[] = [];
+  note: string;
+  verified: boolean;
+  verifiedRid: Date;
+  constructor(movement: Movement) {
+    this._id = movement._id;
+    this.category = movement.category.name;
+    this.date = movement.date;
+    this.amount = movement.amount;
+    this.profit = movement.amount * movement.category.amountToProfit;
+    this.rid.push(movement.rid);
+    this.rid.push(movement.extraRid);
+    this.note = movement.note;
+    this.verified = movement.verified;
+    this.verifiedRid = movement.verifiedRid ? movement.verifiedRid.date : undefined;
   }
 }

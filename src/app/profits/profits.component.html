@@ -1,5 +1,6 @@
 <mat-card>
-  <h1>Aggi</h1>
+  <h1>Aggio attuale: {{totalProfit | currency:'EUR'}}</h1>
+  <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>
   <mat-button-toggle-group>
     <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
       Mensile

@@ -1,0 +1,17 @@
+<div class="upload-row">
+  <input type='text' matInput placeholder="Carica excel..." (click)="imgFileInput.click()" [ngModel]="inputFileName" />
+  <button mat-raised-button color='primary' (click)="imgFileInput.click()">Browse</button>
+  <input hidden type="file" #imgFileInput (change)="onFileChange($event)" accept=".xls,.xlsx" />
+  <button mat-raised-button color='primary' (click)="load()" [disabled]='!inputFile'>Carica</button>
+  <button mat-raised-button color='warn' (click)='deleteAll()'>Elimina tutti</button>
+</div>
+
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<!--<input type="file" (change)="onFileChange($event)" placeholder="Upload file">-->
+<!--<table class="sjs-table">
+  <tr *ngFor="let row of data">
+    <td *ngFor="let val of row">
+      {{val}}
+    </td>
+  </tr>
+</table>-->

@@ -5,7 +5,6 @@ import { CategoriesRoutingModule } from './categories-routing.module';
 
 import { CategoriesComponent } from './categories.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
-import { CategoryTabsComponent } from './category-tabs/category-tabs.component';
 
 import { CategoryFormService } from './category-form/category-form.service';
 
@@ -15,11 +14,10 @@ import { CategoryFormService } from './category-form/category-form.service';
     CategoriesRoutingModule
   ],
   declarations: [
-    CategoriesComponent, CategoryFormComponent, CategoryTabsComponent
+    CategoriesComponent, CategoryFormComponent
   ],
   providers: [
     CategoryFormService
-  ],
-  exports: [CategoryTabsComponent]
+  ]
 })
 export class CategoriesModule { }

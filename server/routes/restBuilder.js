@@ -1,9 +1,11 @@
-module.exports = function (router, model) {
+module.exports = function (router, model, enableDeleteAll = false) {
   var mongoose = require('mongoose');
 
   /*
     GET /
     POST /
+    DELETE /
+
     POST /query
 
     GET /:id
@@ -22,6 +24,24 @@ module.exports = function (router, model) {
   /* SAVE ITEM */
   router.post('/', function (req, res, next) {
     model.create(req.body, function (err, data) {
+      if (err) return next(err);
+      res.json(data);
+    });
+  });
+
+  /* DELETE ALL*/
+  if (enableDeleteAll) {
+    router.delete('/', function (req, res, next) {
+      model.remove({}, function (err, data) {
+        if (err) return next(err);
+        res.json(data);
+      });
+    });
+  }
+
+  /*SAVE MANY ITEMS*/
+  router.post('/bulk', function (req, res, next) {
+    model.insertMany(req.body, function (err, data) {
       if (err) return next(err);
       res.json(data);
     });

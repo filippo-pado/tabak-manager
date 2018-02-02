@@ -1,4 +1,5 @@
 <mat-card class="container">
+  <app-rid-uploader (ridsLoaded)='ridsLoaded($event)'></app-rid-uploader>
   <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
   </mat-form-field>
@@ -6,7 +7,7 @@
     <ng-container matColumnDef="category">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
       <mat-cell *matCellDef="let rid">
-        {{rid.category | titlecase}}
+        {{rid.category}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="description">
@@ -32,7 +33,14 @@
       <mat-cell *matCellDef="let rid">
         <button mat-icon-button (click)='verify(rid)' color="primary">
           <mat-icon>{{rid.verified ? 'warning' : 'check'}}</mat-icon>
-        </button>{{rid.verified ? (rid.verifiedMovement ? rid.verifiedMovement._id : 'SI') : '--' }}
+        </button>
+        {{rid.verifiedMovement ? rid.verifiedMovement : (rid.verified ? 'Si' : 'No')}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="verifiedMovement">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Data trovata </mat-header-cell>
+      <mat-cell *matCellDef="let rid">
+        {{rid.verifiedMovement ? (rid.date | date: 'yyyy-MM-dd ') : 'Non trovato'}}
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

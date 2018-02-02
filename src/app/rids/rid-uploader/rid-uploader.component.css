@@ -1,0 +1,10 @@
+.upload-row { 
+  display: flex;
+  direction: row;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+.upload-row > button{
+  margin-left: 12px;
+  min-width: auto;
+}

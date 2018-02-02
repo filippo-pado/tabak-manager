@@ -25,8 +25,8 @@ export class RidService {
       .catch(this.handleError);
   }
 
-  query(query: any = {}): Promise<Rid[]> {
-    return this.http.post(this.ridsUrl + '/query', query)
+  query(query: any = {}, populate: string = ''): Promise<Rid[]> {
+    return this.http.post(this.ridsUrl + '/query', { query: query, populate: populate })
       .toPromise()
       .then(response => response as Rid[])
       .catch(this.handleError);
@@ -36,6 +36,13 @@ export class RidService {
     return this.http.post(this.ridsUrl, rid)
       .toPromise()
       .then(response => response as Rid)
+      .catch(this.handleError);
+  }
+
+  createMany(rids: Rid[]): Promise<Rid[]> {
+    return this.http.post(this.ridsUrl + '/bulk', rids)
+      .toPromise()
+      .then(response => response as Rid[])
       .catch(this.handleError);
   }
 
@@ -55,6 +62,12 @@ export class RidService {
       .catch(this.handleError);
   }
 
+  deleteAll(): Promise<void> {
+    return this.http.delete(this.ridsUrl)
+      .toPromise()
+      .then(() => null)
+      .catch(this.handleError);
+  }
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error);

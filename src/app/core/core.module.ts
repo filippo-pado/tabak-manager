@@ -10,6 +10,7 @@ import { CategoryService } from './http/category.service';
 import { MovementService } from './http/movement.service';
 import { ProfitService } from './http/profit.service';
 import { RidService } from './http/rid.service';
+import { LogService } from './http/log.service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { RidService } from './http/rid.service';
     MovementService,
     ProfitService,
     RidService,
+    LogService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })

@@ -36,7 +36,6 @@ export class MovementFormComponent implements OnInit {
             alert(JSON.stringify(error, null, 2));
           });
       } else {
-        this.reset();
         if (params.category_id) {
           this.categoryService.getOne(params.category_id)
             .then(category => {
@@ -45,6 +44,8 @@ export class MovementFormComponent implements OnInit {
             .catch(error => {
               alert(JSON.stringify(error, null, 2));
             });
+        } else {
+          this.reset();
         }
       }
       this.dateEl.nativeElement.focus();

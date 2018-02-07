@@ -49,10 +49,14 @@ module.exports = function (router, model, enableDeleteAll = false) {
 
   /* QUERY ITEMS */
   router.post('/query', function (req, res, next) {
-    model.find(req.body.query ? req.body.query : {}).populate(req.body.populate ? req.body.populate : '').exec(function (err, data) {
-      if (err) return next(err);
-      res.json(data);
-    });
+    model.find(req.body.query ? req.body.query : {})
+      .populate(req.body.populate ? req.body.populate : '')
+      .sort(req.body.sort ? req.body.sort : {})
+      .limit(req.body.limit ? req.body.limit : 10000000)
+      .exec(function (err, data) {
+        if (err) return next(err);
+        res.json(data);
+      });
   });
 
   /* GET SINGLE ITEM BY ID */

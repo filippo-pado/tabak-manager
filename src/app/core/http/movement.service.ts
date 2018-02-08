@@ -25,8 +25,8 @@ export class MovementService {
       .catch(this.handleError);
   }
 
-  query(query: any = {}, populate: string = ''): Promise<Movement[]> {
-    return this.http.post(this.movementsUrl + '/query', { query: query, populate: populate })
+  query(query: any = {}, populate: string = '', sort: object = {}, limit: number = 100000000): Promise<Movement[]> {
+    return this.http.post(this.movementsUrl + '/query', { query: query, populate: populate, sort: sort, limit: limit })
       .toPromise()
       .then(response => response as Movement[])
       .catch(this.handleError);

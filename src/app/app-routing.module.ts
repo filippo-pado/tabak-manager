@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'profits',
     canActivate: [AuthGuard],
     loadChildren: 'app/profits/profits.module#ProfitsModule'
+  },
+  {
+    path: 'logs',
+    canActivate: [AuthGuard],
+    loadChildren: 'app/logs/logs.module#LogsModule'
   }
 ];
 

@@ -4,6 +4,7 @@ import { SharedModule } from '@app/shared';
 import { RidsComponent } from './rids.component';
 import { RidsRoutingModule } from './rids-routing.module';
 import { RidUploaderComponent } from './rid-uploader/rid-uploader.component';
+import { RidVerifierComponent } from './rid-verifier/rid-verifier.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { RidUploaderComponent } from './rid-uploader/rid-uploader.component';
   ],
   declarations: [
     RidsComponent,
-    RidUploaderComponent
+    RidUploaderComponent,
+    RidVerifierComponent
   ],
   providers: []
 })

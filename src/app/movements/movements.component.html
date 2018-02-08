@@ -14,7 +14,7 @@
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
       <mat-cell *matCellDef="let movement">
-        {{movement.date | date: 'yyyy-MM-dd '}}
+        {{movement.date | date: 'yyyy-MM-dd'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="amount">

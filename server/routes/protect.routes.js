@@ -1,5 +1,4 @@
-var express = require('express'),
-  jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
   let auth_header = req.headers['authorization'];

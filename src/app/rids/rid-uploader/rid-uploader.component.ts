@@ -102,7 +102,6 @@ export class RidUploaderComponent implements OnInit {
     descriptionMap.set('regione veneto', 'bollo auto');
     descriptionMap.set('busitalia veneto', 'abbonamenti bus');
     descriptionMap.set('logista italia', 'tabacchi');
-    descriptionMap.set('busitalia veneto', 'abbonamenti bus');
     descriptionMap.set('moneygram', 'moneygram');
     descriptionMap.set('lis ip s. P. A', 'lis ip s. P. A');
 

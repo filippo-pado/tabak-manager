@@ -1,0 +1,22 @@
+<mat-card>
+  <div class='mat-h1'>Log</div>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
+  </mat-form-field>
+  <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc">
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
+      <mat-cell *matCellDef="let log">{{log.date | date:'full'}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="requestType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Url </mat-header-cell>
+      <mat-cell *matCellDef="let log">{{log.requestType}} {{log.url}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="body">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Oggetto </mat-header-cell>
+      <mat-cell *matCellDef="let log">{{log.body | json}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</mat-card>

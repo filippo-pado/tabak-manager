@@ -1,11 +1,14 @@
 <mat-toolbar color="primary">
-  <a mat-button routerLink="/" class='navbar-main'>Tabak-Manager</a>
-  <a [class.show]='loginObserver | async' mat-button routerLink="movements" class='navbar-item'>Contabilità</a>
-  <a [class.show]='loginObserver | async' mat-button routerLink="rids" class='navbar-item'>Rid</a>
-  <a [class.show]='loginObserver | async' mat-button routerLink="categories" class='navbar-item'>Categorie</a>
-  <a [class.show]='loginObserver | async' mat-button routerLink="profits" class='navbar-item'>Aggi</a>
-  <a [class.show]='loginObserver | async' mat-button routerLink="logs" class='navbar-item'>Log</a>
+  <a mat-button routerLink="/" class='navbar-main'>
+    <div class='logo-big'>TABAK</div>
+    <div class='logo-small'>MANAGER</div>
+  </a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="movements" class='navbar-item'>CONTABILITA'</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="rids" class='navbar-item'>RID</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="categories" class='navbar-item'>CATEGORIE</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="profits" class='navbar-item'>AGGI</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink="logs" class='navbar-item'>LOG</a>
   <!-- This fills the remaining space of the current row -->
   <span style='flex: 1 1 auto;'></span>
-  <a [class.show]='loginObserver | async' mat-button routerLink='/login' class='navbar-item'>Logout</a>
+  <a [class.show]='loginObserver | async' mat-button routerLink='/login' class='navbar-item'>LOGOUT</a>
 </mat-toolbar>

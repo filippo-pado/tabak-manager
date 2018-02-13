@@ -1,11 +1,20 @@
+.logo-big{  
+  font-size: 24px;
+}
+
+.logo-small{  
+  font-weight: 200;
+  font-size: 16px;
+}
+
 .navbar-main {
   color: white;
-  font-size: 30px;
+  line-height: 22px;
 }
 
 .navbar-item {
   color: white;
-  font-size: 20px;
+  font-size: 18px;
   display: none;
 }
 

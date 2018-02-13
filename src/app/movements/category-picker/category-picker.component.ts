@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTabGroup, MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 
 import { Category } from '@app/categories';
 import { CategoryService } from '@app/core';
 
 @Component({
-  selector: 'app-category-tabs',
-  templateUrl: './category-tabs.component.html',
-  styleUrls: ['./category-tabs.component.css']
+  selector: 'app-category-picker',
+  templateUrl: './category-picker.component.html',
+  styleUrls: ['./category-picker.component.css']
 })
-export class CategoryTabsComponent implements OnInit {
+export class CategoryPickerComponent implements OnInit {
   objectKeys = Object.keys;
   categories: Category[] = [];
   categoryGroups: { [key: string]: Category[] } = {};
@@ -28,12 +27,5 @@ export class CategoryTabsComponent implements OnInit {
         this.categoryGroups[group] = this.categories.filter(category => category.group === group);
       });
     });
-  }
-  parentTabChanged(event: MatTabChangeEvent): void {
-    if (event.tab.textLabel === 'Tutti') {
-      this.router.navigate(['movements']);
-    } else {
-      this.router.navigate(['movements'], { queryParams: { category_id: this.categoryGroups[event.tab.textLabel.toLowerCase()][0]._id } });
-    }
   }
 }

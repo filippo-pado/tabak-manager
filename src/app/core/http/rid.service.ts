@@ -25,8 +25,8 @@ export class RidService {
       .catch(this.handleError);
   }
 
-  query(query: any = {}, populate: string = ''): Promise<Rid[]> {
-    return this.http.post(this.ridsUrl + '/query', { query: query, populate: populate })
+  query(query: any = {}, populate: string = '', sort: object = {}, limit: number = 100000000): Promise<Rid[]> {
+    return this.http.post(this.ridsUrl + '/query', { query: query, populate: populate, sort: sort, limit: limit })
       .toPromise()
       .then(response => response as Rid[])
       .catch(this.handleError);

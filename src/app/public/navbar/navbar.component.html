@@ -1,7 +1,8 @@
 <mat-toolbar color="primary">
   <a mat-button routerLink="/" class='navbar-main'>
-    <div class='logo-big'>TABAK</div>
-    <div class='logo-small'>MANAGER</div>
+    <img src='/assets/white-logo.png' height='36'>
+    <span class='logo-big'>TABAK</span>
+    <span class='logo-small'>MANAGER</span>
   </a>
   <a [class.show]='loginObserver | async' mat-button routerLink="movements" class='navbar-item'>CONTABILITA'</a>
   <a [class.show]='loginObserver | async' mat-button routerLink="rids" class='navbar-item'>RID</a>

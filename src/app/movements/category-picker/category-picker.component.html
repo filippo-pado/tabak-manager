@@ -1,19 +1,11 @@
 <mat-toolbar class='category-toolbar'>
-  <a class='group-button' mat-button [routerLink]="['./']">
-    Tutti
-  </a>
-  <ng-container *ngFor='let group of objectKeys(categoryGroups)'>
-    <button class='group-button' mat-button #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="appMenu">
-      {{group | titlecase}}
-    </button>
-    <mat-menu #appMenu="matMenu">
-      <span (mouseleave)="menuTrigger.closeMenu()">
-        <a mat-menu-item *ngFor='let category of categoryGroups[group]' [routerLink]="['./']" [queryParams]="{ category_id: category._id }">
-          {{category.name | titlecase}}
-        </a>
-      </span>
-    </mat-menu>
-  </ng-container>
+  <div class="dropdown" *ngFor='let group of objectKeys(categoryGroups)'>
+    <button mat-button class="dropbtn">{{group | titlecase}}</button>
+    <div class="dropdown-content">
+      <a mat-button *ngFor='let category of categoryGroups[group]' [routerLink]="['./']" [queryParams]="{ category_id: category._id }">
+        {{category.name | titlecase}}
+      </a>
+    </div>
+  </div>
 </mat-toolbar>
-
 <router-outlet></router-outlet>

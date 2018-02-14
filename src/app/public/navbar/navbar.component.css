@@ -1,10 +1,12 @@
 .logo-big{  
   font-size: 24px;
+  padding-left: 8px;
 }
 
 .logo-small{  
   font-weight: 200;
   font-size: 16px;
+  vertical-align: baseline;
 }
 
 .navbar-main {

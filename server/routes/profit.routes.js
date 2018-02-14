@@ -16,6 +16,11 @@ router.get('/', (req, res) => {
     },
     { $unwind: '$category' },
     {
+      $match: {
+        'category.art': { '$ne': '' }
+      }
+    },
+    {
       $group: {
         _id: {
           group: req.query.group ? ('$category.' + req.query.group) : '$category.profitGroup',

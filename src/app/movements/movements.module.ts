@@ -5,7 +5,7 @@ import { MovementsRoutingModule } from './movements-routing.module';
 
 import { MovementsComponent } from './movements.component';
 import { MovementFormComponent } from './movement-form/movement-form.component';
-import { CategoryTabsComponent } from './category-tabs/category-tabs.component';
+import { CategoryPickerComponent } from './category-picker/category-picker.component';
 
 import { MovementFormService } from './movement-form/movement-form.service';
 
@@ -15,7 +15,7 @@ import { MovementFormService } from './movement-form/movement-form.service';
     MovementsRoutingModule
   ],
   declarations: [
-    MovementsComponent, MovementFormComponent, CategoryTabsComponent
+    MovementsComponent, MovementFormComponent, CategoryPickerComponent
   ],
   providers: [
     MovementFormService

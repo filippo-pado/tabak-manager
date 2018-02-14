@@ -20,6 +20,7 @@ export class RidUploaderComponent implements OnInit {
   categories: Category[];
   inputFile: File;
   inputFileName: string = '';
+  descriptionMap: Map<string, string>;
   @Output() ridsLoaded: EventEmitter<void> = new EventEmitter();
 
   constructor(private categoryService: CategoryService, private ridService: RidService, public snackBar: MatSnackBar) { }
@@ -28,6 +29,17 @@ export class RidUploaderComponent implements OnInit {
     this.categoryService.getAll().then(categories => {
       this.categories = categories;
     });
+    this.descriptionMap = new Map<string, string>();
+    this.descriptionMap.set('Delega f24', 'f24');
+    this.descriptionMap.set('Bon sepa', null);
+    this.descriptionMap.set('wursi srl', 'western union');
+    this.descriptionMap.set('sisal group', 'superenalotto');
+    this.descriptionMap.set('lottomatica holding', 'lotto');
+    this.descriptionMap.set('regione veneto', 'bollo auto');
+    this.descriptionMap.set('busitalia veneto', 'abbonamenti bus');
+    this.descriptionMap.set('logista italia', 'tabacchi');
+    this.descriptionMap.set('moneygram', 'moneygram');
+    this.descriptionMap.set('lis ip s. P. A', 'lis ip s. P. A');
   }
 
   deleteAll(): void {
@@ -93,20 +105,8 @@ export class RidUploaderComponent implements OnInit {
   }
 
   private findCategory(description: string): Category {
-    const descriptionMap = new Map<string, string>();
-    descriptionMap.set('Delega f24', 'f24');
-    descriptionMap.set('Bon sepa', null);
-    descriptionMap.set('wursi srl', 'western union');
-    descriptionMap.set('sisal group', 'superenalotto');
-    descriptionMap.set('lottomatica holding', 'lotto');
-    descriptionMap.set('regione veneto', 'bollo auto');
-    descriptionMap.set('busitalia veneto', 'abbonamenti bus');
-    descriptionMap.set('logista italia', 'tabacchi');
-    descriptionMap.set('moneygram', 'moneygram');
-    descriptionMap.set('lis ip s. P. A', 'lis ip s. P. A');
-
     let categoryFound: Category;
-    descriptionMap.forEach((value: string, key: string) => {
+    this.descriptionMap.forEach((value: string, key: string) => {
       if (description.indexOf(key) !== -1) {
         if (value !== null) {
           categoryFound = this.categories.find(category => category.name === value);

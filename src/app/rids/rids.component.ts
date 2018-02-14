@@ -49,7 +49,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
         const ridIndex = this.dataSource.data.findIndex(ri => ri._id === response._id);
         if (ridIndex !== -1) {
           this.dataSource.data[ridIndex].verified = response.verified;
-          this.dataSource.data[ridIndex].verifiedMovement = response.verifiedMovement ? response.verifiedMovement.date : undefined;
+          this.dataSource.data[ridIndex].verifiedMovement = response.verifiedMovement;
           this.dataSource._updateChangeSubscription();
         }
       }).catch(error => {
@@ -79,7 +79,7 @@ class RidTableData {
   date: Date;
   amount: number;
   verified: boolean;
-  verifiedMovement: Date;
+  verifiedMovement: string;
   constructor(rid: Rid) {
     this._id = rid._id;
     this.category = rid.category ? rid.category.name : 'Altro';
@@ -87,6 +87,6 @@ class RidTableData {
     this.date = rid.date;
     this.amount = rid.amount;
     this.verified = rid.verified;
-    this.verifiedMovement = rid.verifiedMovement ? rid.verifiedMovement.date : undefined;
+    this.verifiedMovement = rid.verifiedMovement;
   }
 }

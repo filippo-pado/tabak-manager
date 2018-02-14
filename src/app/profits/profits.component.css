@@ -1,12 +1,16 @@
 .buttonToggle{
   color: black;
 }
-.mat-cell{
-  padding-right: 10px;
-}
 .mat-header-cell.mat-sort-header-sorted {
-  color: black;
+  color: black;  
 }
 .mat-row{
   min-height: auto;
+}
+.currency-cell{
+  text-align: end;
+}
+.currency-header {
+  display: flex;
+  justify-content: flex-end;
 }

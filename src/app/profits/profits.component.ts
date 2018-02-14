@@ -48,7 +48,8 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
       this.periods.concat(['totalGroup']).forEach(period => {
         totalRow[period] = 0;
         profits.forEach(row => {
-          totalRow[period] += row[period] ? row[period] : 0;
+          row[period] = row[period] ? row[period] : 0;
+          totalRow[period] += row[period];
         });
       });
       this.dataSource.data = profits.concat(totalRow);

@@ -1,6 +1,6 @@
 <mat-card>
-  <h1>Aggio attuale: {{totalProfit | currency:'EUR'}}</h1>
   <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>
+  <h2>Aggio attuale: {{totalProfit | currency:'EUR'}}</h2>
   <mat-button-toggle-group>
     <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
       Mensile
@@ -18,12 +18,12 @@
       <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
     </ng-container>
     <ng-container *ngFor='let period of periods' matColumnDef="{{period}}">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{[periodLabels[period-1]]}} </mat-header-cell>
-      <mat-cell *matCellDef="let group">{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'>{{[periodLabels[period-1]]}}</mat-header-cell>
+      <mat-cell *matCellDef="let group" class='currency-cell'>{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="totalGroup">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Totale </mat-header-cell>
-      <mat-cell *matCellDef="let group">{{group.totalGroup | currency: 'EUR'}}</mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'> Totale </mat-header-cell>
+      <mat-cell *matCellDef="let group" class='currency-cell'>{{group.totalGroup | currency: 'EUR'}}</mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -8,5 +8,5 @@ export class Rid {
   date: Date = new Date();
   amount: number = 0;
   verified: boolean = false;
-  verifiedMovement: Movement = new Movement();
+  verifiedMovement: string;
 }

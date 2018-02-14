@@ -10,6 +10,10 @@ const routes: Routes = [
     component: CategoriesComponent,
     children: [
       {
+        path: '',
+        component: CategoryFormComponent
+      },
+      {
         path: ':category_id',
         component: CategoryFormComponent
       }

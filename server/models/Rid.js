@@ -6,7 +6,7 @@ var RidSchema = new mongoose.Schema({
   date: Date,
   amount: Number,
   verified: Boolean,
-  verifiedMovement: { type: mongoose.Schema.Types.ObjectId, ref: 'Movement' }
+  verifiedMovement: String
 });
 
 module.exports = mongoose.model('Rid', RidSchema);

@@ -27,7 +27,11 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
     this.categoryFormService.categoryUpdatedID.subscribe(categoryUpdatedID => {
       this.categoryService.getOne(categoryUpdatedID).then(category => {
         const categoryIndex = this.dataSource.data.findIndex(cat => cat._id === category._id);
-        this.dataSource.data[categoryIndex] = category;
+        if (categoryIndex !== -1) {
+          this.dataSource.data[categoryIndex] = category;
+        } else {
+          this.dataSource.data.unshift(category);
+        }
         this.dataSource._updateChangeSubscription();
       });
     });

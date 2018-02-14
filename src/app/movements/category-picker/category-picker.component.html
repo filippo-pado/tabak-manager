@@ -1,0 +1,11 @@
+<mat-toolbar class='category-toolbar'>
+  <div class="dropdown" *ngFor='let group of objectKeys(categoryGroups)'>
+    <button mat-button class="dropbtn">{{group | titlecase}}</button>
+    <div class="dropdown-content">
+      <a mat-button *ngFor='let category of categoryGroups[group]' [routerLink]="['./']" [queryParams]="{ category_id: category._id }">
+        {{category.name | titlecase}}
+      </a>
+    </div>
+  </div>
+</mat-toolbar>
+<router-outlet></router-outlet>

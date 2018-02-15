@@ -33,7 +33,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
       <mat-cell *matCellDef="let rid">
         <button mat-icon-button (click)='verify(rid)' color="primary">
-          <mat-icon>{{rid.verified ? 'warning' : 'check'}}</mat-icon>
+          <mat-icon>{{rid.verified ? 'help_outline' : 'check_circle'}}</mat-icon>
         </button>
         {{rid.verifiedMovement ? rid.verifiedMovement : (rid.verified ? 'Si' : 'No')}}
       </mat-cell>

@@ -29,7 +29,6 @@ export class RidVerifierComponent implements OnInit {
           { 'rid': { $gt: 0 } }, { 'extraRid': { $gt: 0 } }
         ]
       }, 'category', { date: 'asc' }).then(movements => {
-        console.log(movements.length);
         this.movements = movements;
         this.rids.forEach(rid => {
           this.movements.forEach(movement => {

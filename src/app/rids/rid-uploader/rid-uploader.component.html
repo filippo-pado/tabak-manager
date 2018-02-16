@@ -5,8 +5,9 @@
   <button mat-raised-button color='primary' (click)="load()" [disabled]='!inputFile'>Carica</button>
   <button mat-raised-button color='warn' (click)='deleteAll()'>Elimina tutti</button>
 </div>
-
-<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+<div>
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+</div>
 <!--<input type="file" (change)="onFileChange($event)" placeholder="Upload file">-->
 <!--<table class="sjs-table">
   <tr *ngFor="let row of data">

@@ -10,6 +10,12 @@
         {{category.name}}
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="pattern">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Pattern </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.pattern}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="group">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo logico </mat-header-cell>
       <mat-cell *matCellDef="let category">

@@ -3,6 +3,7 @@ import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular
 
 import { Rid } from './rid';
 import { RidService } from '@app/core';
+import { MovementService } from '@app/core';
 import { interceptingHandler } from '@angular/common/http/src/module';
 
 @Component({
@@ -17,7 +18,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private ridService: RidService, public snackBar: MatSnackBar) { }
+  constructor(private ridService: RidService, private movementService: MovementService, public snackBar: MatSnackBar) { }
   /**
    * Set the sort after the view init since this component will
    * be able to query its view for the initialized sort.
@@ -49,7 +50,7 @@ export class RidsComponent implements OnInit, AfterViewInit {
         const ridIndex = this.dataSource.data.findIndex(ri => ri._id === response._id);
         if (ridIndex !== -1) {
           this.dataSource.data[ridIndex].verified = response.verified;
-          this.dataSource.data[ridIndex].verifiedMovement = response.verifiedMovement;
+          this.dataSource.data[ridIndex].verifiedMovement = response.verifiedMovement ? response.verifiedMovement : '';
           this.dataSource._updateChangeSubscription();
         }
       }).catch(error => {
@@ -60,6 +61,12 @@ export class RidsComponent implements OnInit, AfterViewInit {
   ridsLoaded(): void {
     this.reload();
   }
+  fetchMovementDate(rid: RidTableData) {
+    this.movementService.getOne(rid.verifiedMovement).then(movement => {
+      rid.verifiedMovementDate = movement.date;
+    });
+  }
+
 
   private reload(): void {
     const data: RidTableData[] = [];
@@ -80,6 +87,7 @@ class RidTableData {
   amount: number;
   verified: boolean;
   verifiedMovement: string;
+  verifiedMovementDate: Date;
   constructor(rid: Rid) {
     this._id = rid._id;
     this.category = rid.category ? rid.category.name : 'Altro';
@@ -87,6 +95,6 @@ class RidTableData {
     this.date = rid.date;
     this.amount = rid.amount;
     this.verified = rid.verified;
-    this.verifiedMovement = rid.verifiedMovement;
+    this.verifiedMovement = rid.verifiedMovement ? rid.verifiedMovement : '';
   }
 }

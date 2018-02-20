@@ -20,16 +20,15 @@ export class RidUploaderComponent implements OnInit {
   categories: Category[];
   inputFile: File;
   inputFileName: string = '';
-  descriptionMap: Map<string, string>;
   @Output() ridsLoaded: EventEmitter<void> = new EventEmitter();
 
   constructor(private categoryService: CategoryService, private ridService: RidService, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.categoryService.getAll().then(categories => {
-      this.categories = categories;
+      this.categories = categories.filter(category => (category.pattern && category.pattern !== ''));
     });
-    this.descriptionMap = new Map<string, string>();
+    /*this.descriptionMap = new Map<string, string>();
     this.descriptionMap.set('Delega f24', 'f24');
     this.descriptionMap.set('Bon sepa', null);
     this.descriptionMap.set('wursi srl', 'western union');
@@ -39,7 +38,7 @@ export class RidUploaderComponent implements OnInit {
     this.descriptionMap.set('busitalia veneto', 'abbonamenti bus');
     this.descriptionMap.set('logista italia', 'tabacchi');
     this.descriptionMap.set('moneygram', 'moneygram');
-    this.descriptionMap.set('lis ip s. P. A', 'lis ip s. P. A');
+    this.descriptionMap.set('lis ip s. P. A', 'lis ip s. P. A');*/
   }
 
   deleteAll(): void {
@@ -106,11 +105,9 @@ export class RidUploaderComponent implements OnInit {
 
   private findCategory(description: string): Category {
     let categoryFound: Category;
-    this.descriptionMap.forEach((value: string, key: string) => {
-      if (description.indexOf(key) !== -1) {
-        if (value !== null) {
-          categoryFound = this.categories.find(category => category.name === value);
-        }
+    this.categories.forEach(category => {
+      if (description.indexOf(category.pattern) !== -1) {
+        categoryFound = category;
         return;
       }
     });

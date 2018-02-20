@@ -1,4 +1,10 @@
 <mat-card>
+  <div>
+    <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around'>
+      <app-repartition-graph></app-repartition-graph>
+      <app-period-profit-graph></app-period-profit-graph>
+    </div>
+  </div>
   <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>
   <h2>Aggio attuale: {{totalProfit | currency:'EUR'}}</h2>
   <mat-button-toggle-group>
@@ -10,6 +16,14 @@
     </mat-button-toggle>
   </mat-button-toggle-group>
 
+  <mat-button-toggle-group *ngIf='view==="month"'>
+    <mat-button-toggle class='buttonToggle' (click)='viewSemester(1)' checked='true' value="1">
+      1° semestre
+    </mat-button-toggle>
+    <mat-button-toggle class='buttonToggle' (click)='viewSemester(2)' value="2">
+      2° semestre
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <mat-table #table [dataSource]="dataSource" matSort>
 
@@ -29,6 +43,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
 
 </mat-card>

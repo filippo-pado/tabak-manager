@@ -14,7 +14,13 @@
     </ng-container>
     <ng-container matColumnDef="body">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Oggetto </mat-header-cell>
-      <mat-cell *matCellDef="let log">{{log.body | json}}</mat-cell>
+      <mat-cell *matCellDef="let log">
+        <div class='log-body'>
+          <pre>
+            {{log.body | json}}
+          </pre>
+        </div>
+      </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

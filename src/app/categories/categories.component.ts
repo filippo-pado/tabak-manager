@@ -20,7 +20,7 @@ export class CategoriesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.displayedColumns = ['name', 'group', 'profitGroup', 'art', 'rate', 'amountToProfit', 'action'];
+    this.displayedColumns = ['name', 'pattern', 'group', 'profitGroup', 'art', 'rate', 'amountToProfit', 'action'];
     this.categoryService.getAll().then(categories => {
       this.dataSource.data = categories;
     });

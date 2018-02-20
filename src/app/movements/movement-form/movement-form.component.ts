@@ -31,7 +31,10 @@ export class MovementFormComponent implements OnInit {
       if (params.movement_id) {
         this.action = 'edit';
         this.movementService.query({ _id: params.movement_id }, 'category')
-          .then(movement => this.movement = movement[0])
+          .then(movement => {
+            this.dateEl.nativeElement.focus();
+            this.movement = movement[0];
+          })
           .catch(error => {
             alert(JSON.stringify(error, null, 2));
           });
@@ -48,14 +51,13 @@ export class MovementFormComponent implements OnInit {
           this.reset();
         }
       }
-      this.dateEl.nativeElement.focus();
     });
   }
   reset(category: Category = new Category()): void {
     this.action = 'new';
     this.movement = new Movement();
     this.movement.category = category;
-    this.dateEl.nativeElement.focus();
+    setTimeout(() => this.dateEl.nativeElement.focus(), 100);
   }
   onSubmit() {
     this.movement.date = new Date(this.movement.date);

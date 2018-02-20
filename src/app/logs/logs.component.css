@@ -1,3 +1,11 @@
 .mat-form-field {
   width: 100%;
 }
+.log-body{
+  max-height: 100px;
+  font-size: 12px;
+  line-height: 13px;
+}
+.log-body:hover{
+  max-height: initial;
+}

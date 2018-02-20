@@ -20,7 +20,7 @@
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
       <mat-cell *matCellDef="let rid">
-        {{rid.date | date: 'yyyy-MM-dd '}}
+        {{rid.date | date: 'yyyy-MM-dd'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="amount">
@@ -33,15 +33,19 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
       <mat-cell *matCellDef="let rid">
         <button mat-icon-button (click)='verify(rid)' color="primary">
-          <mat-icon>{{rid.verified ? 'warning' : 'check'}}</mat-icon>
+          <mat-icon>{{rid.verified ? 'highlight_off' : 'check_circle'}}</mat-icon>
         </button>
-        {{rid.verifiedMovement ? rid.verifiedMovement : (rid.verified ? 'Si' : 'No')}}
+        {{rid.verifiedMovement!=='' ? 'Si' : (rid.verified ? 'Si' : 'No')}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="verifiedMovement">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Data trovata </mat-header-cell>
-      <mat-cell *matCellDef="let rid">
-        {{rid.verifiedMovement ? rid.verifiedMovement : 'Non trovato'}}
+      <mat-cell *matCellDef="let rid" (click)='fetchMovementDate(rid)'>
+        <span *ngIf='rid.verifiedMovement===""'>Non trovato</span>
+        <button *ngIf='rid.verifiedMovement!==""' mat-icon-button (click)='fetchMovementDate(rid) ' color="primary">
+          <mat-icon>help_circle</mat-icon>
+        </button>
+        <span>{{rid.verifiedMovementDate ? (rid.verifiedMovementDate | date: 'yyyy-MM-dd ') : ' '}}</span>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

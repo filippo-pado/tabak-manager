@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var CategorySchema = new mongoose.Schema({
   name: String,
+  pattern: String,
   group: String,
   profitGroup: String,
   art: String,

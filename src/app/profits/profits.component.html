@@ -1,4 +1,14 @@
 <mat-card>
+  <div>
+    <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around'>
+      <div fxFlex='500px'>
+        <app-repartition-graph></app-repartition-graph>
+      </div>
+      <div fxFlex='500px'>
+        <app-period-profit-graph></app-period-profit-graph>
+      </div>
+    </div>
+  </div>
   <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>
   <h2>Aggio attuale: {{totalProfit | currency:'EUR'}}</h2>
   <mat-button-toggle-group>
@@ -37,6 +47,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-
 
 </mat-card>

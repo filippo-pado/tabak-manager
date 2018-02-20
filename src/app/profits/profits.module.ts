@@ -4,6 +4,8 @@ import { SharedModule } from '@app/shared';
 
 import { ProfitsComponent } from './profits.component';
 import { ProfitsRoutingModule } from './profits-routing.module';
+import { RepartitionGraphComponent } from './repartition-graph/repartition-graph.component';
+import { PeriodProfitGraphComponent } from './period-profit-graph/period-profit-graph.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,9 @@ import { ProfitsRoutingModule } from './profits-routing.module';
     ProfitsRoutingModule
   ],
   declarations: [
-    ProfitsComponent
+    ProfitsComponent,
+    RepartitionGraphComponent,
+    PeriodProfitGraphComponent
   ],
   providers: []
 })

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProfitService } from '@app/core';
 import { UtilsService } from '@app/shared';
 
-import { Chart } from 'chart.js';
+import { chart } from 'highcharts';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-period-profit-graph',
@@ -10,36 +11,35 @@ import { Chart } from 'chart.js';
   styleUrls: ['./period-profit-graph.component.css']
 })
 export class PeriodProfitGraphComponent implements OnInit {
-  chart = [];
+  chart: Highcharts.ChartObject;
 
   constructor(private profitService: ProfitService, private utilsService: UtilsService) { }
 
   ngOnInit() {
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
-      const datasets = [];
       const periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+      const dataset = [];
       profits.forEach(group => {
-        const groupProfits = [];
+        const groupData = [];
         periods.forEach(period => {
-          groupProfits.push(group[period] ? group[period] : 0);
+          groupData.push([period, group[period] ? group[period] : 0]);
         });
-        datasets.push({
-          label: this.utilsService.toTitleCase(group.group),
-          data: groupProfits,
-          borderColor: this.utilsService.randomColor(),
-          fill: false,
-          hidden: true,
+        dataset.push({
+          name: this.utilsService.toTitleCase(group.group),
+          data: groupData,
+          visible: false
         });
       });
-      datasets[0].hidden = false;
-      this.chart = new Chart('line', {
-        type: 'line',
-        data: {
-          datasets: datasets,
-          labels: periods
-        }
+      dataset[0].visible = true;
+      this.chart = chart('line', {
+        chart: { type: 'line' },
+        title: { text: 'Andamento per categoria' },
+        credits: { enabled: false },
+        series: dataset,
+        xAxis: {
+          categories: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+        },
       });
     });
   }
-
 }

@@ -1,12 +1,8 @@
 <mat-card>
   <div>
     <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around'>
-      <div fxFlex='500px'>
-        <app-repartition-graph></app-repartition-graph>
-      </div>
-      <div fxFlex='500px'>
-        <app-period-profit-graph></app-period-profit-graph>
-      </div>
+      <app-repartition-graph></app-repartition-graph>
+      <app-period-profit-graph></app-period-profit-graph>
     </div>
   </div>
   <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>

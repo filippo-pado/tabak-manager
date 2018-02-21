@@ -1,6 +1,12 @@
 .category-toolbar{
   height: 44px;
 }
+.arrow{
+  font-size: 20px;
+  width: 20px;
+  transition: transform .5s ease-in-out;
+  height: 20px;
+}
 .dropdown {
   float: left;
   overflow: hidden;
@@ -9,12 +15,14 @@
   min-width: 120px;
 }
 .dropdown-content {
-  display: none;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  max-height: 0px;
+  overflow: hidden;
+  transition: overflow 0.1s ease-in-out;  
 }
 .dropdown-content a {
   float: none;
@@ -28,5 +36,10 @@
   background-color: #ddd;
 }
 .dropdown:hover .dropdown-content {
-  display: block;
+  max-height: 400px;
+  overflow: inherit;
+  transition: max-height 0.5s ease-in-out;
+}
+.dropdown:hover .arrow {
+  transform: rotate(180deg);
 }

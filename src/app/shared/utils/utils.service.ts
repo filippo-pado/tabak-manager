@@ -36,4 +36,11 @@ export class UtilsService {
   toTitleCase(str): string {
     return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
   }
+  dayOfYear(): number {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = (now.valueOf() - start.valueOf()) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+  }
 }

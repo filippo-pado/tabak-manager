@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfitService } from '@app/core';
 import { UtilsService } from '@app/shared';
 
-import { chart } from 'highcharts';
-import * as Highcharts from 'highcharts';
+import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-period-profit-graph',
@@ -11,7 +10,7 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./period-profit-graph.component.css']
 })
 export class PeriodProfitGraphComponent implements OnInit {
-  chart: Highcharts.ChartObject;
+  chart: Chart;
 
   constructor(private profitService: ProfitService, private utilsService: UtilsService) { }
 
@@ -31,7 +30,7 @@ export class PeriodProfitGraphComponent implements OnInit {
         });
       });
       dataset[0].visible = true;
-      this.chart = chart('line', {
+      this.chart = new Chart({
         chart: { type: 'line' },
         title: { text: 'Andamento per categoria' },
         credits: { enabled: false },

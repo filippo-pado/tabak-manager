@@ -3,22 +3,23 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
 import { AppMaterialModule } from './app-material.module';
+import { ChartModule } from 'angular-highcharts';
+
 import { UtilsService } from './utils/utils.service';
 
 const modules = [
   CommonModule,
   RouterModule,
   FormsModule,
+  FlexLayoutModule,
   AppMaterialModule,
-  FlexLayoutModule
+  ChartModule
 ];
 
 @NgModule({
   imports: modules,
-  declarations: [
-  ],
+  declarations: [],
   providers: [UtilsService],
   exports: modules
 })

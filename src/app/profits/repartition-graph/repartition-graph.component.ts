@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfitService } from '@app/core';
 import { UtilsService } from '@app/shared';
 
-import { chart } from 'highcharts';
-import * as Highcharts from 'highcharts';
+import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-repartition-graph',
@@ -11,16 +10,15 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./repartition-graph.component.css']
 })
 export class RepartitionGraphComponent implements OnInit {
-  chart: Highcharts.ChartObject;
+  chart: Chart;
 
   constructor(private profitService: ProfitService, private utilsService: UtilsService) { }
 
   ngOnInit() {
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
-      this.chart = chart('donut', {
+      this.chart = new Chart({
         chart: { type: 'pie' },
         title: { text: 'Ripartizione aggio' },
-        credits: { enabled: false },
         plotOptions: {
           pie: {
             allowPointSelect: true,

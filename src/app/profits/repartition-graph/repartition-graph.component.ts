@@ -22,7 +22,10 @@ export class RepartitionGraphComponent implements OnInit {
         plotOptions: {
           pie: {
             allowPointSelect: true,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            dataLabels: {
+              softConnector: false
+            }
           }
         },
         series: [{

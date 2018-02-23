@@ -13,21 +13,10 @@ export class HighchartsService {
           backgroundColor: 'transparent',
           style: {
             fontFamily: 'Roboto'
-          },
-          spacing: [30, 30, 30, 30],
-          width: 450
+          }
         },
         credits: {
           enabled: false
-        },
-        title: {
-          align: 'center',
-          style: {
-            color: '#717171',
-            fontWeight: '400',
-            padding: '1em 0',
-            'text-transform': 'uppercase'
-          }
         },
         plotOptions: {
           column: {
@@ -35,19 +24,12 @@ export class HighchartsService {
             maxPointWidth: 17
           },
           pie: {
-            borderWidth: 0,
+            borderWidth: 0.5,
             colors: ['#F44336', '#FF9800', '#FFEB3B', '#97C31B', '#00BCD4', '#2196F3', '#9C27B0'],
-            dataLabels: {
-              style: {
-                fontWeight: '500'
-              }
-            }
           },
           series: {
             lineWidth: 3,
             marker: {
-              radius: 5,
-              symbol: 'circle',
               lineWidth: 0,
               states: {
                 hover: {

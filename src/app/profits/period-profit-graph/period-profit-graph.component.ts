@@ -32,9 +32,10 @@ export class PeriodProfitGraphComponent implements OnInit {
       dataset[0].visible = true;
       this.chart = new Chart({
         chart: { type: 'line' },
-        title: { text: 'Andamento per categoria' },
         credits: { enabled: false },
+        title: { text: null },
         series: dataset,
+        yAxis: { title: { text: null } },
         xAxis: {
           categories: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
         },

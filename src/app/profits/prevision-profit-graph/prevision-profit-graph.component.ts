@@ -23,42 +23,42 @@ export class PrevisionProfitGraphComponent implements OnInit {
       const yeardays = new Date().getFullYear() % 4 === 0 ? 366 : 365;
       const datofyear = this.utilsService.dayOfYear();
       this.chart = new Chart({
-        chart: {
-          type: 'bar'
-        },
-        series: [{
-          name: 'Attuale',
-          data: [Math.round(totalProfit * 100) / 100]
-        }, {
-          name: 'Previsione',
-          data: [Math.round(totalProfit / datofyear * yeardays * 100) / 100]
-        }],
-        title: {
-          text: 'Previsione Aggio'
-        },
-        xAxis: {
-          visible: false
-        },
-        yAxis: {
-          title: {
-            text: null
+        chart: { type: 'pie' },
+        title: { text: null },
+        tooltip: { valueSuffix: '€', valueDecimals: 2 },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: { enabled: false },
+            showInLegend: true
           }
         },
         legend: {
-          enabled: false
+          labelFormat: '{name}: {y:,.2f}€'
         },
-        plotOptions: {
-          bar: {
-            dataLabels: {
-              enabled: true,
-              format: "{point.y} €",
-              style: {
-                fontSize: '15px',
-                fontWeight: '500'
-              }
-            }
-          }
-        }
+        series: [{
+          name: 'Aggio',
+          size: '60%',
+          data: [{
+            name: 'Attuale',
+            y: Math.round(totalProfit * 100) / 100,
+            color: '#2196F3'
+          }, {
+            name: 'Rimanente',
+            y: Math.round(((totalProfit / datofyear * yeardays) - totalProfit) * 100) / 100,
+            color: '#FFEB3B',
+          }]
+        }, {
+          name: 'Previsione',
+          size: '85%',
+          innerSize: '70%',
+          data: [{
+            name: 'Previsione',
+            y: Math.round(totalProfit / datofyear * yeardays * 100) / 100,
+            color: '#4CAF50'
+          }]
+        }]
       });
     });
   }

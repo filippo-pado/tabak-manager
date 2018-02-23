@@ -1,12 +1,11 @@
 <mat-card>
   <div>
-    <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around'>
+    <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around' class='graphs'>
+      <app-prevision-profit-graph></app-prevision-profit-graph>
       <app-repartition-graph></app-repartition-graph>
       <app-period-profit-graph></app-period-profit-graph>
     </div>
   </div>
-  <h1>Previsione aggio: {{estimatedProfit | currency:'EUR'}}</h1>
-  <h2>Aggio attuale: {{totalProfit | currency:'EUR'}}</h2>
   <mat-button-toggle-group>
     <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
       Mensile

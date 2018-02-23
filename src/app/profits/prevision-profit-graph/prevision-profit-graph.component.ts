@@ -11,7 +11,6 @@ import { Chart } from 'angular-highcharts';
 })
 export class PrevisionProfitGraphComponent implements OnInit {
   chart: Chart;
-
   constructor(private profitService: ProfitService, private utilsService: UtilsService) { }
 
   ngOnInit() {
@@ -23,23 +22,22 @@ export class PrevisionProfitGraphComponent implements OnInit {
       const yeardays = new Date().getFullYear() % 4 === 0 ? 366 : 365;
       const datofyear = this.utilsService.dayOfYear();
       this.chart = new Chart({
-        chart: { type: 'pie' },
-        title: { text: null },
+        chart: {
+          type: 'pie',
+          height: 300,
+          width: 300
+        },
         tooltip: { valueSuffix: '€', valueDecimals: 2 },
         plotOptions: {
           pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
             dataLabels: { enabled: false },
             showInLegend: true
           }
         },
-        legend: {
-          labelFormat: '{name}: {y:,.2f}€'
-        },
+        legend: { labelFormat: '{name}: {y:,.2f}€' },
         series: [{
           name: 'Aggio',
-          size: '60%',
+          size: '70%',
           data: [{
             name: 'Attuale',
             y: Math.round(totalProfit * 100) / 100,
@@ -51,7 +49,7 @@ export class PrevisionProfitGraphComponent implements OnInit {
           }]
         }, {
           name: 'Previsione',
-          size: '85%',
+          size: '100%',
           innerSize: '70%',
           data: [{
             name: 'Previsione',

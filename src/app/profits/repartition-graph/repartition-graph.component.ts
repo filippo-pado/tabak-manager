@@ -18,16 +18,6 @@ export class RepartitionGraphComponent implements OnInit {
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
       this.chart = new Chart({
         chart: { type: 'pie' },
-        title: { text: 'Ripartizione aggio' },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              softConnector: false
-            }
-          }
-        },
         series: [{
           name: 'Aggio',
           data: profits.map(group => {

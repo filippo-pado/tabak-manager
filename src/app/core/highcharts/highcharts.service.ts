@@ -9,23 +9,40 @@ export class HighchartsService {
   applyTheme() {
     Highcharts.setOptions(
       {
+        lang: {
+          thousandsSep: ""
+        },
         chart: {
           backgroundColor: 'transparent',
-          style: {
-            fontFamily: 'Roboto'
+          style: { fontFamily: 'Roboto' },
+          height: 400,
+          width: 600
+        },
+        title: { text: null },
+        legend: {
+          itemStyle: {
+            fontSize: '16px',
+            fontWeight: 'normal'
           }
         },
-        credits: {
-          enabled: false
-        },
+        credits: { enabled: false },
         plotOptions: {
           column: {
             borderWidth: 0,
             maxPointWidth: 17
           },
           pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
             borderWidth: 0.5,
             colors: ['#F44336', '#FF9800', '#FFEB3B', '#97C31B', '#00BCD4', '#2196F3', '#9C27B0'],
+            dataLabels: {
+              softConnector: false,
+              style: {
+                fontSize: '14px',
+                fontWeight: 'normal'
+              }
+            }
           },
           series: {
             lineWidth: 3,
@@ -45,11 +62,7 @@ export class HighchartsService {
           gridLineWidth: 0,
           gridLineColor: "#ddd",
           gridLineDashStyle: "longdash",
-          labels: {
-            style: {
-              color: '#ACACAC'
-            }
-          },
+          labels: { style: { color: '#ACACAC' } },
           tickWidth: 0,
           lineWidth: 0
         },
@@ -57,16 +70,10 @@ export class HighchartsService {
           gridLineWidth: 1,
           gridLineColor: "#ddd",
           gridLineDashStyle: "longdash",
-          labels: {
-            style: {
-              color: '#ACACAC'
-            }
-          }
+          labels: { style: { color: '#ACACAC' } }
         },
         series: [
-          {
-            color: 'rgba(125,190,113,.15)',
-          }
+          { color: 'rgba(125,190,113,.15)', }
         ]
       }
     );

@@ -32,8 +32,6 @@ export class PeriodProfitGraphComponent implements OnInit {
       dataset[0].visible = true;
       this.chart = new Chart({
         chart: { type: 'line' },
-        credits: { enabled: false },
-        title: { text: null },
         series: dataset,
         yAxis: { title: { text: null } },
         xAxis: {

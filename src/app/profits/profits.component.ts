@@ -16,8 +16,6 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
   view: string;
   periods: string[];
   periodLabels: string[];
-  totalProfit: number = 0;
-  estimatedProfit: number = 0;
   constructor(private profitService: ProfitService, private categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -64,16 +62,6 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
         });
       });
       this.dataSource.data = profits.concat(totalRow);
-
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = (now.valueOf() - start.valueOf()) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-      const oneDay = 1000 * 60 * 60 * 24;
-      const day = Math.floor(diff / oneDay);
-      const days = new Date().getFullYear() % 4 === 0 ? 366 : 365;
-
-      this.totalProfit = totalRow['totalGroup'];
-      this.estimatedProfit = this.totalProfit / day * days;
     });
   }
 }

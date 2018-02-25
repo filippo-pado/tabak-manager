@@ -1,46 +1,46 @@
 <mat-card>
-  <div>
-    <div fxFlex='row' fxLayoutWrap fxLayoutAlign='space-around' class='graphs'>
+  <mat-card-content>
+    <div fxLayout='row' class='graphs' fxLayoutWrap fxLayoutAlign='space-around'>
       <app-prevision-profit-graph></app-prevision-profit-graph>
       <app-repartition-graph></app-repartition-graph>
       <app-period-profit-graph></app-period-profit-graph>
     </div>
-  </div>
-  <mat-button-toggle-group>
-    <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
-      Mensile
-    </mat-button-toggle>
-    <mat-button-toggle class='buttonToggle' (click)='quarterArts()' value="quarter">
-      Trimestrale
-    </mat-button-toggle>
-  </mat-button-toggle-group>
 
-  <mat-button-toggle-group *ngIf='view==="month"'>
-    <mat-button-toggle class='buttonToggle' (click)='viewSemester(1)' checked='true' value="1">
-      1° semestre
-    </mat-button-toggle>
-    <mat-button-toggle class='buttonToggle' (click)='viewSemester(2)' value="2">
-      2° semestre
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+    <mat-button-toggle-group>
+      <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
+        Mensile
+      </mat-button-toggle>
+      <mat-button-toggle class='buttonToggle' (click)='quarterArts()' value="quarter">
+        Trimestrale
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-  <mat-table #table [dataSource]="dataSource" matSort>
+    <mat-button-toggle-group *ngIf='view==="month"'>
+      <mat-button-toggle class='buttonToggle' (click)='viewSemester(1)' checked='true' value="1">
+        1° semestre
+      </mat-button-toggle>
+      <mat-button-toggle class='buttonToggle' (click)='viewSemester(2)' value="2">
+        2° semestre
+      </mat-button-toggle>
+    </mat-button-toggle-group>
 
-    <ng-container matColumnDef="group">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo </mat-header-cell>
-      <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
-    </ng-container>
-    <ng-container *ngFor='let period of periods' matColumnDef="{{period}}">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'>{{[periodLabels[period-1]]}}</mat-header-cell>
-      <mat-cell *matCellDef="let group" class='currency-cell'>{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="totalGroup">
-      <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'> Totale </mat-header-cell>
-      <mat-cell *matCellDef="let group" class='currency-cell'>{{group.totalGroup | currency: 'EUR'}}</mat-cell>
-    </ng-container>
+    <mat-table #table [dataSource]="dataSource" matSort>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+      <ng-container matColumnDef="group">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo </mat-header-cell>
+        <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
+      </ng-container>
+      <ng-container *ngFor='let period of periods' matColumnDef="{{period}}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'>{{[periodLabels[period-1]]}}</mat-header-cell>
+        <mat-cell *matCellDef="let group" class='currency-cell'>{{(group[period] ? group[period] : 0) | currency: 'EUR'}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="totalGroup">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class='currency-header'> Totale </mat-header-cell>
+        <mat-cell *matCellDef="let group" class='currency-cell'>{{group.totalGroup | currency: 'EUR'}}</mat-cell>
+      </ng-container>
 
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
 </mat-card>

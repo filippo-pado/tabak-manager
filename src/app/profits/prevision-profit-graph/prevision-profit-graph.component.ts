@@ -24,8 +24,6 @@ export class PrevisionProfitGraphComponent implements OnInit {
       this.chart = new Chart({
         chart: {
           type: 'pie',
-          height: 300,
-          width: 300
         },
         tooltip: { valueSuffix: '€', valueDecimals: 2 },
         plotOptions: {

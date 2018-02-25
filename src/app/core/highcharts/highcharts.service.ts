@@ -15,13 +15,12 @@ export class HighchartsService {
         chart: {
           backgroundColor: 'transparent',
           style: { fontFamily: 'Roboto' },
-          height: 400,
-          width: 600
+          height: '60%'
         },
         title: { text: null },
         legend: {
           itemStyle: {
-            fontSize: '16px',
+            fontSize: '14px',
             fontWeight: 'normal'
           }
         },
@@ -32,14 +31,16 @@ export class HighchartsService {
             maxPointWidth: 17
           },
           pie: {
+            size: '80%',
             allowPointSelect: true,
             cursor: 'pointer',
             borderWidth: 0.5,
             colors: ['#F44336', '#FF9800', '#FFEB3B', '#97C31B', '#00BCD4', '#2196F3', '#9C27B0'],
             dataLabels: {
+              crop: false,
               softConnector: false,
               style: {
-                fontSize: '14px',
+                fontSize: '12px',
                 fontWeight: 'normal'
               }
             }

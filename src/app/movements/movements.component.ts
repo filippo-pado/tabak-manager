@@ -1,11 +1,11 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar, MatDialog } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Movement } from './movement';
 import { MovementService } from '@app/core';
 import { MovementFormService } from './movement-form/movement-form.service';
-import { unescape } from 'querystring';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component'
 
 @Component({
   selector: 'app-movements',
@@ -20,7 +20,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private movementService: MovementService, private movementFormService: MovementFormService,
-    public snackBar: MatSnackBar, private route: ActivatedRoute) { }
+    public snackBar: MatSnackBar, public dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
@@ -89,16 +89,23 @@ export class MovementsComponent implements OnInit, AfterViewInit {
     });
   }
   delete(movement: Movement): void {
-    if (confirm('Eliminare elemento?')) {
-      this.movementService.delete(movement._id).then(() => {
-        this.dataSource.data = this.dataSource.data.filter(function (elem: MovementTableData) {
-          return elem._id !== movement._id;
+    let dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: movement
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.movementService.delete(movement._id).then(() => {
+          this.dataSource.data = this.dataSource.data.filter(function (elem: MovementTableData) {
+            return elem._id !== movement._id;
+          });
+          this.snackBar.open('Movimento eliminato!', 'Ok', { duration: 2000 });
+        }).catch(error => {
+          alert(JSON.stringify(error, null, 2));
         });
-        this.snackBar.open('Movimento eliminato!', 'Ok', { duration: 2000 });
-      }).catch(error => {
-        alert(JSON.stringify(error, null, 2));
-      });
-    }
+      }
+    });
   }
 }
 

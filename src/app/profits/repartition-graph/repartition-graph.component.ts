@@ -18,6 +18,13 @@ export class RepartitionGraphComponent implements OnInit {
     this.profitService.getProfits(1, 'profitGroup').then(profits => {
       this.chart = new Chart({
         chart: { type: 'pie' },
+        plotOptions: {
+          pie: {
+            dataLabels: {
+              format: '{point.name} {point.percentage:.1f} %'
+            }
+          }
+        },
         series: [{
           name: 'Aggio',
           data: profits.map(group => {

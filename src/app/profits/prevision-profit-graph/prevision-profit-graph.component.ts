@@ -28,6 +28,7 @@ export class PrevisionProfitGraphComponent implements OnInit {
         tooltip: { valueSuffix: '€', valueDecimals: 2 },
         plotOptions: {
           pie: {
+            allowPointSelect: false,
             dataLabels: { enabled: false },
             showInLegend: true
           }

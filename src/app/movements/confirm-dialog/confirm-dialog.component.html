@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Confermi eliminazione?</h2>
+<mat-dialog-content>
+  <div class='dialog-row'>
+    <span class='mat-body-2'>Categoria:</span>
+    <span class='spacer'></span>
+    {{movement.category | titlecase}}
+  </div>
+  <div class='dialog-row'>
+    <span class='mat-body-2'>Data:</span>
+    <span class='spacer'></span>
+    {{movement.date | date: 'yyyy-MM-dd'}}
+  </div>
+  <div class='dialog-row'>
+    <span class='mat-body-2'>Valore:</span>
+    <span class='spacer'></span>
+    {{movement.amount | currency:'EUR'}}
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">No</button>
+  <button mat-button [mat-dialog-close]="true">Yes</button>
+</mat-dialog-actions>

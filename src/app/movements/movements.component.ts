@@ -24,7 +24,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified', 'action'];
+    this.displayedColumns = ['category', 'date', 'amount', 'profit', 'rid', 'note', 'verified'];
     this.movementFormService.movementUpdatedID.subscribe(movementUpdatedID => {
       this.movementService.query({ _id: movementUpdatedID }, 'category').then(movements => {
         const movement = movements[0];
@@ -90,7 +90,7 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   }
   delete(movement: Movement): void {
     let dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
+      width: '350px',
       data: movement
     });
 

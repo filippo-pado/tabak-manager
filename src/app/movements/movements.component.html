@@ -44,15 +44,10 @@
     <ng-container matColumnDef="verified">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
       <mat-cell *matCellDef="let movement">
+        {{movement.verifiedRid ? movement.verifiedRid : (movement.verified ? 'Si' : 'No')}}
         <button mat-icon-button (click)='verify(movement)' color="primary">
           <mat-icon>{{movement.verified ? 'help_outline' : 'check_circle'}}</mat-icon>
         </button>
-        {{movement.verifiedRid ? movement.verifiedRid : (movement.verified ? 'Si' : 'No')}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
-      <mat-cell *matCellDef="let movement">
         <button mat-icon-button [routerLink]="['./']" [queryParams]="{ movement_id: movement._id }" queryParamsHandling="merge" color="primary">
           <mat-icon>edit</mat-icon>
         </button>

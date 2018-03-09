@@ -10,7 +10,7 @@ export class HighchartsService {
     Highcharts.setOptions(
       {
         lang: {
-          thousandsSep: ""
+          thousandsSep: ''
         },
         chart: {
           backgroundColor: 'transparent',
@@ -37,8 +37,8 @@ export class HighchartsService {
             borderWidth: 0.5,
             colors: ['#F44336', '#FF9800', '#FFEB3B', '#97C31B', '#00BCD4', '#2196F3', '#9C27B0'],
             dataLabels: {
-              crop: false,
               softConnector: false,
+              distance: 10,
               style: {
                 fontSize: '12px',
                 fontWeight: 'normal'
@@ -61,16 +61,16 @@ export class HighchartsService {
         },
         xAxis: {
           gridLineWidth: 0,
-          gridLineColor: "#ddd",
-          gridLineDashStyle: "longdash",
+          gridLineColor: '#ddd',
+          gridLineDashStyle: 'longdash',
           labels: { style: { color: '#ACACAC' } },
           tickWidth: 0,
           lineWidth: 0
         },
         yAxis: {
           gridLineWidth: 1,
-          gridLineColor: "#ddd",
-          gridLineDashStyle: "longdash",
+          gridLineColor: '#ddd',
+          gridLineDashStyle: 'longdash',
           labels: { style: { color: '#ACACAC' } }
         },
         series: [

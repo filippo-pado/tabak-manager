@@ -42,8 +42,8 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="verified">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Verificato </mat-header-cell>
-      <mat-cell *matCellDef="let movement">
+      <mat-header-cell *matHeaderCellDef mat-sort-header class='col-actions'> Verificato </mat-header-cell>
+      <mat-cell *matCellDef="let movement" class='col-actions'>
         {{movement.verifiedRid ? movement.verifiedRid : (movement.verified ? 'Si' : 'No')}}
         <button mat-icon-button (click)='verify(movement)' color="primary">
           <mat-icon>{{movement.verified ? 'help_outline' : 'check_circle'}}</mat-icon>

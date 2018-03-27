@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@app/shared';
 import { ProfitsRoutingModule } from './profits-routing.module';
+import { ChartModule } from 'angular-highcharts';
 
 import { ProfitsComponent } from './profits.component';
 import { RepartitionGraphComponent } from './repartition-graph/repartition-graph.component';
@@ -11,7 +12,8 @@ import { PrevisionProfitGraphComponent } from './prevision-profit-graph/previsio
 @NgModule({
   imports: [
     SharedModule,
-    ProfitsRoutingModule
+    ProfitsRoutingModule,
+    ChartModule
   ],
   declarations: [
     ProfitsComponent,

@@ -4,7 +4,6 @@ import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular
 import { Rid } from './rid';
 import { RidService } from '@app/core';
 import { MovementService } from '@app/core';
-import { interceptingHandler } from '@angular/common/http/src/module';
 
 @Component({
   selector: 'app-rids',

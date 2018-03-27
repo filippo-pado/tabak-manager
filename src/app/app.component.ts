@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HighchartsService } from '@app/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +7,7 @@ import { HighchartsService } from '@app/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private highchartsService: HighchartsService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.highchartsService.applyTheme();
-  }
+  ngOnInit() { }
 }

@@ -7,6 +7,7 @@ var protectRoutes = require('./protect.routes.js');
 var logRoutes = require('./log.routes.js');
 var infoRoutes = require('./info.routes.js');
 var profitRoutes = require('./profit.routes.js');
+var vatRoutes = require('./vat.routes.js');
 
 var restBuilder = require('./restBuilder.js');
 var Movement = require('../models/Movement.js');
@@ -19,6 +20,7 @@ router.use('/api', protectRoutes);
 router.use('/api', logRoutes);
 router.use('/api/info/', infoRoutes);
 router.use('/api/profits/', profitRoutes);
+router.use('/api/vats/', vatRoutes);
 router.use('/api/movements/', restBuilder(express.Router(), Movement));
 router.use('/api/rids/', restBuilder(express.Router(), Rid, true));
 router.use('/api/categories/', restBuilder(express.Router(), Category));

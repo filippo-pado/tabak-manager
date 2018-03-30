@@ -5,12 +5,12 @@ import { SharedModule } from '@app/shared';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AuthGuard } from './auth/auth.guard';
-import { HighchartsService } from './highcharts/highcharts.service';
 import { CategoryService } from './http/category.service';
 import { MovementService } from './http/movement.service';
 import { ProfitService } from './http/profit.service';
 import { RidService } from './http/rid.service';
 import { LogService } from './http/log.service';
+import { VatService } from './http/vat.service';
 
 @NgModule({
   imports: [
@@ -21,12 +21,12 @@ import { LogService } from './http/log.service';
   providers: [
     AuthService,
     AuthGuard,
-    HighchartsService,
     CategoryService,
     MovementService,
     ProfitService,
     RidService,
     LogService,
+    VatService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ]
 })

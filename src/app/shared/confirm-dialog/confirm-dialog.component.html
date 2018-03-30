@@ -1,6 +1,8 @@
-<h2 mat-dialog-title>Confermi eliminazione?</h2>
-<mat-dialog-content>
-  <div class='dialog-row'>
+<h2 mat-dialog-title>{{data.action}}</h2>
+<mat-dialog-content *ngIf='data.object || data.text'>
+  <pre *ngIf='data.object'>{{data.object | json}}</pre>
+  <span *ngIf='data.text'>{{data.text}}</span>
+  <!--<div class='dialog-row'>
     <span class='mat-body-2'>Categoria:</span>
     <span class='spacer'></span>
     {{movement.category | titlecase}}
@@ -14,9 +16,10 @@
     <span class='mat-body-2'>Valore:</span>
     <span class='spacer'></span>
     {{movement.amount | currency:'EUR'}}
-  </div>
+  </div>-->
+
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="false">No</button>
-  <button mat-button [mat-dialog-close]="true">Yes</button>
+  <button mat-button [mat-dialog-close]="false" *ngIf='!data.text'>No</button>
+  <button mat-button [mat-dialog-close]="true">Ok</button>
 </mat-dialog-actions>

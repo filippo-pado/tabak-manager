@@ -25,6 +25,11 @@ const routes: Routes = [
     loadChildren: 'app/profits/profits.module#ProfitsModule'
   },
   {
+    path: 'vats',
+    canActivate: [AuthGuard],
+    loadChildren: 'app/vats/vats.module#VatsModule'
+  },
+  {
     path: 'logs',
     canActivate: [AuthGuard],
     loadChildren: 'app/logs/logs.module#LogsModule'

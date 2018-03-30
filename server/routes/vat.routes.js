@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 
 /* SAVE ITEM */
 router.post('/', function (req, res, next) {
-  Vat.create(req.body, function (err, data) {
+  Vat.sendVat(req.body, function (err, data) {
     if (err) return next(err);
     res.json(data);
   });

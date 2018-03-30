@@ -1,9 +1,11 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 
 import { Vat } from './vat';
 import { VatService } from '@app/core';
 import { VatFormService } from './vat-form/vat-form.service';
+
+import { ConfirmDialogComponent } from '@app/shared';
 
 @Component({
   selector: 'app-vats',
@@ -16,11 +18,15 @@ export class VatsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private vatService: VatService, private vatFormService: VatFormService) { }
+  constructor(
+    private vatService: VatService,
+    private vatFormService: VatFormService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource();
-    this.displayedColumns = ['date', 'amount'];
+    this.displayedColumns = ['date', 'amount', 'response', 'xml'];
     this.vatService.getAll().then(vats => {
       this.dataSource.data = vats;
     });
@@ -46,5 +52,16 @@ export class VatsComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-
+  showRequest(vat: Vat) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '700px',
+      data: { action: 'XML inviato:', text: vat.sentXML }
+    });
+  }
+  showResponse(vat: Vat) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '700px',
+      data: { action: 'XML ricevuto:', text: vat.responseXML }
+    });
+  }
 }

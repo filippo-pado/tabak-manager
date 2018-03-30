@@ -8,7 +8,6 @@ import { MovementFormComponent } from './movement-form/movement-form.component';
 import { CategoryPickerComponent } from './category-picker/category-picker.component';
 
 import { MovementFormService } from './movement-form/movement-form.service';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,13 +15,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MovementsRoutingModule
   ],
   declarations: [
-    MovementsComponent, MovementFormComponent, CategoryPickerComponent, ConfirmDialogComponent
+    MovementsComponent, MovementFormComponent, CategoryPickerComponent
   ],
   providers: [
     MovementFormService
-  ],
-  entryComponents: [
-    ConfirmDialogComponent
   ]
 })
 export class MovementsModule { }

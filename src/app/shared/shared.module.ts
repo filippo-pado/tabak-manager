@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppMaterialModule } from './app-material.module';
 
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 import { UtilsService } from './utils/utils.service';
 
@@ -18,8 +19,11 @@ const modules = [
 
 @NgModule({
   imports: modules,
-  declarations: [],
+  declarations: [ConfirmDialogComponent],
   providers: [UtilsService],
-  exports: modules
+  exports: modules,
+  entryComponents: [
+    ConfirmDialogComponent
+  ]
 })
 export class SharedModule { }

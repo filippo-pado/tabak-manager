@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { UtilsService } from '@app/shared';
 
 import { Vat } from '../vat';
 import { VatService } from '@app/core';
 import { VatFormService } from './vat-form.service';
+
+import { ConfirmDialogComponent } from '@app/shared';
 
 @Component({
   selector: 'app-vat-form',
@@ -21,7 +23,8 @@ export class VatFormComponent implements OnInit {
     private utilsService: UtilsService,
     private vatService: VatService,
     private vatFormService: VatFormService,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -34,12 +37,23 @@ export class VatFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.vatService.create(this.vat).then(response => {
-      this.snackBar.open('Corrispettivi inviati!', 'Ok', { duration: 2000 });
-      this.vatFormService.updateVatID(response._id);
-      this.reset();
-    }).catch(error => {
-      alert(JSON.stringify(error, null, 2));
-    });
+    if (this.vat.amount >= 0) {
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '350px',
+        data: { action: 'Confermi invio corrispettivi?' }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.vatService.create(this.vat).then(response => {
+            this.snackBar.open('Corrispettivi inviati!', 'Ok', { duration: 2000 });
+            this.vatFormService.updateVatID(response._id);
+            this.reset();
+          }).catch(error => {
+            alert(JSON.stringify(error, null, 2));
+          });
+        }
+      });
+    }
   }
 }

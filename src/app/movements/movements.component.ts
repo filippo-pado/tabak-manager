@@ -5,7 +5,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Movement } from './movement';
 import { MovementService } from '@app/core';
 import { MovementFormService } from './movement-form/movement-form.service';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/shared';
 
 @Component({
   selector: 'app-movements',
@@ -90,8 +90,8 @@ export class MovementsComponent implements OnInit, AfterViewInit {
   }
   delete(movement: Movement): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '350px',
-      data: movement
+      width: '400px',
+      data: { action: 'Confermi eliminazione?', object: movement }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -16,6 +16,19 @@
         {{vat.amount | currency:'EUR'}}
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="response">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Risposta </mat-header-cell>
+      <mat-cell *matCellDef="let vat">
+        {{vat.responseCode}} - {{vat.responseCode===200 ? 'OK' : 'ERRORE'}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="xml">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> XML </mat-header-cell>
+      <mat-cell *matCellDef="let vat">
+        <button mat-raised-button color='primary' (click)='showRequest(vat)'>Richiesta</button>
+        <button mat-raised-button color='primary' (click)='showResponse(vat)'>Risposta</button>
+      </mat-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>

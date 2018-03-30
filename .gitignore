@@ -21,5 +21,4 @@ node_modules/
 /server/certificates
 
 # XML files
-/server/signature/vat.xml
-/server/signature/vatSigned.xml
+/server/signature/*.xml

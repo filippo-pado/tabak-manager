@@ -5,7 +5,7 @@ import { Vat } from './vat';
 import { VatService } from '@app/core';
 import { VatFormService } from './vat-form/vat-form.service';
 
-import { ConfirmDialogComponent } from '@app/shared';
+import { ConfirmDialogComponent, DialogData } from '@app/shared';
 
 @Component({
   selector: 'app-vats',
@@ -53,15 +53,23 @@ export class VatsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
   showRequest(vat: Vat) {
+    const dialogData: DialogData = {
+      action: 'XML inviato:',
+      text: vat.sentXML
+    };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '700px',
-      data: { action: 'XML inviato:', text: vat.sentXML }
+      width: '800px',
+      data: dialogData
     });
   }
   showResponse(vat: Vat) {
+    const dialogData: DialogData = {
+      action: 'XML ricevuto:',
+      text: vat.responseXML
+    };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '700px',
-      data: { action: 'XML ricevuto:', text: vat.responseXML }
+      width: '800px',
+      data: dialogData
     });
   }
 }

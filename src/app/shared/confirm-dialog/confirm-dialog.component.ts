@@ -10,8 +10,8 @@ export class ConfirmDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 }
 
-export class DialogData {
-  action: string;
-  object: any;
-  text: string;
+export interface DialogData {
+  action?: string;
+  object?: any;
+  text?: string;
 }

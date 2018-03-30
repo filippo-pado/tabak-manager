@@ -7,7 +7,7 @@
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
       <mat-cell *matCellDef="let vat">
-        {{vat.date | date:'yyyy-MM-dd HH:mm'}}
+        {{vat.date | date:'yyyy-MM-dd HH:mm:ss'}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="amount">

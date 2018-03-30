@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "analyze": "ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json",
-    "start": "node ./bin/www",
+    "start": "node ./bin/tabak-manager",
     "postinstall": "ng build --prod",
     "update_packages": "ncu -u"
   },

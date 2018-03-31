@@ -1,7 +1,9 @@
 var moment = require('moment');
 var fs = require('fs');
 var request = require('request');
-var spawn = require('child_process');
+const {
+  spawn
+} = require('child_process');
 
 module.exports = function sendXML(vat, lastVat, sequenceID, callback) {
   fs.writeFile('./server/signature/vat.xml', generateXML(vat, lastVat, sequenceID), function (err) {

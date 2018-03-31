@@ -36,7 +36,7 @@ function generateXML(vat, lastVat, sequenceID) {
   let lat = ((45.339261 * 1000000 - 100) + Math.round(Math.random() * 200)) / 1000000;
   let long = ((11.880813 * 1000000 - 100) + Math.round(Math.random() * 200)) / 1000000;
   return `<?xml version='1.0' encoding='utf-8'?>
-    <p:DatiCorrispettivi xmlns:p='http://ivaservizi.agenziaentrate.gov.it/docs/xsd/corrispettivi/dati/v1.0' versione='COR10' simulazione='true'>
+    <p:DatiCorrispettivi xmlns:p='http://ivaservizi.agenziaentrate.gov.it/docs/xsd/corrispettivi/dati/v1.0' versione='COR10'>
       <Trasmissione>
         <Progressivo>${sequenceID}</Progressivo>
         <Formato>COR10</Formato>

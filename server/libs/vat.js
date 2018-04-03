@@ -8,7 +8,7 @@ const {
 module.exports = function sendXML(vat, lastVat, sequenceID, callback) {
   fs.writeFile('./server/signature/vat.xml', generateXML(vat, lastVat, sequenceID), function (err) {
     if (err) return callback(err);
-    const ls = spawn('java', ['-jar', './server/signature/Sign.jar', './server/certificates/device.p12', './server/signature/vat.xml', './server/signature/vatSigned.xml']);
+    const ls = spawn(process.env.JAVA ? process.env.JAVA : 'java', ['-jar', './server/signature/Sign.jar', './server/certificates/device.p12', './server/signature/vat.xml', './server/signature/vatSigned.xml']);
     ls.on('exit', (code) => {
       if (code !== 0) return callback('Error executing java sign!');
       fs.readFile('./server/signature/vatSigned.xml', function (err, data) {

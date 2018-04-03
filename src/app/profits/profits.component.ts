@@ -91,7 +91,7 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
             maxPointWidth: 17
           },
           pie: {
-            size: '80%',
+            size: '70%',
             allowPointSelect: true,
             cursor: 'pointer',
             borderWidth: 0.5,

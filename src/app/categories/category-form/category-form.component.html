@@ -1,6 +1,6 @@
 <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
   <div class='mat-h1'>{{action==='new' ? 'Nuovo' : 'Modifica'}}</div>
-  <div fxLayout='row' fxLayoutAlign='space-around' fxLayoutWrap>
+  <div>
     <mat-form-field>
       <input name='name' matInput type="text" placeholder="Nome" [(ngModel)]="category.name">
     </mat-form-field>

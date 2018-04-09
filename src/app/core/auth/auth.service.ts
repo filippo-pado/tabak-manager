@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -17,12 +17,18 @@ export class AuthService {
   get loginObserver(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
-  constructor(private http: HttpClient) {
-    if (localStorage.getItem('token')) {
+  constructor(
+    @Inject('LOCALSTORAGE') private localStorage: any,
+    private http: HttpClient
+  ) {
+
+    console.log(this.localStorage.getItem('token'));
+    if (this.localStorage.getItem('token')) {
       this.loggedIn.next(true);
-      this.token = localStorage.getItem('token');
+      this.token = this.localStorage.getItem('token');
     }
   }
+
   login(password: string): Promise<any> {
     return this.http.post(this.authUrl, { password: password })
       .toPromise()
@@ -31,7 +37,7 @@ export class AuthService {
         const token = response['token'];
         if (token) {
           // store jwt token in local storage to keep member logged in between page refreshes
-          localStorage.setItem('token', token);
+          this.localStorage.setItem('token', token);
           this.token = token;
           this.loggedIn.next(true);
         } else {
@@ -44,7 +50,7 @@ export class AuthService {
   logout(): void {
     // remove member from local storage to log user out
     this.token = null;
-    localStorage.removeItem('token');
+    this.localStorage.removeItem('token');
     this.loggedIn.next(false);
   }
   getToken(): string {

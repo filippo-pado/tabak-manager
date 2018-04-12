@@ -9,6 +9,7 @@ import { AuthService } from '@app/core';
 })
 export class LoginComponent implements OnInit {
   loading: boolean = false;
+  notTrusted: boolean = false;
   returnUrl: string;
   message: string;
   password: string;
@@ -20,10 +21,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // reset login status
     this.authService.logout();
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.authService.login('')
+      .then(success => {
+        this.router.navigate([this.returnUrl]);
+      }, error => {
+        this.notTrusted = true;
+      });
   }
   login() {
     this.message = null;
@@ -31,8 +37,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.password)
       .then(success => {
         this.router.navigate([this.returnUrl]);
-      },
-      error => {
+      }, error => {
         this.message = error.error;
         this.loading = false;
       });

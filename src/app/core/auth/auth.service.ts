@@ -8,24 +8,26 @@ import 'rxjs/add/operator/toPromise';
 export class AuthService {
   private authUrl: string = '/api/users/login';
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private trusted: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private token: string = null;
 
   // make isLoggedIn public readonly
   get isLoggedIn(): boolean {
     return this.loggedIn.getValue();
   }
+  get isTrusted(): boolean {
+    return this.trusted.getValue();
+  }
   get loginObserver(): Observable<boolean> {
     return this.loggedIn.asObservable();
   }
-  constructor(
-    @Inject('LOCALSTORAGE') private localStorage: any,
-    private http: HttpClient
-  ) {
-
-    console.log(this.localStorage.getItem('token'));
-    if (this.localStorage.getItem('token')) {
+  get trustedObserver(): Observable<boolean> {
+    return this.trusted.asObservable();
+  }
+  constructor(private http: HttpClient) {
+    if (localStorage.getItem('token')) {
       this.loggedIn.next(true);
-      this.token = this.localStorage.getItem('token');
+      this.token = localStorage.getItem('token');
     }
   }
 
@@ -37,9 +39,11 @@ export class AuthService {
         const token = response['token'];
         if (token) {
           // store jwt token in local storage to keep member logged in between page refreshes
-          this.localStorage.setItem('token', token);
+          localStorage.setItem('token', token);
+          localStorage.setItem('trusted', response['trusted']);
           this.token = token;
           this.loggedIn.next(true);
+          this.trusted.next(response['trusted']);
         } else {
           return Promise.reject('No token or member provided');
         }
@@ -50,8 +54,10 @@ export class AuthService {
   logout(): void {
     // remove member from local storage to log user out
     this.token = null;
-    this.localStorage.removeItem('token');
+    localStorage.removeItem('token');
+    localStorage.removeItem('trusted');
     this.loggedIn.next(false);
+    this.trusted.next(false);
   }
   getToken(): string {
     return this.token;

@@ -1,10 +1,10 @@
-<div fxLayoutAlign="center">
+<div fxLayoutAlign="center" *ngIf='notTrusted'>
   <mat-card class='loginCard'>
     <form name="form" (ngSubmit)="loginForm.form.valid && login()" #loginForm="ngForm">
       <div fxLayout="column">
         <div class='mat-h1'>Accedi</div>
         <mat-form-field>
-          <input matInput name='password' type='password' required [(ngModel)]="password" placeholder="Password" autofocus>
+          <input matInput name='password' required type='password' [(ngModel)]="password" placeholder="Password" autofocus>
         </mat-form-field>
         <button mat-raised-button color='primary' fxFlexAlign="center" [disabled]="loading">Login</button>
         <div class="report">

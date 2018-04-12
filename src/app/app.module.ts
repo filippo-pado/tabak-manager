@@ -19,14 +19,7 @@ import { AppComponent } from './app.component';
     CoreModule,
     PublicModule
   ],
-  bootstrap: [AppComponent],
-  providers: [
-    { provide: 'LOCALSTORAGE', useFactory: getLocalStorage }
-  ]
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }
-
-export function getLocalStorage() {
-  return (typeof window !== 'undefined') ? window.localStorage : null;
-}

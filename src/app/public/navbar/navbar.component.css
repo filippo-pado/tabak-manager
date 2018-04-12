@@ -1,25 +1,25 @@
-.logo-big{  
-  font-size: 24px;
+.logo-big {
+  font-size: 18px;
   padding-left: 8px;
 }
 
-.logo-small{  
+.logo-small {
   font-weight: 200;
-  font-size: 16px;
+  font-size: 12px;
   vertical-align: baseline;
 }
 
 .navbar-main {
   color: white;
-  line-height: 22px;
 }
 
 .navbar-item {
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   display: none;
+  min-width: 0px;
 }
 
-.show{
+.show {
   display: block;
 }

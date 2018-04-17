@@ -9,8 +9,8 @@
         <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="movement.date | date:'yyyy-MM-dd'" (ngModelChange)="movement.date = $event">
       </mat-form-field>
       <mat-form-field class='input-number'>
-        <input name='amount' matInput type="number" placeholder="Valore" step="0.01" [(ngModel)]="movement.amount" (keypress)="validateNumberField($event)"
-        />
+        <input name='amount' matInput type="number" placeholder="{{(movement.category.amountHint | titlecase) || 'Valore'}}" step="0.01"
+          [(ngModel)]="movement.amount" (keypress)="validateNumberField($event)" />
       </mat-form-field>
       <mat-form-field class='input-number'>
         <input name='rid' matInput type="number" placeholder="Rid" step="0.01" [(ngModel)]="movement.rid" (keypress)="validateNumberField($event)"

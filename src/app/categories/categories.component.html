@@ -46,6 +46,12 @@
         {{category.amountToProfit}}
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="amountHint">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Suggerimento valore </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.amountHint}}
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="action">
       <mat-header-cell *matHeaderCellDef> Azioni </mat-header-cell>
       <mat-cell *matCellDef="let category">

@@ -7,7 +7,8 @@ var CategorySchema = new mongoose.Schema({
   profitGroup: String,
   art: String,
   rate: Number,
-  amountToProfit: Number
+  amountToProfit: Number,
+  amountHint: String
 });
 
 module.exports = mongoose.model('Category', CategorySchema);

@@ -23,6 +23,9 @@
       <input name='amountToProfit' matInput type="number" placeholder="Moltiplicatore aggio" [(ngModel)]="category.amountToProfit"
         (keypress)="validateNumberField($event)">
     </mat-form-field>
+    <mat-form-field>
+      <input name='amountHint' matInput type="text" placeholder="Suggerimento valore" [(ngModel)]="category.amountHint">
+    </mat-form-field>
 
     <span>
       <button mat-icon-button type='submit' color="primary" [disabled]='category.name===""'>

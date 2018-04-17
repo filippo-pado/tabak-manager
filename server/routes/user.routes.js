@@ -26,7 +26,9 @@ router.post('/login', bruteforce.prevent, function (req, res) {
     }
     if (req.body.password && req.body.password !== '') {
       if (user.comparePassword(req.body.password)) {
-        return res.json(successResponse(user, false));
+        return req.brute.reset(function () {
+          res.json(successResponse(user, false));
+        })
       }
       return res.status(401).send('Authentication failed. Wrong password.');
     } else {
@@ -37,13 +39,17 @@ router.post('/login', bruteforce.prevent, function (req, res) {
           /*console.log('address found: %s', address);
           console.log('address request: %s', req.connection.remoteAddress);*/
           if (address && address === req.connection.remoteAddress) {
-            return res.json(successResponse(user, true));
+            return req.brute.reset(function () {
+              res.json(successResponse(user, true));
+            })
           }
           dns.lookup(process.env.TRUSTEDHOST, 6, (err, address) => { //retry with ipv6
             /*console.log('address found: %s', address);
             console.log('address request: %s', req.connection.remoteAddress);*/
             if (address && address === req.connection.remoteAddress) {
-              return res.json(successResponse(user, true));
+              return req.brute.reset(function () {
+                res.json(successResponse(user, true));
+              })
             }
             return res.status(401).send('Authentication failed. Not trusted.');
           });

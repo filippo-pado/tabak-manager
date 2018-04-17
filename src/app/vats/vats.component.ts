@@ -29,6 +29,7 @@ export class VatsComponent implements OnInit, AfterViewInit {
     this.displayedColumns = ['date', 'amount', 'response', 'xml'];
     this.vatService.getAll().then(vats => {
       this.dataSource.data = vats;
+      console.log(vats);
     });
     this.vatFormService.vatUpdatedID.subscribe(vatUpdatedID => {
       this.vatService.getOne(vatUpdatedID).then(vat => {
@@ -52,24 +53,28 @@ export class VatsComponent implements OnInit, AfterViewInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  showRequest(vat: Vat) {
-    const dialogData: DialogData = {
-      action: 'XML inviato:',
-      text: vat.sentXML
-    };
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '800px',
-      data: dialogData
+  showRequest(v: Vat) {
+    this.vatService.getOne(v._id).then(vat => {
+      const dialogData: DialogData = {
+        action: 'XML inviato:',
+        text: vat.sentXML
+      };
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '800px',
+        data: dialogData
+      });
     });
   }
-  showResponse(vat: Vat) {
-    const dialogData: DialogData = {
-      action: 'XML ricevuto:',
-      text: vat.responseXML
-    };
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '800px',
-      data: dialogData
+  showResponse(v: Vat) {
+    this.vatService.getOne(v._id).then(vat => {
+      const dialogData: DialogData = {
+        action: 'XML ricevuto:',
+        text: vat.responseXML
+      };
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '800px',
+        data: dialogData
+      });
     });
   }
 }

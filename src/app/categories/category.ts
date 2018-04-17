@@ -7,4 +7,5 @@ export class Category {
   art: string = '';
   rate: number = 0;
   amountToProfit: number = 1;
+  amountHint: string = '';
 }

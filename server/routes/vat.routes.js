@@ -5,7 +5,7 @@ var Vat = require('../models/Vat.js');
 
 /* FIND ITEMS */
 router.get('/', function (req, res, next) {
-  Vat.find({}, function (err, data) {
+  Vat.find({}, 'date amount responseCode', function (err, data) {
     if (err) return next(err);
     res.json(data);
   });

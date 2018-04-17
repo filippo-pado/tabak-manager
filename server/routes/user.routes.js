@@ -2,15 +2,22 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   jwt = require('jsonwebtoken'),
-  User = require('../models/User.js');
-dns = require('dns');
+  User = require('../models/User.js'),
+  dns = require('dns'),
+  ExpressBrute = require('express-brute'),
+  MongooseStore = require('express-brute-mongoose'),
+  BruteForce = require('../models/BruteForce');
+
+var store = new MongooseStore(BruteForce);
+var bruteforce = new ExpressBrute(store);
+
 
 /*
 POST /login
 */
 
 /* LOGIN */
-router.post('/login', function (req, res) {
+router.post('/login', bruteforce.prevent, function (req, res) {
   //User.findOne({ username: req.body.username.toLowerCase()}, 'username hashedPassword', function (err, user) {
   User.findOne({}, 'username hashedPassword', function (err, user) {
     if (err) return next(err);
@@ -19,25 +26,33 @@ router.post('/login', function (req, res) {
     }
     if (req.body.password && req.body.password !== '') {
       if (user.comparePassword(req.body.password)) {
-        return res.json(successResponse(user, false));
+        return req.brute.reset(function () {
+          res.json(successResponse(user, false));
+        })
       }
       return res.status(401).send('Authentication failed. Wrong password.');
     } else {
       if (!process.env.TRUSTEDHOST) {
         return res.status(401).send('Authentication failed. Must provide password.');
       } else {
-        const options = {
-          family: 6,
-          hints: dns.ADDRCONFIG | dns.V4MAPPED,
-        };
-        dns.lookup(process.env.TRUSTEDHOST, options, (err, address) => {
-          if (err) return res.status(401).send('Authentication failed. Host not found.');
+        dns.lookup(process.env.TRUSTEDHOST, 4, (err, address) => {
           /*console.log('address found: %s', address);
           console.log('address request: %s', req.connection.remoteAddress);*/
-          if (address === req.connection.remoteAddress) {
-            return res.json(successResponse(user, true));
+          if (address && address === req.connection.remoteAddress) {
+            return req.brute.reset(function () {
+              res.json(successResponse(user, true));
+            })
           }
-          return res.status(401).send('Authentication failed. Not trusted.');
+          dns.lookup(process.env.TRUSTEDHOST, 6, (err, address) => { //retry with ipv6
+            /*console.log('address found: %s', address);
+            console.log('address request: %s', req.connection.remoteAddress);*/
+            if (address && address === req.connection.remoteAddress) {
+              return req.brute.reset(function () {
+                res.json(successResponse(user, true));
+              })
+            }
+            return res.status(401).send('Authentication failed. Not trusted.');
+          });
         });
       }
     }

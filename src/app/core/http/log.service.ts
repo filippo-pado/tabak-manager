@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Log } from '@app/logs';
 
-import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class LogService {

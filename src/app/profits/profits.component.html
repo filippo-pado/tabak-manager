@@ -7,15 +7,15 @@
     </div>
 
     <mat-button-toggle-group>
-      <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="month">
-        Mensile
+      <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="group">
+        Gruppo
       </mat-button-toggle>
-      <mat-button-toggle class='buttonToggle' (click)='quarterArts()' value="quarter">
-        Trimestrale
+      <mat-button-toggle class='buttonToggle' (click)='monthArts()' value="art">
+        Articolo
       </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <mat-button-toggle-group *ngIf='view==="month"'>
+    <mat-button-toggle-group>
       <mat-button-toggle class='buttonToggle' (click)='viewSemester(1)' checked='true' value="1">
         1° semestre
       </mat-button-toggle>

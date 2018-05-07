@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Vat } from '@app/vats';
-import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class VatService {

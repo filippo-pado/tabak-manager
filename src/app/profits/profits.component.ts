@@ -14,7 +14,6 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
-  view: string;
   periods: string[];
   periodLabels: string[];
   constructor(private profitService: ProfitService, private categoryService: CategoryService) { }
@@ -22,6 +21,9 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.applyTheme();
     this.dataSource = new MatTableDataSource();
+    this.periodLabels = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+      'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+    this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     this.monthGroups();
   }
 
@@ -29,20 +31,13 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   monthGroups(): void {
-    this.view = 'month';
-    this.periodLabels = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-      'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-    this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     this.loadProfits(1, 'profitGroup');
-    this.displayedColumns = ['group'].concat('1', '2', '3', '4', '5', '6').concat(['totalGroup']);
+    this.viewSemester(1);
   }
 
-  quarterArts(): void {
-    this.view = 'quarter';
-    this.periodLabels = ['Gennaio Febbraio Marzo', 'Aprile Maggio Giugno', 'Luglio Agosto Settembre', 'Ottobre Novembre Dicembre'];
-    this.periods = ['1', '2', '3', '4'];
-    this.loadProfits(4, 'art');
-    this.displayedColumns = ['group'].concat('1', '2', '3', '4').concat(['totalGroup']);
+  monthArts(): void {
+    this.loadProfits(3, 'art');
+    this.viewSemester(1);
   }
 
   viewSemester(semester: number): void {
@@ -53,8 +48,8 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private loadProfits(month: number, group: string): void {
-    this.profitService.getProfits(month, group).then(profits => {
+  private loadProfits(monthsGroup: number, group: string): void {
+    this.profitService.getProfits(monthsGroup, group).then(profits => {
       const totalRow = { group: 'totale' };
       this.periods.concat(['totalGroup']).forEach(period => {
         totalRow[period] = 0;

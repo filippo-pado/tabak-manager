@@ -29,7 +29,6 @@ export class VatsComponent implements OnInit, AfterViewInit {
     this.displayedColumns = ['date', 'amount', 'response', 'xml'];
     this.vatService.getAll().then(vats => {
       this.dataSource.data = vats;
-      console.log(vats);
     });
     this.vatFormService.vatUpdatedID.subscribe(vatUpdatedID => {
       this.vatService.getOne(vatUpdatedID).then(vat => {

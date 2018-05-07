@@ -43,7 +43,11 @@ router.post('/login', bruteforce.prevent, function (req, res) {
               res.json(successResponse(user, true));
             })
           }
-          dns.lookup(process.env.TRUSTEDHOST, 6, (err, address) => { //retry with ipv6
+          const options = {
+            family: 6,
+            hints: dns.ADDRCONFIG,
+          };
+          dns.lookup(process.env.TRUSTEDHOST, options, (err, address) => { //retry with ipv6
             /*console.log('address found: %s', address);
             console.log('address request: %s', req.connection.remoteAddress);*/
             if (address && address === req.connection.remoteAddress) {

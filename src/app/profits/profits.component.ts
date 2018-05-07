@@ -36,7 +36,7 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
   }
 
   monthArts(): void {
-    this.loadProfits(3, 'art');
+    this.loadProfits(1, 'art');
     this.viewSemester(1);
   }
 

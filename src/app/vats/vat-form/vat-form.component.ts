@@ -17,6 +17,7 @@ import { ConfirmDialogComponent } from '@app/shared';
 export class VatFormComponent implements OnInit {
   vat: Vat;
   action: string;
+  sendingVats: boolean = false;
   validateNumberField: (evt: Event) => void;
 
   constructor(
@@ -45,11 +46,14 @@ export class VatFormComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.sendingVats = true;
           this.vatService.create(this.vat).then(response => {
+            this.sendingVats = false;
             this.snackBar.open('Corrispettivi inviati!', 'Ok', { duration: 2000 });
             this.vatFormService.updateVatID(response._id);
             this.reset();
           }).catch(error => {
+            this.sendingVats = false;
             alert(JSON.stringify(error, null, 2));
           });
         }

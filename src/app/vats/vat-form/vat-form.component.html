@@ -6,12 +6,13 @@
       <input name='amount' matInput type="number" placeholder="Venduto" [(ngModel)]="vat.amount" (keypress)="validateNumberField($event)">
     </mat-form-field>
     <span>
-      <button class='icon-button' mat-icon-button type='submit' color="primary">
-        <mat-icon class='icon-button'>note_add</mat-icon>
+      <button mat-icon-button type='submit' color="primary">
+        <mat-icon>note_add</mat-icon>
       </button>
-      <button class='icon-button' mat-icon-button type='button' (click)='reset()' color="warn">
-        <mat-icon class='icon-button'>cancel</mat-icon>
+      <button mat-icon-button type='button' (click)='reset()' color="warn">
+        <mat-icon>cancel</mat-icon>
       </button>
     </span>
   </div>
+  <mat-progress-bar *ngIf='sendingVats' mode="indeterminate"></mat-progress-bar>
 </form>

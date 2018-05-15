@@ -45,7 +45,7 @@ router.post('/login', bruteforce.prevent, function (req, res) {
           }
           const options = {
             family: 6,
-            hints: dns.ADDRCONFIG,
+            hints: dns.V4MAPPED,
           };
           dns.lookup(process.env.TRUSTEDHOST, options, (err, address) => { //retry with ipv6
             /*console.log('address found: %s', address);

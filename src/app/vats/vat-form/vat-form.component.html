@@ -1,17 +1,12 @@
 <form #categoryForm="ngForm" (ngSubmit)="onSubmit()">
-
-  <div fxLayout='row' fxLayoutWrap>
-    <span class='mat-h1' style='margin-right: 30px;'>Invia corrispettivi</span>
-    <mat-form-field>
+  <div fxLayout='row'>
+    <span class='mat-h1' style='margin-right: 30px;'>Trasmetti</span>
+    <mat-form-field style='max-width: 200px; margin-right: 24px;'>
       <input name='amount' matInput type="number" placeholder="Venduto" [(ngModel)]="vat.amount" (keypress)="validateNumberField($event)">
     </mat-form-field>
     <span>
-      <button mat-icon-button type='submit' color="primary">
-        <mat-icon>note_add</mat-icon>
-      </button>
-      <button mat-icon-button type='button' (click)='reset()' color="warn">
-        <mat-icon>cancel</mat-icon>
-      </button>
+      <button mat-raised-button type='submit' color="primary">Invia</button>&nbsp;
+      <button mat-raised-button type='button' (click)='reset()' color="warn">Annulla</button>
     </span>
   </div>
   <mat-progress-bar *ngIf='sendingVats' mode="indeterminate"></mat-progress-bar>

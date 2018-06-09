@@ -16,6 +16,12 @@ export class VatService {
       .then(response => response as Vat[])
       .catch(this.handleError);
   }
+  getReport(): Promise<any[]> {
+    return this.http.get(this.vatsUrl + '/report')
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
 
   getOne(id: string): Promise<Vat> {
     const url = `${this.vatsUrl}/${id}`;

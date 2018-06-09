@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
 
 import { Vat } from './vat';
 import { VatService } from '@app/core';
@@ -17,6 +17,7 @@ export class VatsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Vat>;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private vatService: VatService,
@@ -45,6 +46,7 @@ export class VatsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(filterValue: string) {

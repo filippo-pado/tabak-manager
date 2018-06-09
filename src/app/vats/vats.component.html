@@ -1,35 +1,44 @@
 <mat-card class="container">
   <router-outlet></router-outlet>
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
-  </mat-form-field>
-  <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc">
-    <ng-container matColumnDef="date">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
-      <mat-cell *matCellDef="let vat">
-        {{vat.date | date:'yyyy-MM-dd HH:mm:ss'}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Venduto </mat-header-cell>
-      <mat-cell *matCellDef="let vat">
-        {{vat.amount | currency:'EUR'}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="response">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Risposta </mat-header-cell>
-      <mat-cell *matCellDef="let vat">
-        {{vat.responseCode}} - {{vat.responseCode===200 ? 'OK' : 'ERRORE'}}
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="xml">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> XML </mat-header-cell>
-      <mat-cell *matCellDef="let vat">
-        <button mat-raised-button color='primary' (click)='showRequest(vat)'>Richiesta</button>
-        <button mat-raised-button color='primary' (click)='showResponse(vat)'>Risposta</button>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  <div fxLayout='row'>
+    <div fxFlex='700px' style='margin-right: 60px;'>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtra">
+      </mat-form-field>
+      <mat-table #table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc">
+        <ng-container matColumnDef="date">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Data </mat-header-cell>
+          <mat-cell *matCellDef="let vat">
+            {{vat.date | date:'yyyy-MM-dd HH:mm:ss'}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Venduto </mat-header-cell>
+          <mat-cell *matCellDef="let vat">
+            {{vat.amount | currency:'EUR'}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="response">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Risposta </mat-header-cell>
+          <mat-cell *matCellDef="let vat">
+            {{vat.responseCode}} - {{vat.responseCode===200 ? 'OK' : 'ERRORE'}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="xml">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> XML </mat-header-cell>
+          <mat-cell *matCellDef="let vat">
+            <button mat-raised-button color='primary' (click)='showRequest(vat)'>Richiesta</button>&nbsp;
+            <button mat-raised-button color='primary' (click)='showResponse(vat)'>Risposta</button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[10, 50, 100]">
+      </mat-paginator>
+    </div>
+    <div fxFlex='auto'>
+      <app-vat-report></app-vat-report>
+    </div>
+  </div>
 </mat-card>

@@ -7,6 +7,7 @@ import { VatsComponent } from './vats.component';
 import { VatFormComponent } from './vat-form/vat-form.component';
 
 import { VatFormService } from './vat-form/vat-form.service';
+import { VatReportComponent } from './vat-report/vat-report.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,7 @@ import { VatFormService } from './vat-form/vat-form.service';
     VatsRoutingModule
   ],
   declarations: [
-    VatsComponent, VatFormComponent
+    VatsComponent, VatFormComponent, VatReportComponent
   ],
   providers: [
     VatFormService

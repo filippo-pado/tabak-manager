@@ -19,6 +19,51 @@ router.post('/', function (req, res, next) {
   });
 });
 
+router.get('/report', (req, res) => {
+  Vat.aggregate([{
+      $addFields: {
+        "year": {
+          "$year": "$date"
+        },
+      }
+    }, {
+      $match: {
+        'year': {
+          '$eq': req.query.year ? Number(req.query.year) : (new Date()).getFullYear()
+        }
+      }
+    },
+    {
+      $group: {
+        _id: {
+          $month: "$date"
+        },
+        vats: {
+          $sum: {
+            $divide: [{
+              $trunc: {
+                $add: [{
+                  $multiply: ['$amount', 100]
+                }, 0.5]
+              }
+            }, 100]
+          }
+        },
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }
+  ]).exec(function (err, vats) {
+    res.json(vats);
+  });
+});
+
+
 /* GET SINGLE ITEM */
 router.get('/:id', function (req, res, next) {
   Vat.findById(req.params.id, function (err, data) {
@@ -26,4 +71,7 @@ router.get('/:id', function (req, res, next) {
     res.json(data);
   });
 });
+
+/* GET VATS BY MONTH */
+
 module.exports = router;

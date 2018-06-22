@@ -3,7 +3,7 @@
   <ng-container matColumnDef="month">
     <mat-header-cell *matHeaderCellDef> Mese </mat-header-cell>
     <mat-cell *matCellDef="let month">
-      {{monthLabels[month._id]}}
+      {{monthLabels[month._id-1]}}
     </mat-cell>
   </ng-container>
   <ng-container matColumnDef="vats">

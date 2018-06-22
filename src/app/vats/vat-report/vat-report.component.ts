@@ -36,7 +36,7 @@ export class VatReportComponent implements OnInit {
       vatReport.forEach(row => {
         total += row.vats;
       });
-      this.dataSource.data = vatReport.concat({ _id: 12, vats: total });
+      this.dataSource.data = vatReport.concat({ _id: 13, vats: total });
     });
   }
 }

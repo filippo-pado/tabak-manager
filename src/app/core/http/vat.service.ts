@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Vat } from '@app/vats';
 
@@ -16,8 +16,11 @@ export class VatService {
       .then(response => response as Vat[])
       .catch(this.handleError);
   }
-  getReport(): Promise<any[]> {
-    return this.http.get(this.vatsUrl + '/report')
+
+  getReport(year: number = (new Date()).getFullYear()): Promise<any[]> {
+    let params = new HttpParams();
+    params = params.append('year', '' + year);
+    return this.http.get(this.vatsUrl + '/report', { params: params })
       .toPromise()
       .then(response => response)
       .catch(this.handleError);

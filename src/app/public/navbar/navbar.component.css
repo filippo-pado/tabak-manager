@@ -15,9 +15,13 @@
 
 .navbar-item {
   color: white;
-  font-size: 14px;
+  font-size: 15px;
   display: none;
   min-width: 0px;
+}
+
+.navbar-item-selected {
+  font-weight: bold;
 }
 
 .show {

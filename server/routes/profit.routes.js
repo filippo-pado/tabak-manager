@@ -5,8 +5,21 @@ var express = require('express'),
 var Movement = require('../models/Movement.js');
 
 router.get('/', (req, res) => {
-  Movement.aggregate([
+  Movement.aggregate([{
+      $project: {
+        year: {
+          $year: '$date'
+        },
+        category: 1,
+        date: 1,
+        amount: 1
+      }
+    },
     {
+      $match: {
+        year: Number(req.query.year)
+      }
+    }, {
       $lookup: {
         from: 'categories',
         localField: 'category',
@@ -14,10 +27,14 @@ router.get('/', (req, res) => {
         as: 'category'
       },
     },
-    { $unwind: '$category' },
+    {
+      $unwind: '$category'
+    },
     {
       $match: {
-        'category.art': { '$ne': '' }
+        'category.art': {
+          '$ne': ''
+        }
       }
     },
     {
@@ -25,17 +42,31 @@ router.get('/', (req, res) => {
         _id: {
           group: req.query.group ? ('$category.' + req.query.group) : '$category.profitGroup',
           month: {
-            $substr: [{ $ceil: { $divide: [{ $month: "$date" }, req.query.months ? Number(req.query.months) : 1] } }, 0, - 1]
+            $substr: [{
+              $ceil: {
+                $divide: [{
+                  $month: "$date"
+                }, req.query.months ? Number(req.query.months) : 1]
+              }
+            }, 0, -1]
           },
         },
         profit: {
           $sum: {
-            $divide: [
-              { $trunc: { $add: [{ $multiply: [{ $multiply: ['$amount', '$category.amountToProfit'] }, 100] }, 0.5] } }, 100
-            ]
+            $divide: [{
+              $trunc: {
+                $add: [{
+                  $multiply: [{
+                    $multiply: ['$amount', '$category.amountToProfit']
+                  }, 100]
+                }, 0.5]
+              }
+            }, 100]
           }
         },
-        count: { $sum: 1 }
+        count: {
+          $sum: 1
+        }
       }
     }, {
       $group: {
@@ -64,9 +95,18 @@ router.get('/', (req, res) => {
         totalGroup: 1
       }
     },
-    { $addFields: { profits: { 'group': "$_id", 'totalGroup': '$totalGroup' } } },
     {
-      $replaceRoot: { newRoot: "$profits" }
+      $addFields: {
+        profits: {
+          'group': "$_id",
+          'totalGroup': '$totalGroup'
+        }
+      }
+    },
+    {
+      $replaceRoot: {
+        newRoot: "$profits"
+      }
     }
   ]).exec(function (err, profits) {
     res.json(profits);

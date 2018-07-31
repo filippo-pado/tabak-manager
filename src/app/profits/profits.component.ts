@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ProfitService } from '@app/core';
-import { Category } from '@app/categories';
-import { CategoryService } from '@app/core';
 import { Highcharts } from 'angular-highcharts';
 
 @Component({
@@ -12,11 +12,13 @@ import { Highcharts } from 'angular-highcharts';
 })
 export class ProfitsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
+  artGroupToggle: string;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[];
   periods: string[];
   periodLabels: string[];
-  constructor(private profitService: ProfitService, private categoryService: CategoryService) { }
+  year: number;
+  constructor(private profitService: ProfitService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.applyTheme();
@@ -24,22 +26,25 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.periodLabels = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
       'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
     this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
-    this.monthGroups();
+    this.artGroupToggle = 'profitGroup';
+    this.viewSemester(1);
+    this.route.params.subscribe(params => {
+      if (params.year) {
+        this.year = Number(params.year);
+        this.loadProfits(1, this.artGroupToggle, this.year);
+      }
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
-  monthGroups(): void {
-    this.loadProfits(1, 'profitGroup');
-    this.viewSemester(1);
+  changedArtGroup(event: MatButtonToggleChange) {
+    this.loadProfits(1, event.value, this.year);
   }
-
-  monthArts(): void {
-    this.loadProfits(1, 'art');
-    this.viewSemester(1);
+  changedSemester(event: MatButtonToggleChange) {
+    this.viewSemester(Number(event.value));
   }
-
   viewSemester(semester: number): void {
     if (semester === 1) {
       this.displayedColumns = ['group'].concat(['1', '2', '3', '4', '5', '6']).concat(['totalGroup']);
@@ -48,8 +53,8 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private loadProfits(monthsGroup: number, group: string): void {
-    this.profitService.getProfits(monthsGroup, group).then(profits => {
+  private loadProfits(monthsGroup: number, group: string, year: number): void {
+    this.profitService.getProfits(monthsGroup, group, year).then(profits => {
       const totalRow = { group: 'totale' };
       this.periods.concat(['totalGroup']).forEach(period => {
         totalRow[period] = 0;
@@ -86,7 +91,7 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
             maxPointWidth: 17
           },
           pie: {
-            size: '70%',
+            size: '90%',
             allowPointSelect: true,
             cursor: 'pointer',
             borderWidth: 0.5,

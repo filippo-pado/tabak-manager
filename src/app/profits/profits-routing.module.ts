@@ -5,7 +5,12 @@ import { ProfitsComponent } from './profits.component';
 
 const routes: Routes = [
   {
-    path: '', component: ProfitsComponent
+    path: '',
+    redirectTo: (new Date()).getFullYear().toString(),
+    pathMatch: 'full'
+  },
+  {
+    path: ':year', component: ProfitsComponent
   }
 ];
 

@@ -1,4 +1,10 @@
-<span class='mat-h1'>Totale mensile</span>
+<mat-form-field>
+  <mat-select placeholder="Anno" [(value)]="yearSelected" (selectionChange)='changedYear($event)'>
+    <mat-option *ngFor="let year of years" [value]="year">
+      {{year}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <mat-table #table [dataSource]="dataSource">
   <ng-container matColumnDef="month">
     <mat-header-cell *matHeaderCellDef> Mese </mat-header-cell>

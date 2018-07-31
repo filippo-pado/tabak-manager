@@ -1,31 +1,30 @@
 <mat-card>
   <mat-card-content>
-    <div class='graphs'>
-      <app-prevision-profit-graph></app-prevision-profit-graph>
-      <app-repartition-graph></app-repartition-graph>
-      <app-period-profit-graph></app-period-profit-graph>
+    <div fxLayout='row' fxLayoutGap='20px'>
+      <span>
+        <a mat-raised-button routerLink="../2018" routerLinkActive="mat-primary">2018</a>
+        <a mat-raised-button routerLink="../2019" routerLinkActive="mat-primary">2019</a>
+        <a mat-raised-button routerLink="../2020" routerLinkActive="mat-primary">2020</a>
+      </span>
+      <mat-button-toggle-group [(ngModel)]="artGroupToggle" (change)='changedArtGroup($event)'>
+        <mat-button-toggle class='buttonToggle' value="profitGroup">
+          Gruppo
+        </mat-button-toggle>
+        <mat-button-toggle class='buttonToggle' value="art">
+          Articolo
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-button-toggle-group (change)='changedSemester($event)'>
+        <mat-button-toggle class='buttonToggle' checked='true' value="1">
+          1° semestre
+        </mat-button-toggle>
+        <mat-button-toggle class='buttonToggle' value="2">
+          2° semestre
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
 
-    <mat-button-toggle-group>
-      <mat-button-toggle class='buttonToggle' (click)='monthGroups()' checked='true' value="group">
-        Gruppo
-      </mat-button-toggle>
-      <mat-button-toggle class='buttonToggle' (click)='monthArts()' value="art">
-        Articolo
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-
-    <mat-button-toggle-group>
-      <mat-button-toggle class='buttonToggle' (click)='viewSemester(1)' checked='true' value="1">
-        1° semestre
-      </mat-button-toggle>
-      <mat-button-toggle class='buttonToggle' (click)='viewSemester(2)' value="2">
-        2° semestre
-      </mat-button-toggle>
-    </mat-button-toggle-group>
-
     <mat-table #table [dataSource]="dataSource" matSort>
-
       <ng-container matColumnDef="group">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Gruppo </mat-header-cell>
         <mat-cell *matCellDef="let group">{{group.group | titlecase}}</mat-cell>
@@ -42,5 +41,9 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+
+    <app-prevision-profit-graph></app-prevision-profit-graph>
+    <app-repartition-graph></app-repartition-graph>
+    <app-period-profit-graph></app-period-profit-graph>
   </mat-card-content>
 </mat-card>

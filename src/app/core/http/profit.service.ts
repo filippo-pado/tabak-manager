@@ -9,10 +9,11 @@ export class ProfitService {
 
   constructor(private http: HttpClient) { }
 
-  getProfits(monthsGroup: number = 1, group: string = 'profitGroup'): Promise<any> {
+  getProfits(monthsGroup: number = 1, group: string = 'profitGroup', year: number = (new Date()).getFullYear()): Promise<any> {
     let params = new HttpParams();
     params = params.append('months', '' + monthsGroup);
     params = params.append('group', group);
+    params = params.append('year', '' + year);
     return this.http.get(this.profitsUrl + '/', { params: params })
       .toPromise()
       .then(response => response)

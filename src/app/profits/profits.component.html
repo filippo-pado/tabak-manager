@@ -2,9 +2,7 @@
   <mat-card-content>
     <div fxLayout='row' fxLayoutGap='20px'>
       <span>
-        <a mat-raised-button routerLink="../2018" routerLinkActive="mat-primary">2018</a>
-        <a mat-raised-button routerLink="../2019" routerLinkActive="mat-primary">2019</a>
-        <a mat-raised-button routerLink="../2020" routerLinkActive="mat-primary">2020</a>
+        <a *ngFor='let year of years' mat-raised-button [routerLink]="['../', year]" routerLinkActive="mat-primary">{{year}}</a>
       </span>
       <mat-button-toggle-group [(ngModel)]="artGroupToggle" (change)='changedArtGroup($event)'>
         <mat-button-toggle class='buttonToggle' value="profitGroup">

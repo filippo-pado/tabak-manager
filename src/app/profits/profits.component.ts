@@ -17,7 +17,8 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[];
   periods: string[];
   periodLabels: string[];
-  year: number;
+  currentYear: number;
+  years: number[] = [];
   constructor(private profitService: ProfitService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -28,10 +29,13 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.periods = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     this.artGroupToggle = 'profitGroup';
     this.viewSemester(1);
+    for (let year = 2018; year <= (new Date()).getFullYear(); year++) {
+      this.years.push(year);
+    }
     this.route.params.subscribe(params => {
       if (params.year) {
-        this.year = Number(params.year);
-        this.loadProfits(1, this.artGroupToggle, this.year);
+        this.currentYear = Number(params.year);
+        this.loadProfits(1, this.artGroupToggle, this.currentYear);
       }
     });
   }
@@ -40,7 +44,7 @@ export class ProfitsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   changedArtGroup(event: MatButtonToggleChange) {
-    this.loadProfits(1, event.value, this.year);
+    this.loadProfits(1, event.value, this.currentYear);
   }
   changedSemester(event: MatButtonToggleChange) {
     this.viewSemester(Number(event.value));

@@ -25,8 +25,10 @@ export class RepartitionGraphComponent implements OnInit {
             chart: { type: 'pie' },
             plotOptions: {
               pie: {
+                size: '70%',
                 dataLabels: {
-                  format: '{point.name} {point.percentage:.1f} %'
+                  format: '{point.name} {point.percentage:.1f} %',
+                  distance: 30
                 }
               }
             },

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
-import { Log } from './log';
+import { Log } from '@app/logs/log';
 import { LogService } from '@app/core';
 
 @Component({

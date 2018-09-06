@@ -30,6 +30,11 @@ const routes: Routes = [
     loadChildren: 'app/vats/vats.module#VatsModule'
   },
   {
+    path: 'slots',
+    canActivate: [AuthGuard],
+    loadChildren: 'app/slots/slots.module#SlotsModule'
+  },
+  {
     path: 'logs',
     canActivate: [AuthGuard],
     loadChildren: 'app/logs/logs.module#LogsModule'

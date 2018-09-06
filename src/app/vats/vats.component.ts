@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatDialog, MatPaginator } from '@angular/material';
 
-import { Vat } from './vat';
+import { Vat } from '@app/vats/vat';
 import { VatService } from '@app/core';
-import { VatFormService } from './vat-form/vat-form.service';
+import { VatFormService } from '@app/vats/vat-form/vat-form.service';
 
 import { ConfirmDialogComponent, DialogData } from '@app/shared';
 

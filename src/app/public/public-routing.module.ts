@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '@app/core';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { LoginComponent } from './login/login.component';
+import { PageNotFoundComponent } from '@app/public/page-not-found/page-not-found.component';
+import { LoginComponent } from '@app/public/login/login.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

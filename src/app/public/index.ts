@@ -1,6 +1,6 @@
-export * from './login/login.component';
-export * from './navbar/navbar.component';
-export * from './page-not-found/page-not-found.component';
+export * from '@app/public/login/login.component';
+export * from '@app/public/navbar/navbar.component';
+export * from '@app/public/page-not-found/page-not-found.component';
 
-export * from './public-routing.module';
-export * from './public.module';
+export * from '@app/public/public-routing.module';
+export * from '@app/public/public.module';

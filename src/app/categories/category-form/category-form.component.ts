@@ -4,9 +4,9 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { UtilsService } from '@app/shared';
 
-import { Category } from '../category';
+import { Category } from '@app/categories/category';
 import { CategoryService } from '@app/core';
-import { CategoryFormService } from './category-form.service';
+import { CategoryFormService } from '@app/categories/category-form/category-form.service';
 
 @Component({
   selector: 'app-category-form',

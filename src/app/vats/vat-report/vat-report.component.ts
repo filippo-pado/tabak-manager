@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSelectChange } from '@angular/material';
 
-import { Vat } from '../vat';
+import { Vat } from '@app/vats/vat';
 import { VatService } from '@app/core';
-import { VatFormService } from '../vat-form/vat-form.service';
+import { VatFormService } from '@app/vats/vat-form/vat-form.service';
 
 @Component({
   selector: 'app-vat-report',

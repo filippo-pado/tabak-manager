@@ -4,9 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CoreModule } from '@app/core';
 import { PublicModule } from '@app/public';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '@app/app-routing.module';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from '@app/app.component';
 
 @NgModule({
   declarations: [

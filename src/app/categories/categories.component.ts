@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
 
-import { Category } from './category';
+import { Category } from '@app/categories/category';
 import { CategoryService } from '@app/core';
-import { CategoryFormService } from './category-form/category-form.service';
+import { CategoryFormService } from '@app/categories/category-form/category-form.service';
 
 @Component({
   selector: 'app-categories',

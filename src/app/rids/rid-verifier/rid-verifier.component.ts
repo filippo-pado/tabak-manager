@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Rid } from '../rid';
+import { Rid } from '@app/rids/rid';
 import { RidService, MovementService } from '@app/core';
 import { Movement } from '@app/movements';
 import { UtilsService } from '@app/shared';

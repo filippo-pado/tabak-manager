@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-content>
+    <div fxLayout='row' fxLayoutGap='20px'>
+      <app-slot-detail fxFlex='250px'></app-slot-detail>
+      <app-slot-list fxFlex='fill'></app-slot-list>
+    </div>
+    <table style='margin-top: 20px;'>
+      <thead>
+        <tr class='mat-h2'>
+          <td>Data</td>
+          <td *ngFor='let slot of slotList'>{{slot.name}} {{slot.position}}°</td>
+          <td>Guadagno</td>
+          <td>Canc</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let dateReports of reportsByDate'>
+          <td>{{dateReports._id}}</td>
+          <td *ngFor='let slot of slotList'>
+            <div *ngIf='getSlotReport(dateReports.reports, slot._id); let slotDateReport'>
+              <div>+ {{slotDateReport.totalIn}}</div>
+              <div>- {{slotDateReport.totalOut}}</div>
+              <div *ngIf='slotDateReport.negative'>Negativa</div>
+            </div>
+          </td>
+          <td>{{dateReports.profit | currency: 'EUR'}}</td>
+          <td>
+            <button mat-icon-button (click)='deleteReports(dateReports.reports)' color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div fxLayout='row wrap' fxLayoutGap='8px' style='margin-top: 20px;'>
+      <div *ngFor='let slot of slotList'>
+        <div style='max-width: 190px;'>
+          <form #reportForm="ngForm">
+            <div>
+              <div class='mat-h2'>{{slot.name}} {{slot.position}}°</div>
+              <mat-form-field>
+                <input matInput type='number' placeholder="Totale In" name='{{slot._id}}_readTotalIn' [(ngModel)]='newSlotReports[slot._id].totalIn'>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type='number' placeholder="Totale Out" name='{{slot._id}}_readTotalOut' [(ngModel)]='newSlotReports[slot._id].totalOut'>
+              </mat-form-field>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div>
+        <div class='mat-h2'>Salva</div>
+        <div style='height: 56px;'>
+          <button mat-raised-button color='primary' (click)='saveReport()'>Conferma</button>
+        </div>
+        <div>
+          <mat-form-field>
+            <input #date name='date' matInput type="date" placeholder="Data" [ngModel]="reportsDate | date:'yyyy-MM-dd'"
+              (ngModelChange)="reportsDate = $event">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

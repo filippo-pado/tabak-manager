@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RidsComponent } from './rids.component';
+import { RidsComponent } from '@app/rids/rids.component';
 
 const routes: Routes = [
   {

@@ -3,9 +3,9 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { UtilsService } from '@app/shared';
 
-import { Vat } from '../vat';
+import { Vat } from '@app/vats/vat';
 import { VatService } from '@app/core';
-import { VatFormService } from './vat-form.service';
+import { VatFormService } from '@app/vats/vat-form/vat-form.service';
 
 import { ConfirmDialogComponent } from '@app/shared';
 

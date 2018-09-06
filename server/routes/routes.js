@@ -8,12 +8,15 @@ var logRoutes = require('./log.routes.js');
 var infoRoutes = require('./info.routes.js');
 var profitRoutes = require('./profit.routes.js');
 var vatRoutes = require('./vat.routes.js');
+var slotRoutes = require('./slot.routes.js');
+
 
 var restBuilder = require('./restBuilder.js');
 var Movement = require('../models/Movement.js');
 var Rid = require('../models/Rid.js');
 var Category = require('../models/Category.js');
 var Log = require('../models/Log.js');
+var Slot = require('../models/Slot.js');
 
 router.use('/api/users/', userRoutes);
 router.use('/api', protectRoutes);
@@ -21,10 +24,13 @@ router.use('/api', logRoutes);
 router.use('/api/info/', infoRoutes);
 router.use('/api/profits/', profitRoutes);
 router.use('/api/vats/', vatRoutes);
+router.use('/api/slots/', slotRoutes);
 router.use('/api/movements/', restBuilder(express.Router(), Movement));
 router.use('/api/rids/', restBuilder(express.Router(), Rid, true));
 router.use('/api/categories/', restBuilder(express.Router(), Category));
 router.use('/api/logs/', restBuilder(express.Router(), Log));
+router.use('/api/slots/', restBuilder(express.Router(), Slot));
+
 
 router.get('/api/*', (req, res) => {
   res.status(500).send('Wrong API request');

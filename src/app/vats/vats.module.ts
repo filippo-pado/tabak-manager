@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@app/shared';
-import { VatsRoutingModule } from './vats-routing.module';
+import { VatsRoutingModule } from '@app/vats/vats-routing.module';
 
-import { VatsComponent } from './vats.component';
-import { VatFormComponent } from './vat-form/vat-form.component';
+import { VatsComponent } from '@app/vats/vats.component';
+import { VatFormComponent } from '@app/vats/vat-form/vat-form.component';
 
-import { VatFormService } from './vat-form/vat-form.service';
-import { VatReportComponent } from './vat-report/vat-report.component';
+import { VatFormService } from '@app/vats/vat-form/vat-form.service';
+import { VatReportComponent } from '@app/vats/vat-report/vat-report.component';
 
 @NgModule({
   imports: [

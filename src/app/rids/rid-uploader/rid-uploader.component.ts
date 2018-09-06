@@ -1,12 +1,12 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
-import { Rid } from '../rid';
+import { Rid } from '@app/rids/rid';
 import { Category } from '@app/categories';
 import { RidService } from '@app/core';
 import { CategoryService } from '@app/core';
 
-import * as XLSX from 'xlsx';
+import { WorkBook, WorkSheet, read, utils } from 'xlsx/types';
 type AOA = any[][];
 
 @Component({
@@ -67,12 +67,12 @@ export class RidUploaderComponent implements OnInit {
     reader.onload = (e: any) => {
       // read workbook
       const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const wb: WorkBook = read(bstr, { type: 'binary' });
       // grab first sheet
       const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+      const ws: WorkSheet = wb.Sheets[wsname];
       // parse data
-      this.data = <AOA>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
+      this.data = <AOA>(utils.sheet_to_json(ws, { header: 1 }));
 
       const ridToSave: Rid[] = [];
       this.data.forEach(row => {

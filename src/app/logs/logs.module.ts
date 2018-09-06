@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@app/shared';
 
-import { LogsComponent } from './logs.component';
-import { LogsRoutingModule } from './logs-routing.module';
+import { LogsComponent } from '@app/logs/logs.component';
+import { LogsRoutingModule } from '@app/logs/logs-routing.module';
 
 @NgModule({
   imports: [

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { VatsComponent } from './vats.component';
-import { VatFormComponent } from './vat-form/vat-form.component';
+import { VatsComponent } from '@app/vats/vats.component';
+import { VatFormComponent } from '@app/vats/vat-form/vat-form.component';
 
 const routes: Routes = [
   {

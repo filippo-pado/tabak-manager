@@ -3,11 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppMaterialModule } from './app-material.module';
+import { AppMaterialModule } from '@app/shared/app-material.module';
 
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '@app/shared/confirm-dialog/confirm-dialog.component';
 
-import { UtilsService } from './utils/utils.service';
+import { UtilsService } from '@app/shared/utils/utils.service';
 
 const modules = [
   CommonModule,

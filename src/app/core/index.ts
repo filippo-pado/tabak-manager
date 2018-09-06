@@ -1,13 +1,14 @@
-export * from './auth/auth.guard';
-export * from './auth/auth.interceptor';
-export * from './auth/auth.service';
+export * from '@app/core/auth/auth.guard';
+export * from '@app/core/auth/auth.interceptor';
+export * from '@app/core/auth/auth.service';
 
-export * from './http/category.service';
-export * from './http/movement.service';
-export * from './http/profit.service';
-export * from './http/rid.service';
-export * from './http/log.service';
-export * from './http/vat.service';
+export * from '@app/core/http/category.service';
+export * from '@app/core/http/movement.service';
+export * from '@app/core/http/profit.service';
+export * from '@app/core/http/rid.service';
+export * from '@app/core/http/log.service';
+export * from '@app/core/http/vat.service';
+export * from '@app/core/http/slot.service';
 
-export * from './core.module';
+export * from '@app/core/core.module';
 

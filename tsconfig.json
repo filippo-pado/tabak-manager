@@ -9,6 +9,9 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "xlsx/types": [
+        "../node_modules/xlsx"
       ]
     },
     "sourceMap": true,

@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar } from '@angular/material';
 
-import { Rid } from './rid';
+import { Rid } from '@app/rids/rid';
 import { RidService } from '@app/core';
 import { MovementService } from '@app/core';
 

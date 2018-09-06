@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ProfitsComponent } from './profits.component';
+import { ProfitsComponent } from '@app/profits/profits.component';
 const startingYear: string = '2018';
 
 const routes: Routes = [

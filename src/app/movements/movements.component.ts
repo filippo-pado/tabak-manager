@@ -2,9 +2,9 @@ import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatSnackBar, MatDialog } from '@angular/material';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Movement } from './movement';
+import { Movement } from '@app/movements/movement';
 import { MovementService } from '@app/core';
-import { MovementFormService } from './movement-form/movement-form.service';
+import { MovementFormService } from '@app/movements/movement-form/movement-form.service';
 import { ConfirmDialogComponent } from '@app/shared';
 
 @Component({

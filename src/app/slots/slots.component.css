@@ -2,13 +2,11 @@ table {
   width: 100%;
 }
 
-td {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: rgba(0, 0, 0, .12);
-  padding: 0;
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
-table {
-  border-spacing: 0;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }

@@ -2,6 +2,10 @@
   color: black;
 }
 
+.mat-button-toggle-checked {
+  color: white;
+}
+
 .mat-header-cell.mat-sort-header-sorted {
   color: black;
 }

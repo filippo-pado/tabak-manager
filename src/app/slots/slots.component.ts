@@ -29,20 +29,29 @@ export class SlotsComponent implements OnInit {
     });
   }
   saveReport() {
-    const savingPromises: Promise<any>[] = [];
-    this.slotList.forEach(slot => {
-      this.newSlotReports[slot._id].date = this.reportsDate;
-      savingPromises.push(this.slotService.createReport(slot._id, this.newSlotReports[slot._id])
-        .then(response => { })
-        .catch(error => {
-          alert(JSON.stringify(error, null, 2));
-        })
-      );
-    });
-    Promise.all(savingPromises).then(() => {
-      this.reset();
-      this.snackBar.open('Report salvato!', 'Ok', { duration: 2000 });
-    });
+    if (this.reportsByDate.find(reports => {
+      return (reports._id === (new Date(this.reportsDate).toISOString().split('T')[0]));
+    })) {
+      this.dialog.open(ConfirmDialogComponent, {
+        width: '200px',
+        data: { text: 'Data già presente!' }
+      });
+    } else {
+      const savingPromises: Promise<any>[] = [];
+      this.slotList.forEach(slot => {
+        this.newSlotReports[slot._id].date = this.reportsDate;
+        savingPromises.push(this.slotService.createReport(slot._id, this.newSlotReports[slot._id])
+          .then(response => { })
+          .catch(error => {
+            alert(JSON.stringify(error, null, 2));
+          })
+        );
+      });
+      Promise.all(savingPromises).then(() => {
+        this.reset();
+        this.snackBar.open('Report salvato!', 'Ok', { duration: 2000 });
+      });
+    }
   }
 
   reset() {
@@ -64,23 +73,28 @@ export class SlotsComponent implements OnInit {
   }
   getProfit(date: string) {
     const dateIndex = this.reportsByDate.findIndex(reports => reports._id === date);
-    if (dateIndex <= 0) { return 0; } // not found or first day
+    let firstReport = false;
+    if (dateIndex < 0) { return 0; } // not found
+    if (dateIndex === 0) { firstReport = true; }
     const dateReports = this.reportsByDate[dateIndex];
-    const previousDateReports = this.reportsByDate[dateIndex - 1];
+    const previousDateReports = firstReport ? null : this.reportsByDate[dateIndex - 1];
     let profit = 0;
     this.slotList.forEach(slot => {
       const dateSlotReport = this.getSlotReport(dateReports.reports, slot._id);
-      const previousDateSlotReport = this.getSlotReport(previousDateReports.reports, slot._id);
-      if (!dateSlotReport || !previousDateSlotReport) { return 'error'; }
-      // check if negative
-      const totalIn = dateSlotReport.totalIn - previousDateSlotReport.totalIn;
-      const totalOut = dateSlotReport.totalOut - previousDateSlotReport.totalOut;
-      if (totalIn > totalOut) {
-        const income = (totalIn - totalOut - (totalIn * 19.8 / 100)) * 80 / 100;
-        profit += income;
-      } else {
-        this.reportsByDate.find(reports => reports._id === date).
-          reports.find(report => report.slot === slot._id)['negative'] = true;
+      if (dateSlotReport) { // slot could be missed at this date
+        const previousDateSlotReport = firstReport ? null : this.getSlotReport(previousDateReports.reports, slot._id);
+        // check if negative
+        const totalIn = (dateSlotReport ? dateSlotReport.totalIn : 0) -
+          (firstReport ? 0 : (previousDateSlotReport ? previousDateSlotReport.totalIn : 0));
+        const totalOut = (dateSlotReport ? dateSlotReport.totalOut : 0) -
+          (firstReport ? 0 : (previousDateSlotReport ? previousDateSlotReport.totalOut : 0));
+        if (totalIn > totalOut) {
+          const income = (totalIn - totalOut - (totalIn * 19.8 / 100)) * 80 / 100;
+          profit += income;
+        } else {
+          this.reportsByDate.find(reports => reports._id === date).
+            reports.find(report => report.slot === slot._id)['negative'] = true;
+        }
       }
     });
     return profit;

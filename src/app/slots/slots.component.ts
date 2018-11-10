@@ -88,8 +88,8 @@ export class SlotsComponent implements OnInit {
           (firstReport ? 0 : (previousDateSlotReport ? previousDateSlotReport.totalIn : 0));
         const totalOut = (dateSlotReport ? dateSlotReport.totalOut : 0) -
           (firstReport ? 0 : (previousDateSlotReport ? previousDateSlotReport.totalOut : 0));
-        if (totalIn > totalOut) {
-          const income = (totalIn - totalOut - (totalIn * 19.8 / 100)) * 80 / 100;
+        const income = (totalIn - totalOut - (totalIn * 19.8 / 100)) * 80 / 100;
+        if (income > 0) {
           profit += income;
         } else {
           this.reportsByDate.find(reports => reports._id === date).

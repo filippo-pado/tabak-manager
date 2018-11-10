@@ -1,12 +1,12 @@
-<div style='max-width: 240px; margin: 16px'>
+<div style='margin: 16px'>
   <div *ngIf='slot'>
     <div class='mat-h1'>{{slot._id ? slot.name+' '+slot.position+'°' : 'Nuova Slot'}}</div>
     <form #slotForm="ngForm">
       <div>
-        <mat-form-field>
+        <mat-form-field style='width: 100%'>
           <input matInput type='text' placeholder="Nome" name='{{slot._id}}_name' [(ngModel)]='slot.name'>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field style='width: 100%'>
           <input matInput type='number' min='1' placeholder="Posizione" name='{{slot._id}}_position' [(ngModel)]='slot.position'>
         </mat-form-field>
         <div style='text-align: center'>Operativa</div>
@@ -23,10 +23,12 @@
         </div>
       </div>
     </form>
-    <button *ngIf='!slot._id' mat-button color='primary' (click)='create()'>Crea</button>
-    <button *ngIf='slot._id' mat-button color='primary' (click)='edit()'>Modifica</button>
-    <button *ngIf='slot._id' mat-button color='warn' (click)='delete()'>Elimina</button>
-    <button mat-button color='warn' (click)='reset()'>Annulla</button>
+    <span style='width: 100%; text-align: center; display: inline-block;'>
+      <button *ngIf='!slot._id' mat-button color='primary' (click)='create()'>Crea</button>
+      <button *ngIf='slot._id' mat-button color='primary' (click)='edit()'>Modifica</button>
+      <button *ngIf='slot._id' mat-button color='warn' (click)='delete()'>Elimina</button>
+      <button mat-button color='warn' (click)='reset()'>Annulla</button>
+    </span>
   </div>
   <div *ngIf='!slot'>
     <mat-spinner></mat-spinner>

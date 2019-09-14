@@ -13,7 +13,7 @@ VatSchema.statics.sendVat = function (vat, callback) {
   if (process.env.NODE_ENV === 'dev') {
     return callback('Cant send vats in develop mode!');
   }
-  return this.find().sort({
+  return this.find({responseCode: "200"}).sort({
     'date': -1
   }).exec(function (err, vats) {
     if (err) return callback(err);

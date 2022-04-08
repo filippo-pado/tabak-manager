@@ -41,7 +41,7 @@
     "express-brute-mongoose": "^1.1.0",
     "highcharts": "^6.1.1",
     "jsonwebtoken": "^8.3.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "mongoose": "^5.7.1",
     "morgan": "^1.9.1",
     "request": "^2.87.0",
